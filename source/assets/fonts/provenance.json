@@ -1,0 +1,42 @@
+[
+  {
+    "licenseSha256": "58172E0C0FAC2CDA8A37B348164BB55E44B0E69051E557E92B1D3F6910141F7B",
+    "file": "manrope.ttf",
+    "source": "https://raw.githubusercontent.com/google/fonts/67bc647ce1910e92f461bcc82aae30f21d21a9cc/ofl/manrope/Manrope%5Bwght%5D.ttf",
+    "revision": "67bc647ce1910e92f461bcc82aae30f21d21a9cc",
+    "license": "manrope-OFL.txt",
+    "bytes": 164700,
+    "sha256": "3AE11C49DB0455A3CC33E37D380F20FDB8C7F8B41DC07625C177E3D87A9D6AE6",
+    "family": "manrope"
+  },
+  {
+    "licenseSha256": "5B9321A4298CFEB6B34354164A1C3AFC3DB114569984C502B9B35D988FD58C57",
+    "file": "inter.ttf",
+    "source": "https://raw.githubusercontent.com/google/fonts/67bc647ce1910e92f461bcc82aae30f21d21a9cc/ofl/inter/Inter%5Bopsz%2Cwght%5D.ttf",
+    "revision": "67bc647ce1910e92f461bcc82aae30f21d21a9cc",
+    "license": "inter-OFL.txt",
+    "bytes": 876576,
+    "sha256": "29160A80FF49DDCAB2C97711247E08B1FAB27A484A329CE8B813D820DC559031",
+    "family": "inter"
+  },
+  {
+    "licenseSha256": "B2FE5E8987594E9FFD1D2CA52A2F5D73EB8335243893C5D6254B5AD69269591D",
+    "file": "jetbrainsmono.ttf",
+    "source": "https://raw.githubusercontent.com/google/fonts/67bc647ce1910e92f461bcc82aae30f21d21a9cc/ofl/jetbrainsmono/JetBrainsMono%5Bwght%5D.ttf",
+    "revision": "67bc647ce1910e92f461bcc82aae30f21d21a9cc",
+    "license": "jetbrainsmono-OFL.txt",
+    "bytes": 187208,
+    "sha256": "48715A42EC242C21E9F02692891E147D022299A52E48D5E413E1A942193FFEDA",
+    "family": "jetbrainsmono"
+  },
+  {
+    "family": "inter-italic",
+    "source": "https://raw.githubusercontent.com/google/fonts/67bc647ce1910e92f461bcc82aae30f21d21a9cc/ofl/inter/Inter-Italic%5Bopsz%2Cwght%5D.ttf",
+    "revision": "67bc647ce1910e92f461bcc82aae30f21d21a9cc",
+    "file": "inter-italic.ttf",
+    "sha256": "acd98e64795781b2058f07b18475e0ecee2a0fe2b42a49e2f9e37d0d6bf66ce6",
+    "license": "inter-OFL.txt",
+    "licenseSha256": "5b9321a4298cfeb6b34354164a1c3afc3db114569984c502b9b35d988fd58c57",
+    "bytes": 906596
+  }
+]

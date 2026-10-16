@@ -1,0 +1,32 @@
+{
+  "files": [
+    {
+      "category": "models",
+      "path": "DeepSeek-V4-Pro-Qwen3.5-9B-MTP-Q6_K.gguf",
+      "url": "https://huggingface.co/Jackrong/DeepSeek-V4-Pro-Qwen3.5-9B-MTP-GGUF/resolve/99b43f206bfe6e4e4c311d8fe5bf9b3a9d06d08e/DeepSeek-V4-Pro-Qwen3.5-9B-MTP-Q6_K.gguf",
+      "size": 7558902880,
+      "sha256": "cb7ead946c003136b843a4a1146e68fbefbab602e630f06603c3c8826f2c03f7"
+    },
+    {
+      "category": "models",
+      "path": "mmproj-F32.gguf",
+      "url": "https://huggingface.co/Jackrong/DeepSeek-V4-Pro-Qwen3.5-9B-MTP-GGUF/resolve/99b43f206bfe6e4e4c311d8fe5bf9b3a9d06d08e/mmproj-F32.gguf",
+      "size": 1824061952,
+      "sha256": "16c2f9c13c28c25e6024413951efe280d77b65cd2273b0f00cec20035e221731"
+    }
+  ],
+  "runtime": [
+    {
+      "name": "llama-b11429-bin-win-cuda-13.4-x64.zip",
+      "size": 153089864,
+      "sha256": "76ddc6eff2389570789ed608881efc6977751a722015d8e8c94f302224ff1a3a",
+      "url": "https://github.com/ggml-org/llama.cpp/releases/download/b11429/llama-b11429-bin-win-cuda-13.4-x64.zip"
+    },
+    {
+      "name": "cudart-llama-bin-win-cuda-13.4-x64.zip",
+      "size": 423535356,
+      "sha256": "738f8c251ac22b70c3ae6f83a10cf222725df0395246a2cf58f32bdb85fbe668",
+      "url": "https://github.com/ggml-org/llama.cpp/releases/download/b11429/cudart-llama-bin-win-cuda-13.4-x64.zip"
+    }
+  ]
+}

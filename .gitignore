@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+.venv/
+build/
+dist/
+*.spec
+.env*
+*.pem
+*.key
+*.pfx
+*.p12
+*.gguf
+*.log
+config.json
+UserData/
+Logs/
