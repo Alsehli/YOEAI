@@ -52,3 +52,9 @@ html[data-theme=light] .markdown-body .hljs-keyword,html[data-theme=light] .mark
 
 /* Unregistered trademark branding */
 .brand-tm{font:500 11px Inter,sans-serif;vertical-align:super;margin-left:2px;letter-spacing:0}.trademark-notice{font:12px/1.6 Inter,sans-serif;color:var(--muted,#94a3b8);margin:16px 0}
+
+/* Soft button interactions */
+button{transition:background-color 200ms cubic-bezier(.2,.7,.3,1),border-color 200ms ease,color 200ms ease,box-shadow 200ms ease,transform 140ms ease,opacity 180ms ease}
+button:active:not(:disabled){transform:translateY(1px) scale(.99)}
+#apply[aria-busy="true"]{cursor:progress;opacity:.7}
+@media(prefers-reduced-motion:reduce){button{transition:none!important}button:active:not(:disabled){transform:none}}

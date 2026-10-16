@@ -59,7 +59,7 @@ class Startup(QThread):
      if not Path(starter).is_file():raise RuntimeError('The existing engine launcher is missing: '+starter)
      startup_log=HOME/'launcher-startup.log'
      with startup_log.open('w',encoding='utf-8') as output:
-      result=subprocess.run(['powershell.exe','-NoProfile','-ExecutionPolicy','Bypass','-File',starter],stdin=subprocess.DEVNULL,stdout=output,stderr=subprocess.STDOUT,text=True,creationflags=subprocess.CREATE_NO_WINDOW,timeout=240)
+      result=subprocess.run(['powershell.exe','-NoProfile','-ExecutionPolicy','Bypass','-File',starter,'-Context',str(int(read_config().get('context',4096)))],stdin=subprocess.DEVNULL,stdout=output,stderr=subprocess.STDOUT,text=True,creationflags=subprocess.CREATE_NO_WINDOW,timeout=240)
      if result.returncode:raise RuntimeError('The AI engine could not start. '+startup_log.read_text(encoding='utf-8',errors='replace')[-1200:])
     self.progress.emit('Preparing the local chat interface…')
     ensure_engine();start_ui()

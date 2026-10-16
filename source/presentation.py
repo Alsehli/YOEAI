@@ -1,10 +1,26 @@
 """Same-origin visual assets only. All inference handlers remain unchanged."""
-import mimetypes
+import mimetypes,json
 from urllib.parse import unquote,urlsplit
 import runtime
 from configuration import APP_DIR
 
 class PresentationHandler(runtime.Handler):
+    def do_POST(self):
+        from configuration import read_config
+        if self.path!='/context' or not read_config().get('externalBackend'):
+            return super().do_POST()
+        if not self.allowed() or self.headers.get('Origin')!=f"http://127.0.0.1:{read_config()['uiPort']}":
+            return self.json(403,{'error':'Only the local Settings screen may restart this engine.'})
+        try:
+            if self.headers.get('Transfer-Encoding'):raise ValueError('Unsupported transfer encoding.')
+            length=int(self.headers.get('Content-Length','-1'))
+            if not 0<length<=512:raise ValueError('Invalid context request size.')
+            body=json.loads(self.rfile.read(length))
+            from context_control import change_context
+            return self.json(200,change_context(body.get('context'),body.get('confirmedEngineRestart')))
+        except (ValueError,TypeError) as error:return self.json(400,{'error':str(error)})
+        except Exception as error:return self.json(409,{'error':str(error)})
+
     def do_GET(self):
         route=unquote(urlsplit(self.path).path)
         if not route.startswith('/assets/'):
