@@ -41,3 +41,7 @@ Many regression tests use mocks/disposable fixtures. This does not certify every
 Application source: GPL-3.0-only, [LICENSE](LICENSE). Third-party assets retain their notices; see [THIRD-PARTY.md](THIRD-PARTY.md). Optional models, runtimes and applications have separate terms. [Privacy](PRIVACY.md) · [Security](SECURITY.md) · [Code signing](CODE-SIGNING.md).
 
 Lite has a different packaging/framework configuration and is not replaced by this Normal source tree. The existing Normal/Lite setup executables predate this candidate and are not attached as current installers.
+
+© 2026 Mohamed Yusuf Alsehli — YOEAI
+
+See [NOTICE](NOTICE) and [LICENSE](LICENSE).

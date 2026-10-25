@@ -226,8 +226,8 @@
   },
   {
     "path": "source/ui.html",
-    "size": 36045,
-    "sha256": "feefd8c467976cf2ae7118134a28bb1c3bd58d2f138728e492bf7ed01e0e09a9"
+    "size": 36076,
+    "sha256": "7c1e9e1b2dee25e7ea6c0912541c3d6a70bba85abd0fece1f2acb78edc19985c"
   },
   {
     "path": "source/update_acquire.py",
