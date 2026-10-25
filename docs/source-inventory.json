@@ -36,8 +36,8 @@
   },
   {
     "path": "source/context_control.py",
-    "size": 1395,
-    "sha256": "0a1547c5061e23fbc7e603913ee26b2d9ca342fc13b003928c89d8774ece14fb"
+    "size": 1377,
+    "sha256": "0eb0385c58a12b0541d349e3f489665db891c63321c5fbcf799ff969d32c5a88"
   },
   {
     "path": "source/customer.py",
@@ -216,8 +216,8 @@
   },
   {
     "path": "source/switch_context.ps1",
-    "size": 3410,
-    "sha256": "8e10105050326e4e85476089324392d0995cc710ed452e65388981e9bffd2358"
+    "size": 3369,
+    "sha256": "8a6850f202d34c6cf5bbf7c6f4afe6fa3714fc5afc2d84c5239a94fe08ae9f97"
   },
   {
     "path": "source/text_image_shell.py",
