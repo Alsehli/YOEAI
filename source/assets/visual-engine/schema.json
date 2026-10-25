@@ -1,0 +1,735 @@
+{
+  "anyOf": [
+    {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "1.0"
+        },
+        "type": {
+          "enum": [
+            "chart",
+            "table",
+            "dashboard",
+            "timeline",
+            "flowchart",
+            "mixed"
+          ]
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 1000
+        },
+        "summary": {
+          "type": "string",
+          "maxLength": 4000
+        },
+        "provenance": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "enum": [
+                "user",
+                "calculated",
+                "retrieved",
+                "estimated",
+                "example",
+                "unverified"
+              ]
+            },
+            "note": {
+              "type": "string",
+              "maxLength": 1000
+            },
+            "sources": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "maxLength": 1000
+                  },
+                  "title": {
+                    "type": "string",
+                    "maxLength": 1000
+                  },
+                  "retrievedAt": {
+                    "type": "string",
+                    "maxLength": 1000
+                  }
+                },
+                "required": [
+                  "url",
+                  "title"
+                ],
+                "additionalProperties": false
+              },
+              "maxItems": 20,
+              "minItems": 0
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "additionalProperties": false
+        },
+        "datasets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_-]*$",
+                "maxLength": 32
+              },
+              "columns": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "key": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_-]*$",
+                      "maxLength": 32
+                    },
+                    "label": {
+                      "type": "string",
+                      "maxLength": 1000
+                    },
+                    "type": {
+                      "enum": [
+                        "text",
+                        "number",
+                        "date",
+                        "status"
+                      ]
+                    },
+                    "unit": {
+                      "type": "string",
+                      "maxLength": 1000
+                    },
+                    "format": {
+                      "enum": [
+                        "text",
+                        "number",
+                        "currency",
+                        "percent",
+                        "date",
+                        "time",
+                        "status"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "key",
+                    "label",
+                    "type"
+                  ],
+                  "additionalProperties": false
+                },
+                "maxItems": 32,
+                "minItems": 1
+              },
+              "rows": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": [
+                      "string",
+                      "number",
+                      "null"
+                    ]
+                  }
+                },
+                "maxItems": 10000,
+                "minItems": 1
+              }
+            },
+            "required": [
+              "id",
+              "columns",
+              "rows"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 8,
+          "minItems": 0
+        },
+        "components": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "const": "chart"
+                  },
+                  "title": {
+                    "type": "string",
+                    "maxLength": 1000
+                  },
+                  "description": {
+                    "type": "string",
+                    "maxLength": 1000
+                  },
+                  "dataset": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9_-]*$",
+                    "maxLength": 32
+                  },
+                  "chartType": {
+                    "enum": [
+                      "bar",
+                      "horizontalBar",
+                      "line",
+                      "area",
+                      "scatter",
+                      "donut",
+                      "pie",
+                      "combo"
+                    ]
+                  },
+                  "x": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9_-]*$",
+                    "maxLength": 32
+                  },
+                  "series": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "field": {
+                          "type": "string",
+                          "pattern": "^[A-Za-z][A-Za-z0-9_-]*$",
+                          "maxLength": 32
+                        },
+                        "label": {
+                          "type": "string",
+                          "maxLength": 1000
+                        },
+                        "chartType": {
+                          "enum": [
+                            "bar",
+                            "line"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "field"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "maxItems": 6,
+                    "minItems": 1
+                  }
+                },
+                "required": [
+                  "type",
+                  "dataset",
+                  "chartType",
+                  "x",
+                  "series"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "const": "chart"
+                  },
+                  "title": {
+                    "type": "string",
+                    "maxLength": 1000
+                  },
+                  "description": {
+                    "type": "string",
+                    "maxLength": 1000
+                  },
+                  "dataset": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9_-]*$",
+                    "maxLength": 32
+                  },
+                  "chartType": {
+                    "const": "histogram"
+                  },
+                  "value": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9_-]*$",
+                    "maxLength": 32
+                  },
+                  "bins": {
+                    "type": "integer",
+                    "minimum": 2,
+                    "maximum": 50
+                  }
+                },
+                "required": [
+                  "type",
+                  "dataset",
+                  "chartType",
+                  "value"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "const": "chart"
+                  },
+                  "title": {
+                    "type": "string",
+                    "maxLength": 1000
+                  },
+                  "description": {
+                    "type": "string",
+                    "maxLength": 1000
+                  },
+                  "dataset": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9_-]*$",
+                    "maxLength": 32
+                  },
+                  "chartType": {
+                    "const": "heatmap"
+                  },
+                  "x": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9_-]*$",
+                    "maxLength": 32
+                  },
+                  "y": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9_-]*$",
+                    "maxLength": 32
+                  },
+                  "value": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9_-]*$",
+                    "maxLength": 32
+                  }
+                },
+                "required": [
+                  "type",
+                  "dataset",
+                  "chartType",
+                  "x",
+                  "y",
+                  "value"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "const": "chart"
+                  },
+                  "title": {
+                    "type": "string",
+                    "maxLength": 1000
+                  },
+                  "description": {
+                    "type": "string",
+                    "maxLength": 1000
+                  },
+                  "dataset": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9_-]*$",
+                    "maxLength": 32
+                  },
+                  "chartType": {
+                    "const": "candlestick"
+                  },
+                  "x": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9_-]*$",
+                    "maxLength": 32
+                  },
+                  "open": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9_-]*$",
+                    "maxLength": 32
+                  },
+                  "high": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9_-]*$",
+                    "maxLength": 32
+                  },
+                  "low": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9_-]*$",
+                    "maxLength": 32
+                  },
+                  "close": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9_-]*$",
+                    "maxLength": 32
+                  }
+                },
+                "required": [
+                  "type",
+                  "dataset",
+                  "chartType",
+                  "x",
+                  "open",
+                  "high",
+                  "low",
+                  "close"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "const": "table"
+                  },
+                  "title": {
+                    "type": "string",
+                    "maxLength": 1000
+                  },
+                  "description": {
+                    "type": "string",
+                    "maxLength": 1000
+                  },
+                  "dataset": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9_-]*$",
+                    "maxLength": 32
+                  },
+                  "columns": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_-]*$",
+                      "maxLength": 32
+                    },
+                    "maxItems": 32,
+                    "minItems": 1
+                  }
+                },
+                "required": [
+                  "type",
+                  "dataset"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "const": "kpi"
+                  },
+                  "title": {
+                    "type": "string",
+                    "maxLength": 1000
+                  },
+                  "description": {
+                    "type": "string",
+                    "maxLength": 1000
+                  },
+                  "dataset": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9_-]*$",
+                    "maxLength": 32
+                  },
+                  "field": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9_-]*$",
+                    "maxLength": 32
+                  },
+                  "aggregate": {
+                    "enum": [
+                      "sum",
+                      "mean",
+                      "min",
+                      "max",
+                      "last",
+                      "growth"
+                    ]
+                  },
+                  "label": {
+                    "type": "string",
+                    "maxLength": 1000
+                  },
+                  "unit": {
+                    "type": "string",
+                    "maxLength": 1000
+                  },
+                  "target": {
+                    "type": "number",
+                    "minimum": -1000000000000000,
+                    "maximum": 1000000000000000
+                  }
+                },
+                "required": [
+                  "type",
+                  "dataset",
+                  "field",
+                  "aggregate",
+                  "label"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "const": "kpi"
+                  },
+                  "title": {
+                    "type": "string",
+                    "maxLength": 1000
+                  },
+                  "description": {
+                    "type": "string",
+                    "maxLength": 1000
+                  },
+                  "dataset": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9_-]*$",
+                    "maxLength": 32
+                  },
+                  "aggregate": {
+                    "const": "count"
+                  },
+                  "label": {
+                    "type": "string",
+                    "maxLength": 1000
+                  },
+                  "target": {
+                    "type": "number",
+                    "minimum": -1000000000000000,
+                    "maximum": 1000000000000000
+                  }
+                },
+                "required": [
+                  "type",
+                  "dataset",
+                  "aggregate",
+                  "label"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "const": "timeline"
+                  },
+                  "title": {
+                    "type": "string",
+                    "maxLength": 1000
+                  },
+                  "description": {
+                    "type": "string",
+                    "maxLength": 1000
+                  },
+                  "orientation": {
+                    "enum": [
+                      "vertical",
+                      "horizontal"
+                    ]
+                  },
+                  "events": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "pattern": "^[A-Za-z][A-Za-z0-9_-]*$",
+                          "maxLength": 32
+                        },
+                        "title": {
+                          "type": "string",
+                          "maxLength": 1000
+                        },
+                        "date": {
+                          "type": "string",
+                          "maxLength": 1000
+                        },
+                        "endDate": {
+                          "type": "string",
+                          "maxLength": 1000
+                        },
+                        "dateStatus": {
+                          "enum": [
+                            "provided",
+                            "proposed"
+                          ]
+                        },
+                        "status": {
+                          "enum": [
+                            "planned",
+                            "active",
+                            "completed",
+                            "blocked",
+                            "cancelled"
+                          ]
+                        },
+                        "details": {
+                          "type": "string",
+                          "maxLength": 1000
+                        },
+                        "dependencies": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "pattern": "^[A-Za-z][A-Za-z0-9_-]*$",
+                            "maxLength": 32
+                          },
+                          "maxItems": 20,
+                          "minItems": 0
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "title"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "maxItems": 200,
+                    "minItems": 1
+                  }
+                },
+                "required": [
+                  "type",
+                  "events"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "const": "flowchart"
+                  },
+                  "title": {
+                    "type": "string",
+                    "maxLength": 1000
+                  },
+                  "description": {
+                    "type": "string",
+                    "maxLength": 1000
+                  },
+                  "nodes": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "pattern": "^[A-Za-z][A-Za-z0-9_-]*$",
+                          "maxLength": 32
+                        },
+                        "label": {
+                          "type": "string",
+                          "maxLength": 1000
+                        },
+                        "details": {
+                          "type": "string",
+                          "maxLength": 1000
+                        },
+                        "kind": {
+                          "enum": [
+                            "start",
+                            "process",
+                            "decision",
+                            "end"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "label"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "maxItems": 60,
+                    "minItems": 1
+                  },
+                  "edges": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "source": {
+                          "type": "string",
+                          "pattern": "^[A-Za-z][A-Za-z0-9_-]*$",
+                          "maxLength": 32
+                        },
+                        "target": {
+                          "type": "string",
+                          "pattern": "^[A-Za-z][A-Za-z0-9_-]*$",
+                          "maxLength": 32
+                        },
+                        "label": {
+                          "type": "string",
+                          "maxLength": 1000
+                        }
+                      },
+                      "required": [
+                        "source",
+                        "target"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "maxItems": 100,
+                    "minItems": 0
+                  }
+                },
+                "required": [
+                  "type",
+                  "nodes",
+                  "edges"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "maxItems": 12,
+          "minItems": 1
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "type",
+        "title",
+        "provenance",
+        "datasets",
+        "components"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "1.0"
+        },
+        "type": {
+          "const": "text"
+        },
+        "text": {
+          "type": "string",
+          "maxLength": 4000
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "type",
+        "text"
+      ],
+      "additionalProperties": false
+    }
+  ]
+}

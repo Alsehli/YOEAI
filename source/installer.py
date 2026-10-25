@@ -65,7 +65,7 @@ def install(options,log):
     if servers[0].parent!=backend:
         for file in servers[0].parent.iterdir():
             if file.is_file():shutil.copy2(file,backend/file.name)
-    config=dict(model=str(Path(paths['models'])/manifest['files'][0]['path']),projector=str(Path(paths['models'])/'mmproj-F32.gguf'),apiPort=8080,uiPort=8085,context=4096,externalBackend=bool(options.get('externalBackend',False)))
+    config=dict(model=str(Path(paths['models'])/manifest['files'][0]['path']),projector=str(Path(paths['models'])/'mmproj-F32.gguf'),apiPort=8080,uiPort=8085,context=16384,externalBackend=bool(options.get('externalBackend',False)))
     target.rename(final_target)
     target=final_target.resolve()
     ps="$s=(New-Object -ComObject WScript.Shell).CreateShortcut('"+str(shortcut).replace("'","''")+"');$s.TargetPath='"+str(target/'AlsehliAI.exe').replace("'","''")+"';$s.WorkingDirectory='"+str(target).replace("'","''")+"';$s.Save()"

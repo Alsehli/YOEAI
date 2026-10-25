@@ -9,7 +9,7 @@ class SetupWindow(QWidget):
   if getattr(self,'worker',None) and self.worker.isRunning():event.ignore()
   else:event.accept()
 def create_setup_window(worker_factory=Worker,consent_recorder=save_acceptance):
- window=SetupWindow();window.setWindowTitle('YOEAI™ Setup');window.resize(860,730);layout=QVBoxLayout(window);layout.addWidget(QLabel('YOEAI™ · Review compatibility and policies before installation.'))
+ window=SetupWindow();window.setWindowTitle('YOEAI 2.0™ Setup');window.resize(860,730);layout=QVBoxLayout(window);layout.addWidget(QLabel('YOEAI 2.0™ · Review compatibility and policies before installation.'))
  button=QPushButton('Install preview');button.setObjectName('install-button');agreed,policy=add_agreement(layout,button,window,APP_DIR)
  output=QPlainTextEdit();output.setReadOnly(True);output.setMaximumHeight(130);layout.addWidget(output);layout.addWidget(button)
  def start():

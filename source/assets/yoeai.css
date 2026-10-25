@@ -58,3 +58,17 @@ button{transition:background-color 200ms cubic-bezier(.2,.7,.3,1),border-color 2
 button:active:not(:disabled){transform:translateY(1px) scale(.99)}
 #apply[aria-busy="true"]{cursor:progress;opacity:.7}
 @media(prefers-reduced-motion:reduce){button{transition:none!important}button:active:not(:disabled){transform:none}}
+
+/* Compact desktop overview: reserve more vertical space for conversation. */
+@media(min-width:761px) and (min-height:601px){
+ .topbar{min-height:62px;padding:6px 24px;gap:16px}
+ .topbar-title{gap:14px}.topbar h2{font-size:20px;line-height:24px;margin:0 0 2px}.topbar p{font-size:11px;line-height:16px}
+ .fox-small{width:40px;height:40px}.fox-companion{min-width:148px}.fox-companion #fox-status{font-size:11px}
+ .workspace{padding-top:12px}.stats{padding-bottom:12px;gap:12px}
+ .stat{padding:6px 12px;min-height:68px}.stat>span{font-size:11px;line-height:16px;letter-spacing:.06em}
+ .stat b{font-size:14px;line-height:20px;margin-top:2px}
+ .token-usage{margin-top:2px}.token-usage #usage-summary{font-size:11px;line-height:14px;min-height:14px;height:14px;padding:0}
+}
+@media(min-width:761px) and (min-height:601px) and (max-height:720px){
+ .topbar{min-height:54px}.stat{min-height:60px;padding-top:4px;padding-bottom:4px}.stat>span{line-height:14px}.stat b{line-height:18px}
+}

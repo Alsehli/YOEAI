@@ -48,6 +48,8 @@
  }
  async function blobFor(m){
   if(cache.has(m))return cache.get(m);
+  const completeVisual=/^\s*(?:\{[\s\S]*\}|```(?:yoeai-visual|visual|chart|diagram)\s*\n[\s\S]*\n```\s*)$/.test(m.content);
+  if(completeVisual){const rendered=YoeVisuals.fragment(m.content,YoeMarkdown.fragment),visual=rendered.querySelector('.vie-response');if(visual){const host=document.createElement('div');host.style.cssText='position:fixed;left:-10000px;top:0;width:900px';host.append(rendered);document.body.append(host);try{m.pdfTitle=visual.vieSpec.title;const result=await YoeVisualRenderer.pdf(visual);cache.set(m,Promise.resolve(result));return result;}finally{host.remove();}}}
   const {title,doc}=definition(m.content);m.pdfTitle=title;
   const promise=new Promise((resolve,reject)=>{try{pdfMake.createPdf(doc).getBlob(blob=>resolve(blob));}catch(e){reject(e);}setTimeout(()=>reject(Error('PDF creation timed out. Try a shorter document.')),60000);});
   cache.set(m,promise);try{return await promise;}catch(e){cache.delete(m);throw e;}

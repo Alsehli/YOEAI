@@ -1,7 +1,9 @@
 """Local text and image desktop shell. No audio recording or playback."""
-import argparse,os,sys,subprocess,json,shutil,time
+import argparse,os,sys,subprocess,json,shutil,time,re
 from pathlib import Path
-os.environ.setdefault('QTWEBENGINE_CHROMIUM_FLAGS','--disable-gpu --disable-gpu-compositing')
+preview_flags=os.environ.get('QTWEBENGINE_CHROMIUM_FLAGS','')
+if '--site-per-process' not in preview_flags:preview_flags+=' --site-per-process'
+os.environ['QTWEBENGINE_CHROMIUM_FLAGS']=preview_flags.strip()
 from PySide6.QtCore import QUrl,QThread,Signal,Slot,QTimer
 from PySide6.QtGui import QDesktopServices,QIcon,QFont,QFontDatabase
 from PySide6.QtWidgets import QApplication,QMainWindow,QMessageBox,QStackedWidget,QFileDialog
@@ -35,10 +37,11 @@ def ensure_legacy_services():
 class LocalOnly(QWebEngineUrlRequestInterceptor):
  def interceptRequest(self,info):
   u=info.requestUrl()
-  if not(u.scheme() in {'data','blob','qrc','about'} or (u.scheme()=='http' and u.host()=='127.0.0.1' and u.port()==PORT)):info.block(True)
+  if not(u.scheme() in {'data','blob','qrc','about'} or (u.scheme()=='http' and u.port()==PORT and (u.host()=='127.0.0.1' or u.host()=='localhost' and u.path().startswith('/code-preview/render/')))):info.block(True)
 class LocalPage(QWebEnginePage):
  def acceptNavigationRequest(self,u,kind,main):
   if u.toString()=='about:blank':return True
+  if not main:return u.scheme()=='http' and u.host()=='localhost' and u.port()==PORT and u.path().startswith('/code-preview/render/')
   if kind==QWebEnginePage.NavigationType.NavigationTypeLinkClicked and (u.scheme() in {'https','http'} and bool(u.host()) and u.host()!='127.0.0.1' or u.toString()=='mailto:hello@bahraini.online'):QDesktopServices.openUrl(u);return False
   return u.scheme()=='http' and u.host()=='127.0.0.1' and u.port()==PORT
 class Startup(QThread):
@@ -53,21 +56,22 @@ class Startup(QThread):
     from presentation import install_visual_assets
     install_visual_assets()
     self.progress.emit('Checking the local AI engine…')
-    starter=os.environ.get('YOEAI_ENGINE_STARTER')
-    if starter and read_config().get('externalBackend') and not healthy(read_config()['apiPort']):
-     self.progress.emit('Loading the AI model and vision support…')
-     if not Path(starter).is_file():raise RuntimeError('The existing engine launcher is missing: '+starter)
-     startup_log=HOME/'launcher-startup.log'
-     with startup_log.open('w',encoding='utf-8') as output:
-      result=subprocess.run(['powershell.exe','-NoProfile','-ExecutionPolicy','Bypass','-File',starter,'-Context',str(int(read_config().get('context',4096)))],stdin=subprocess.DEVNULL,stdout=output,stderr=subprocess.STDOUT,text=True,creationflags=subprocess.CREATE_NO_WINDOW,timeout=240)
-     if result.returncode:raise RuntimeError('The AI engine could not start. '+startup_log.read_text(encoding='utf-8',errors='replace')[-1200:])
+    from model_modes import ensure_selected
+    try:ensure_selected()
+    except Exception as model_error:
+     from model_modes import set_state
+     set_state(phase='error',error=str(model_error),detail='Choose Fast Mode or reconnect the Advanced model drive.')
     self.progress.emit('Preparing the local chat interface…')
-    ensure_engine();start_ui()
+    start_ui()
    startup_trace('services_ready',port=PORT);self.ready.emit()
   except Exception as e:startup_trace('startup_failed',error=str(e));self.failed.emit(str(e))
 class TextImageWindow(QMainWindow):
  def __init__(self,start_services=True):
-  super().__init__();self.setWindowTitle('YOEAI™');self.setMinimumSize(640,480);self.resize(1440,960);self.setWindowIcon(QIcon(str(APP_DIR/'assets/yoeai.ico')))
+  super().__init__();self.setWindowTitle('YOEAI 2.0™');self.setMinimumSize(640,480);self.resize(1440,960);self.setWindowIcon(QIcon(str(APP_DIR/'assets/yoeai.ico')))
+  from research_pdf import configure
+  self.report_printer=configure(PORT,self)
+  from windows_picker import configure as configure_windows_picker
+  self.windows_picker=configure_windows_picker(self)
   self.stack=QStackedWidget(self);self.setCentralWidget(self.stack);self.loading=LoadingScreen();self.stack.addWidget(self.loading)
   if start_services:self.show();QApplication.processEvents()
   self.web=QWebEngineView(self);self.stack.addWidget(self.web)
@@ -88,6 +92,13 @@ class TextImageWindow(QMainWindow):
    from developer_mode import launch
    launch(Path(__file__).parent/'customer.py')
   developer.triggered.connect(open_developer)
+  self._native_menus=(menu,settings)
+  self._developer_action=developer
+  self.addAction(developer)
+  developer.setShortcut('Ctrl+Shift+D')
+  self.menuBar().hide()
+  from update_native import install_stop
+  install_stop(self)
   self.worker=Startup(self);self.worker.ready.connect(self.services_ready);self.worker.failed.connect(self.startup_failed);self.worker.progress.connect(self.loading.message)
   self.loading.retry.clicked.connect(self.retry_startup)
   if start_services:self.worker.start()
@@ -105,7 +116,7 @@ class TextImageWindow(QMainWindow):
  def check_chat_ready(self):
   if time.monotonic()>self.ready_deadline:
    self.startup_failed('The chat took too long to become ready. Try again or check the startup logs.');return
-  self.page.runJavaScript("document.getElementById('status')?.textContent==='Ready' && !!document.getElementById('send')",self.chat_ready)
+  self.page.runJavaScript("!!document.getElementById('send') && (document.getElementById('status')?.textContent==='Ready' || !!document.getElementById('model-mode'))",self.chat_ready)
  def chat_ready(self,ready):
   if ready and self.ready_poll.isActive():
    self.ready_poll.stop();self.loading.runner.animation.stop();self.stack.setCurrentWidget(self.web);self.statusBar().showMessage('Ready — local text and image chat');startup_trace('chat_ready',url=self.web.url().toString())
@@ -117,11 +128,14 @@ class TextImageWindow(QMainWindow):
   if action:execute_confirmed(action,lambda p:QMessageBox.question(self,'Confirm Windows action',p.label+'?',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)==QMessageBox.Yes)
  def save_visual_download(self,request):
   name=request.downloadFileName();extension=Path(name).suffix.lower()
-  if request.url().scheme()!='blob' or extension not in {'.svg','.png','.pdf'}:request.cancel();return
-  target,_=QFileDialog.getSaveFileName(self,'Save generated file',str(Path.home()/'Downloads'/name),'PDF documents (*.pdf)' if extension=='.pdf' else 'PDF documents (*.pdf)' if extension=='.pdf' else 'PDF documents (*.pdf)' if extension=='.pdf' else 'Images (*.png *.svg)')
+  url=request.url();video=extension=='.mp4' and url.scheme()=='http' and url.host()=='127.0.0.1' and url.port()==PORT and bool(re.fullmatch(r'/videogen/output/[0-9a-f]{32}',url.path()))
+  if not video and (url.scheme()!='blob' or extension not in {'.svg','.png','.pdf','.wav','.csv','.xlsx','.zip'}):request.cancel();return
+  target,_=QFileDialog.getSaveFileName(self,'Save generated file',str(Path.home()/'Downloads'/('YOEAI-video.mp4' if video else name)),'MP4 video (*.mp4)' if video else 'WAV audio (*.wav)' if extension=='.wav' else 'PDF documents (*.pdf)' if extension=='.pdf' else 'CSV data (*.csv)' if extension=='.csv' else 'Excel workbook (*.xlsx)' if extension=='.xlsx' else 'Project archive (*.zip)' if extension=='.zip' else 'Images (*.png *.svg)')
   if not target:request.cancel();return
   path=Path(target)
-  if path.suffix.lower()!=extension:path=path.with_suffix(extension)
+  if path.suffix.lower()!=extension:
+   path=path.with_suffix(extension)
+   if path.exists() and QMessageBox.question(self,'Replace existing file?',str(path)+' already exists. Replace it?',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)!=QMessageBox.Yes:request.cancel();return
   request.setDownloadDirectory(str(path.parent));request.setDownloadFileName(path.name);request.accept()
  def closeEvent(self,event):
   if self.worker.isRunning():event.ignore();self.statusBar().showMessage('Wait for startup before closing.')

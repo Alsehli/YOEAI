@@ -1,0 +1,27 @@
+/* Explicit local dictation. Never clicks Send or dispatches a command. */
+(()=>{'use strict';
+ const input=document.getElementById('prompt'),actions=document.querySelector('.composer-actions');if(!input||!actions)return;
+ const mic=document.createElement('button');mic.type='button';mic.id='dictation-mic';mic.title='English voice input · local Bark';mic.setAttribute('aria-label','Start local English dictation');mic.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3M8 22h8"/></svg>';
+ const box=document.createElement('div');box.id='dictation-controls';box.hidden=true;const message=document.createElement('span');message.setAttribute('role','status');message.setAttribute('aria-live','polite');
+ const cancel=document.createElement('button');cancel.type='button';cancel.textContent='Cancel';box.append(message,cancel);document.getElementById('input-panel').append(box);actions.prepend(mic);
+ const style=document.createElement('style');style.textContent='#dictation-mic{width:34px;padding:6px;display:inline-flex;align-items:center;justify-content:center}#dictation-mic svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8}#dictation-mic[aria-pressed="true"]{color:#be123c;background:#ffe4e6}#dictation-controls:not([hidden]){display:flex;align-items:center;gap:12px;font-size:12px;padding:6px 12px}#dictation-controls button{padding:2px 8px;min-height:26px}';document.head.append(style);
+ let active=false,recording=false,timer=null,epoch=0,base='',job=null,inserted=null,manual=false,allowedModel=true;
+ function applyText(text){if(input.value!==(inserted??base)){manual=true;return false;}if(manual)return false;input.value=base+(base&&!/\s$/.test(base)?' ':'')+text;inserted=input.value;input.dispatchEvent(new Event('input',{bubbles:true}));return true;}
+ document.addEventListener('yoeai:model-state',e=>{allowedModel=e.detail.active==='fast'&&!e.detail.busy;mic.title=allowedModel?'Live English dictation · Bark Pro · Fast 9B':'Select Fast · 9B for voice input';if(!active)mic.disabled=!allowedModel;});
+ document.getElementById('send')?.addEventListener('click',e=>{if(active){e.preventDefault();e.stopImmediatePropagation();message.textContent='Stop dictation and review your text before sending.';}},true);
+ input.addEventListener('keydown',e=>{if(active&&e.key==='Enter'&&!e.shiftKey){e.preventDefault();e.stopImmediatePropagation();message.textContent='Stop dictation and review your text before sending.';}},true);
+ async function api(path,body){const r=await fetch('/dictation/'+path,{method:body?'POST':'GET',headers:body?{'Content-Type':'application/json'}:{},body:body?JSON.stringify(body):undefined});const value=await r.json();if(!r.ok)throw Error(value.error||'Dictation unavailable.');return value;}
+ function idle(){active=false;recording=false;mic.disabled=!allowedModel;mic.setAttribute('aria-pressed','false');mic.setAttribute('aria-label','Start local English dictation');clearTimeout(timer);cancel.disabled=false;}
+ async function poll(token){try{const s=await api('state');if(token!==epoch)return;if(s.id&&job&&s.id!==job){idle();throw Error('The recording changed. Start dictation again.');}box.hidden=false;message.textContent=s.message||'Transcribing locally…';recording=['starting','recording'].includes(s.status);mic.disabled=!recording;mic.setAttribute('aria-pressed',String(recording));mic.setAttribute('aria-label',recording?'Stop recording and transcribe':'Transcribing');
+  if(s.partial&&typeof s.text==='string'&&s.status==='recording')applyText(s.text);
+  if(['starting','recording','transcribing','restoring'].includes(s.status)){timer=setTimeout(()=>poll(token),200);return;}
+  idle();if(s.status==='complete'){
+   // Preserve anything typed while recording; require a deliberate insert if it changed.
+   if(!applyText(s.text)){message.textContent='Transcript ready. Your typed text was kept.';const insert=document.createElement('button');insert.type='button';insert.textContent='Insert transcript';insert.onclick=()=>{input.setRangeText(s.text,input.selectionStart,input.selectionEnd,'end');input.dispatchEvent(new Event('input',{bubbles:true}));insert.remove();message.textContent='Review your text, then press Send.';input.focus();};box.append(insert);}
+   else{input.focus();message.textContent='Review or edit your text, then press Send.';}
+  }
+ }catch(e){if(token!==epoch)return;idle();box.hidden=false;message.textContent=e.message;}}
+ mic.onclick=async()=>{try{if(active){if(recording){mic.disabled=true;await api('stop',{});}return;}base=input.value;inserted=null;manual=false;box.querySelectorAll('button').forEach(b=>{if(b!==cancel)b.remove();});job=null;const token=++epoch;active=true;mic.disabled=true;box.hidden=false;message.textContent='Preparing live voice input…';const s=await api('start',{activated:true});job=s.id;if(token!==epoch)return;poll(token);}catch(e){idle();box.hidden=false;message.textContent=e.message;}};
+ cancel.onclick=async()=>{const token=++epoch;clearTimeout(timer);mic.disabled=true;cancel.disabled=true;try{await api('cancel',{});if(inserted!==null&&input.value===inserted){input.value=base;input.dispatchEvent(new Event('input',{bubbles:true}));}inserted=null;idle();box.hidden=true;}catch(e){idle();message.textContent=e.message;}if(token!==epoch)return;};
+ window.YoeDictation={get active(){return active;}};
+})();

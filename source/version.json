@@ -1,0 +1,23 @@
+{
+  "product": "YOEAI",
+  "version": "2.0.20261025.4",
+  "displayVersion": "2.0",
+  "edition": "Normal 16GB",
+  "date": "2026-10-24",
+  "imageGeneration": "separate optional local add-on",
+  "readAloud": "English af_heart, local CPU WAV",
+  "releaseStatus": "local update; public customer installer video add-on release verification pending",
+  "videoGeneration": "Normal only: local Wan2.1; Fast 640x384/16 steps default, Quality 832x480/20 steps; 3/5 seconds, 16 fps silent MP4",
+  "videoDefaultQuality": "fast",
+  "miniYOE": "Phase 1: Research/Code, shared existing model, SQLite task queue, scoped tools and approvals",
+  "storageManager": "Scoped local Windows YOE explorer; measured categories; approved file actions",
+  "storageBuild": "2026-10-24",
+  "precisionText": "Local editable English/Arabic Unicode typography over Image Turbo artwork",
+  "precisionTextBuild": "2026-10-24",
+  "gameStudio": "Integrated Unity 6 2D project, reviewed assets, shared-model design, template assembly and verified Windows build workflow",
+  "gameStudioBuild": "2026-10-24",
+  "gameStudioSimple": "Conversation-first interface with approved prototype orchestration",
+  "englishDictation": "Bark Pro BF16 incremental voice input, Fast 9B only, resident CUDA, no chat-model pause, editable live text",
+  "dictationRuntime": "Private Python 3.11 environment on E:; this PC only. Arabic ASR unavailable.",
+  "interactiveVoice": "Premium voice interface; shared Fast Qwen3.5 9B or Advanced Qwen3.8 27B selection in settings."
+}

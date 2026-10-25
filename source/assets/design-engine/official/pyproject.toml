@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "moss-image"
+version = "0.1.0"
+description = "Standalone MOSS-Image text-to-image inference with Diffusers"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.10"
+dependencies = [
+  "torch>=2.9", "diffusers>=0.38", "transformers>=5.3",
+  "accelerate>=1.10", "safetensors>=0.6", "Pillow>=10",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.11"]
+ui = ["gradio>=6.30"]
+
+[tool.setuptools]
+license-files = ["LICENSE", "LICENSES/*.txt"]
+py-modules = ["inference_runtime", "gradio_app", "gradio_presets"]
+packages = ["assets"]
+include-package-data = false
+
+[tool.setuptools.package-data]
+assets = ["logo.svg", "modelscope-base-badge.svg", "modelscope-sft-badge.svg", "feishu-builders-badge.svg", "prompt_defaults.txt", "images/*/*.webp", "images/*/*.png", "images/*/*.json"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

@@ -11,3 +11,5 @@ The application code is GPL-3.0-only. Existing third-party materials keep their 
 - YOEAI visual branding includes user-approved AI-generated mascot assets. Trademark claims do not represent registered rights or clearance. Third-party marks remain with their owners.
 
 llama.cpp, NVIDIA runtime components, GGUF model weights and vision projectors are external and excluded. This source publication does not certify their redistribution eligibility or compatibility. Shipping binaries requires a separate full dependency/license audit.
+
+Current adapters also use separately installed Pillow, ReportLab, psutil, pywin32, pywinauto, comtypes, Playwright, ddgs, primp and lxml. Their own distribution licenses apply; pinned direct application/build dependencies are in requirements-build.txt. Optional worker source is included, but PyTorch, Transformers, sounddevice, Kokoro/eSpeak, model weights, Ghidra/JDK, Unity and Adobe software are not vendored. Font, rendering and preview-vendor directories retain their packaged license/provenance files. Do not infer binary redistribution clearance from a successful source build.

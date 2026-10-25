@@ -1,0 +1,1492 @@
+[
+  {
+    "path": "source/agent_memory.py",
+    "size": 2185,
+    "sha256": "b8a7c2a3e9c4aeda38089f496eea909acf4a7e29597d37e791093fa483fd6683"
+  },
+  {
+    "path": "source/agent_skills.py",
+    "size": 8228,
+    "sha256": "1693bcc543151badb238db049f5ca0bc59b9ada964ae42ffbd1cc582087e9589"
+  },
+  {
+    "path": "source/agreement_installer.py",
+    "size": 1840,
+    "sha256": "abcc84b8a998e4e511eff1dda9de088536c2754f942927179070dc9a42ce1928"
+  },
+  {
+    "path": "source/code_preview.py",
+    "size": 12828,
+    "sha256": "22d53fc978f1136beb07ff1f964e1be73c163fd4a4509f0237a46e0d2202313d"
+  },
+  {
+    "path": "source/code_preview_native.py",
+    "size": 6171,
+    "sha256": "d1c381ca8a08e75e082156a6b1fc89c75c3797d71e0bed1d38b5d06259318bd2"
+  },
+  {
+    "path": "source/commands.py",
+    "size": 2089,
+    "sha256": "d63f125143e00c922f4eb27c7ce0aaf1c0ba0e42f896cbe8997545ce7dbaf770"
+  },
+  {
+    "path": "source/configuration.py",
+    "size": 579,
+    "sha256": "13c0f61b3b631d2e4936c9ee5284f63f57d34a9d94d84a22b86c544ba437415c"
+  },
+  {
+    "path": "source/context_control.py",
+    "size": 1395,
+    "sha256": "0a1547c5061e23fbc7e603913ee26b2d9ca342fc13b003928c89d8774ece14fb"
+  },
+  {
+    "path": "source/customer.py",
+    "size": 707,
+    "sha256": "51d07c4ea957ef043a611628edc0db0c39df25dd582f07d086411c8474e46ed3"
+  },
+  {
+    "path": "source/design_generation.py",
+    "size": 15554,
+    "sha256": "a8c4b4e5d524f05a06b3a0728aa1a8a7b1154eaf9887ce6e26a25865f00a43d7"
+  },
+  {
+    "path": "source/developer_mode.py",
+    "size": 15567,
+    "sha256": "c86fcc544f1175024131b84efca16496d6c8b3b1247804e26c80af2d13ba06df"
+  },
+  {
+    "path": "source/game_assets.py",
+    "size": 5453,
+    "sha256": "21f4a095bd78cca55aafb8e09b82c16493c8f81aeb720396d0a7caf26e862080"
+  },
+  {
+    "path": "source/game_prototype.py",
+    "size": 5053,
+    "sha256": "c443bf09f064cc76b79bdd9862d9618d2ab34b56f5b1e04ac7272d6994fe1fd7"
+  },
+  {
+    "path": "source/game_routes.py",
+    "size": 6361,
+    "sha256": "8acfc052a8914ee3c6bd62a0bf89c842bd447d901fb620dac6dbb7f0c10d111d"
+  },
+  {
+    "path": "source/game_studio.py",
+    "size": 25010,
+    "sha256": "391cd4cf070a11773d58aa47248a9ec1dcbf10d12bc3bf0afc6347fe788e0463"
+  },
+  {
+    "path": "source/gguf_metadata.py",
+    "size": 2848,
+    "sha256": "aca410ce6e25a028fe39ac7d678e85bc0e995713b62fadff2585ee034f080d09"
+  },
+  {
+    "path": "source/image_generation.py",
+    "size": 8520,
+    "sha256": "a414030712d2375d5fefd7f52de4329a21695ad327102082966f951ea79188bc"
+  },
+  {
+    "path": "source/image_generation_adapter.py",
+    "size": 1859,
+    "sha256": "65261dde82514088e7e92d4146ae80aa01b49df35b531dab82d32c6afc2b828d"
+  },
+  {
+    "path": "source/image_pdf.py",
+    "size": 6412,
+    "sha256": "40685f29cb2e4dbe14f595c5d1dda55511e12b9412dc76f4d21883bbc5fd731f"
+  },
+  {
+    "path": "source/installer.py",
+    "size": 6903,
+    "sha256": "f4aa8747bfa7769f89fe57ade9519267eafcaa6d57d32d80d7e6ad99bd3b6553"
+  },
+  {
+    "path": "source/interactive_voice.py",
+    "size": 12299,
+    "sha256": "9f65a681a57efe38e335ad2603fca839985a881a89364a6f0efb8f6e2aa8b17e"
+  },
+  {
+    "path": "source/language_understanding.py",
+    "size": 6668,
+    "sha256": "2c30fadfdac5cbddc02eeb2f25856185bf495a64bffdb5375bd9109f9e503a08"
+  },
+  {
+    "path": "source/LICENSE",
+    "size": 35149,
+    "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986"
+  },
+  {
+    "path": "source/loading_screen.py",
+    "size": 6685,
+    "sha256": "2023c060c9c8aaad4717da60df5dabdb717df1fe1f5c686788d90f0f61a985e8"
+  },
+  {
+    "path": "source/local_mcp.py",
+    "size": 3126,
+    "sha256": "47d0fa3b7cea7ff89d60cbb27dbfa25f6b038c76c2b4e059d93d67f069287294"
+  },
+  {
+    "path": "source/manifest.json",
+    "size": 1375,
+    "sha256": "e03114109de83b5e10a32783bc113e702fc9c790e75ac4c98a38812bdcbe7519"
+  },
+  {
+    "path": "source/memory_controls.py",
+    "size": 5509,
+    "sha256": "2e897ec67c676b014b8e479afb358b9a694717ff2188104b241a7346bdc7aa9e"
+  },
+  {
+    "path": "source/memory_index.py",
+    "size": 4750,
+    "sha256": "fb9e6128983efe23aedc47cdf4443ce877c0f926652c2cf17b575d317caf9656"
+  },
+  {
+    "path": "source/mini_agents.py",
+    "size": 44741,
+    "sha256": "f07ac5661144331bfb815410e0f56658fcf78e6a94c1ecb6303d353cbc36e6e3"
+  },
+  {
+    "path": "source/model_modes.py",
+    "size": 20090,
+    "sha256": "e22a47818827a16337bb92efa3961432683c341cb2b1d7364842cd3e84a02338"
+  },
+  {
+    "path": "source/photoshop_yoe.py",
+    "size": 6163,
+    "sha256": "864999a1521c9ec9d828f64af989745944e0896a678c7dc004e720df227db53e"
+  },
+  {
+    "path": "source/precision_text.py",
+    "size": 22076,
+    "sha256": "213c22e0210d814716597f1a4fbce8a675cb5eaac2320aa73f3ac6d02dd8844b"
+  },
+  {
+    "path": "source/presentation.py",
+    "size": 7404,
+    "sha256": "80effe8bf825eb1fb59bda1be5f4747cadefc1814fa8a559c47c55cec45747ee"
+  },
+  {
+    "path": "source/read_aloud.py",
+    "size": 5164,
+    "sha256": "dcbf1ea3634f68ab3448fe1696e051d71241fc4dd7116c9f8bd8f497c90b1113"
+  },
+  {
+    "path": "source/research_pdf.py",
+    "size": 9097,
+    "sha256": "641a09fa8f88153b7dcad9eee69d7239a446844b36268d203691eee6ad435022"
+  },
+  {
+    "path": "source/reverse_routes.py",
+    "size": 3480,
+    "sha256": "29f016d810e0151f208492dc71a28fc246ccb2ac225812f570bc8a7f524d827e"
+  },
+  {
+    "path": "source/reverse_yoe.py",
+    "size": 21882,
+    "sha256": "ee0e0b6af70a457f7f3834fd007040108036b76148338c2bc60dabab00b1c6f5"
+  },
+  {
+    "path": "source/runtime.py",
+    "size": 9571,
+    "sha256": "62327782bdd9aebe392b5ede543b00fd110ff335773306fe896ed5db8f639b84"
+  },
+  {
+    "path": "source/searx_search.py",
+    "size": 7337,
+    "sha256": "e467710d03f61accf867d6ca6cd32a1c4dfdc827e7cad8b54d92ae3246e15fd6"
+  },
+  {
+    "path": "source/setup_agreement.py",
+    "size": 3276,
+    "sha256": "37c4cb690aad2daa15a2f5150f61e6a27cb4b4a004c64be9142ebab2086e2120"
+  },
+  {
+    "path": "source/speech_input.py",
+    "size": 7464,
+    "sha256": "6319ed52c8c4e758d952109ab6bd6216d6905eecdcf950dded6c35174267d67c"
+  },
+  {
+    "path": "source/speech_live.py",
+    "size": 3572,
+    "sha256": "0a19703f197a69cb6049e310471576531dc49aea86526a9a62b1a6918f96d03a"
+  },
+  {
+    "path": "source/stop_model.ps1",
+    "size": 1256,
+    "sha256": "4122ff45a4fbb4c40f9c0e6b0704f810b40bbeeaf64cb870337670b2930ee882"
+  },
+  {
+    "path": "source/switch_context.ps1",
+    "size": 3410,
+    "sha256": "8e10105050326e4e85476089324392d0995cc710ed452e65388981e9bffd2358"
+  },
+  {
+    "path": "source/text_image_shell.py",
+    "size": 11337,
+    "sha256": "b78b5d4f05a14a0f9a1e4abb5f972806a8415dbc7183bf65862022bddc73d9f1"
+  },
+  {
+    "path": "source/ui.html",
+    "size": 36045,
+    "sha256": "feefd8c467976cf2ae7118134a28bb1c3bd58d2f138728e492bf7ed01e0e09a9"
+  },
+  {
+    "path": "source/update_acquire.py",
+    "size": 6253,
+    "sha256": "e906758322e677a7c5ea04fb9abcf62f96d08b492f98799ee5e917fcaea1d9bd"
+  },
+  {
+    "path": "source/update_audit.py",
+    "size": 22173,
+    "sha256": "98d980625088ef2245ca166fd589fa90d4ec1d0731a32c1d9394ccd34da7295f"
+  },
+  {
+    "path": "source/update_dialogue.py",
+    "size": 11686,
+    "sha256": "7ddf88fc15f8e373f6c248f9728e981548998e0171a815043fe81a9c9902123d"
+  },
+  {
+    "path": "source/update_manager.py",
+    "size": 24233,
+    "sha256": "d3f9f0332906c374ca93cae1399034633c7516d5c78d87fb4254cf5f3f0d86bd"
+  },
+  {
+    "path": "source/update_native.py",
+    "size": 5718,
+    "sha256": "d85af3e8869a5aa22c0e705ef321392d785e02b4fe57d170a07fc1904ccf1a88"
+  },
+  {
+    "path": "source/update_routes.py",
+    "size": 4937,
+    "sha256": "ce3b8bbcf908d88df396fda05ae9cd79c4270c9058b04474a09d8b0c806eea09"
+  },
+  {
+    "path": "source/update_runtime_trust.py",
+    "size": 179,
+    "sha256": "79f3cd40c1b2624f4de0849ddcdf3838f35e558d311845718f67958feaf940bc"
+  },
+  {
+    "path": "source/update_sandbox.py",
+    "size": 12032,
+    "sha256": "cb261a179bd8f1226bd33981ec6d760f9ccd7223152276a179153684b74b4bf7"
+  },
+  {
+    "path": "source/update_yoe.py",
+    "size": 5626,
+    "sha256": "adcb82ad3d0a74a69731de7cab1a80d4798ef1aa8728fafdebbbfffda52d224f"
+  },
+  {
+    "path": "source/version-resource.txt",
+    "size": 611,
+    "sha256": "be4c45541680f3edae829468a677eedc675d17a22ff71ba6c7e9697cad60b690"
+  },
+  {
+    "path": "source/version.json",
+    "size": 1537,
+    "sha256": "54bcd877dbf6af0492c73d19c9fbfbec0991846dbcd5a9be99756d8af565384a"
+  },
+  {
+    "path": "source/video_generation.py",
+    "size": 17633,
+    "sha256": "381b73f9f1960addf75ce88aa4eacf0eb4856a1bf8af5055ebb04069deeaa6fc"
+  },
+  {
+    "path": "source/video_generation_adapter.py",
+    "size": 1666,
+    "sha256": "92ba229a17898824f6d9afd21caa6e79bb4f681dc45e14971ad9f8239ee4d246"
+  },
+  {
+    "path": "source/video_inputs.py",
+    "size": 1468,
+    "sha256": "1eb7c943e9cf28fd56e16b2bf1f3b85ec750728fe8980df51ca9c6a78595ecf8"
+  },
+  {
+    "path": "source/vision_chat.py",
+    "size": 2013,
+    "sha256": "6b4ddd87b786b6e1270bbcd675de721d4bb5ecdaeace22441492470093afa61a"
+  },
+  {
+    "path": "source/visual_contract.py",
+    "size": 3655,
+    "sha256": "4f4adb4eeb86d89b14cf1e8290cf533a42ac3b2754db82238c96b19d57d8bf05"
+  },
+  {
+    "path": "source/web_photos.py",
+    "size": 5569,
+    "sha256": "100549de2a63a335e65eebeee3c5033fa180ca210eae16af64a7f471604ce103"
+  },
+  {
+    "path": "source/web_search.py",
+    "size": 5766,
+    "sha256": "aee00babe3bbb1b5b65c39849df8010bbd73b79a9658e9b9e58dba92e2aee139"
+  },
+  {
+    "path": "source/windows-version.txt",
+    "size": 653,
+    "sha256": "93cddfce28a7042ddd3976162b284817e6495a76aadc24e1e2fa2ae8d7aea7a1"
+  },
+  {
+    "path": "source/windows_agent.py",
+    "size": 19093,
+    "sha256": "40b6f47089c097cfec92da1cb31f502bf1069a96f866e80c15b22a836049935f"
+  },
+  {
+    "path": "source/windows_browser.py",
+    "size": 6569,
+    "sha256": "04dd31a8c83c7af469390bd761971ae55c029c1fe99d95401f9a9a3ea793eeb9"
+  },
+  {
+    "path": "source/windows_capabilities.py",
+    "size": 5820,
+    "sha256": "b6ff31337891855a7e6c54484942afcd44178e525150aa85cdd5b189a5032320"
+  },
+  {
+    "path": "source/windows_explorer.py",
+    "size": 46557,
+    "sha256": "539ae884520837503c47f643925723b292ec304fd249e70108f7dcbb9d2d376b"
+  },
+  {
+    "path": "source/windows_file_safety.py",
+    "size": 3100,
+    "sha256": "903e012b5d224c2fec7357b5798d3c384f319b43a5dae9dea8f730b1333ff1ce"
+  },
+  {
+    "path": "source/windows_helpers.py",
+    "size": 5271,
+    "sha256": "3e9690b8bddfdba0951bd0cd7ecaaa746db784af60a865bbe4f3d882934fbc1b"
+  },
+  {
+    "path": "source/windows_launch.py",
+    "size": 2859,
+    "sha256": "be6f4d763b98af117cee608ad3669ad2c0076fa5dbd4ec23573bee9a665cc5ce"
+  },
+  {
+    "path": "source/windows_office.py",
+    "size": 2760,
+    "sha256": "6588062e57d407cac03ead0d5c3499d93410486bba8fde7bd9d481221608db9e"
+  },
+  {
+    "path": "source/windows_picker.py",
+    "size": 2478,
+    "sha256": "5fe5a353156b69336f906eb0c2d3ec01fdbfbd1216f4eeada2ef32d3334407bd"
+  },
+  {
+    "path": "source/windows_policy.py",
+    "size": 17706,
+    "sha256": "7bc2394b16b48b6c10e2f5de82cf22f9f279df58988fbf6b48013579f76be098"
+  },
+  {
+    "path": "source/windows_productivity.py",
+    "size": 11350,
+    "sha256": "617d600f5253f9718d2cd6306966dbbe23859b27f87e828d827d03c5a6157e21"
+  },
+  {
+    "path": "source/windows_reporting.py",
+    "size": 6861,
+    "sha256": "dadcbe09f6a998bd2e3596d3e605f4f7bea02aa3bdbbcf552fcc1db145bd8467"
+  },
+  {
+    "path": "source/windows_routes.py",
+    "size": 3986,
+    "sha256": "78ddb04260983d889b601fc02d585ffb978cdb09ad2448fee72aca0b9c5c0485"
+  },
+  {
+    "path": "source/windows_spelling.py",
+    "size": 7208,
+    "sha256": "d2b6a25b1d4d5dbde240f682986639622fff592d192e3bd957afae1a45802c7c"
+  },
+  {
+    "path": "source/windows_tools.py",
+    "size": 33474,
+    "sha256": "63c9e8c1746930f7a13cdc3e0523864225f5757b2df1979619f4220cc037204f"
+  },
+  {
+    "path": "source/windows_understanding.py",
+    "size": 9937,
+    "sha256": "9c1089b9943b23a8a50de1666ee4b25efd15e4a3377b141ba34111d68635f67e"
+  },
+  {
+    "path": "source/writing_check.py",
+    "size": 7633,
+    "sha256": "cd5e0972c7d5c12c421b17222458960019e99b630be3a2596dc36dbd0100d844"
+  },
+  {
+    "path": "source/assets/activity.png",
+    "size": 1207,
+    "sha256": "90ebf26db5aa451b6191cb5dd626e5ea0ef6b59fd99f4601a26444e7efb3f6d7"
+  },
+  {
+    "path": "source/assets/activity.svg",
+    "size": 195,
+    "sha256": "0c5a43216915460764ecd5d8b8869eced1ff6fede8cfae2d96d9b2e6e51af1c4"
+  },
+  {
+    "path": "source/assets/agent-memory.js",
+    "size": 4951,
+    "sha256": "9c30b7d1f9a5ab307eda5c65c2e482440a9c5b49de46320741a275a484052ef2"
+  },
+  {
+    "path": "source/assets/brand.png",
+    "size": 14131,
+    "sha256": "b40491f6f09f4be432ae9299fd71ca89a1a52cd547a31c7cd963fe792a0d1768"
+  },
+  {
+    "path": "source/assets/brand.svg",
+    "size": 1075,
+    "sha256": "aee69284e1d46f91c29dd7a576256721164de980f169220c66c737283190acff"
+  },
+  {
+    "path": "source/assets/browser-page.js",
+    "size": 3106,
+    "sha256": "374ac0e086b1c358e6ceddb94a16a806439ce9843df9de84ebcac2c7972b4a06"
+  },
+  {
+    "path": "source/assets/chat-markdown.js",
+    "size": 1922,
+    "sha256": "c43e7fd7617efef6d190c054f4c18bc980f5e37246d338f14553024c7c9b4d6a"
+  },
+  {
+    "path": "source/assets/chat-pdf.js",
+    "size": 7341,
+    "sha256": "ed9b65313dc48a535d0451729d8304e860618a5125e7c530c3ab3d5bc926a672"
+  },
+  {
+    "path": "source/assets/chat-reliability.js",
+    "size": 3270,
+    "sha256": "9ca358ccd126a4b916ee9e10e67bdd7af2e5749a8ebec9702cd27bee7df100e5"
+  },
+  {
+    "path": "source/assets/chat-visuals.css",
+    "size": 1526,
+    "sha256": "5c732ae61f2990c4bc9b0cea4f7ad3ab9db45d6bc57a5efe2a9b78db16f1cf69"
+  },
+  {
+    "path": "source/assets/chat-visuals.js",
+    "size": 13359,
+    "sha256": "83c9790b1401f339e930b85c70d5ff2093f5173bedb9e3e22f6455180761f11d"
+  },
+  {
+    "path": "source/assets/chat.png",
+    "size": 1409,
+    "sha256": "8998f5ec1eeec1a213c051c0173e55ff1728a225e6e485f02d442e7e0b94d68a"
+  },
+  {
+    "path": "source/assets/chat.svg",
+    "size": 266,
+    "sha256": "3b877110d4d486e7d8b4dee348ce716d10e273aaf9c1cfa8a53bdd144d814943"
+  },
+  {
+    "path": "source/assets/chip.png",
+    "size": 1329,
+    "sha256": "faddaad0e0f438752c5fea39574a2865e571e5016a8bbb359156448264607593"
+  },
+  {
+    "path": "source/assets/chip.svg",
+    "size": 325,
+    "sha256": "dbdd875a617f453198efe0f970c10800c1155617c0f4c370bfac8fe0fbb942ac"
+  },
+  {
+    "path": "source/assets/clear.png",
+    "size": 1326,
+    "sha256": "9cb018655a729005a2fe5afe4a32bfe2acad0b4bf5402d3a9e0034d59be14eda"
+  },
+  {
+    "path": "source/assets/clear.svg",
+    "size": 223,
+    "sha256": "a04fa89303f9d8bd0caa2fa1fc79e9dd6a7e76560abb86c126bebb1d7c8fccad"
+  },
+  {
+    "path": "source/assets/close.png",
+    "size": 578,
+    "sha256": "68875a31b1156fcbfac142a87818db24fab0c29aeee5ab266897795ebbd1e468"
+  },
+  {
+    "path": "source/assets/close.svg",
+    "size": 193,
+    "sha256": "97734439a1862bf740365eb5c3e2ee2dc4b7b96f19f88b567ed3b240e3cd496a"
+  },
+  {
+    "path": "source/assets/code-preview-runtime.js",
+    "size": 6504,
+    "sha256": "2152b489c2dd1d3dae78ccb62e57a5b04b1320e0349e6ebbad496fe6c3964cfe"
+  },
+  {
+    "path": "source/assets/code-preview.css",
+    "size": 2311,
+    "sha256": "9e47284b3c0478bfebc45953aac5aa6013329f100794d1ef7601c1f7af70c0b2"
+  },
+  {
+    "path": "source/assets/code-preview.js",
+    "size": 11399,
+    "sha256": "b3d06002778f0fe2010aa230c77aa4744e947a6e7a17a17e9cb478e0704020ff"
+  },
+  {
+    "path": "source/assets/compact-composer.js",
+    "size": 1834,
+    "sha256": "04e2d11bd7f246db6646228c6ad0c3a702af45c99e5a97229cf3e1762ff0473c"
+  },
+  {
+    "path": "source/assets/deepseek.ico",
+    "size": 37418,
+    "sha256": "9eaa84788ec4d3e6fe65571863aa3ee44c9fe97965d1d4557e7429903814efbc"
+  },
+  {
+    "path": "source/assets/design-engine.css",
+    "size": 952,
+    "sha256": "7b1f9e55941d122e6af709e31d579eefbdb2c74e363c76c79270ca06fddaffed"
+  },
+  {
+    "path": "source/assets/eazyai.ico",
+    "size": 8524,
+    "sha256": "fba7f1ae902be19316357e61ee0edb023cfb2ab8573de767e9748483bf8bbd01"
+  },
+  {
+    "path": "source/assets/eazyai.svg",
+    "size": 393,
+    "sha256": "cf7adbbacc4f3dbf76233503dabad67fc354dab40dd8b9919551451c90ce08e8"
+  },
+  {
+    "path": "source/assets/external.png",
+    "size": 1297,
+    "sha256": "9bec6c97b924aa891afd3585594a4a63fe4c303e49b81f50f7d7c4194ac1b90e"
+  },
+  {
+    "path": "source/assets/external.svg",
+    "size": 251,
+    "sha256": "c111ca41b18e82e493b877aa38de1c241d179664b8e016b76127453530c0d915"
+  },
+  {
+    "path": "source/assets/image-generation.js",
+    "size": 15568,
+    "sha256": "322e024b8f67f0e674f9f21d887ff10f6f9dcb6be7b989d900fbb8bb747db066"
+  },
+  {
+    "path": "source/assets/image-pdf.css",
+    "size": 1889,
+    "sha256": "66c953b585821fd5339b87a19ca65e855c1d645e49160040d220010278981d80"
+  },
+  {
+    "path": "source/assets/image-pdf.js",
+    "size": 6621,
+    "sha256": "da75571f4c25d277c276529b825593dc64b0f4da92e86fb6cb7a89fe31d396a7"
+  },
+  {
+    "path": "source/assets/image.png",
+    "size": 1899,
+    "sha256": "b9676503815f2ec89d8770c106288de2eedf6e2c24d9630deb5e3e69c9e98b1c"
+  },
+  {
+    "path": "source/assets/image.svg",
+    "size": 274,
+    "sha256": "65fae6e953a5bb03c3a43a804c7fd53281714efc2cbbd7d0f0423da38955994b"
+  },
+  {
+    "path": "source/assets/interactive-voice.css",
+    "size": 8738,
+    "sha256": "2957c2ffc1341b45510a4f5853fb7c648f50b3b5c4b8408c66f5de988f364ca3"
+  },
+  {
+    "path": "source/assets/interactive-voice.js",
+    "size": 13935,
+    "sha256": "3ec10b53ed46db899f9e47ddf6045233fef9ff7a5c684682b19049f523426f2a"
+  },
+  {
+    "path": "source/assets/language-understanding.js",
+    "size": 825,
+    "sha256": "adf4a97ef3510de929e2584a6b0de4433bb9d24e6faf166e155dcf105b78364c"
+  },
+  {
+    "path": "source/assets/mascot.js",
+    "size": 4395,
+    "sha256": "636565e90356b4cb58d6ba24f24e674922a45b087691ef94d08c87d075481553"
+  },
+  {
+    "path": "source/assets/mini-fox-variants.js",
+    "size": 3955,
+    "sha256": "5935cbfaad784bbc6774f62945f996a1159f662679fe9f95dd1aa3327127f531"
+  },
+  {
+    "path": "source/assets/mini-premium.css",
+    "size": 18912,
+    "sha256": "76f134f0abb83a1adc06c23928c94c1ab25107fa3feae4b792850577a7b4f8d3"
+  },
+  {
+    "path": "source/assets/mini-premium.js",
+    "size": 17997,
+    "sha256": "a51e3441ab798b907860f554e5317c5bcbbd8b5c686238917373fc893812fea3"
+  },
+  {
+    "path": "source/assets/mini-yoe.css",
+    "size": 4950,
+    "sha256": "83087dfbcd1d774ec097126a03fea465a7a977c8206ec5218532223bf7e3dc7a"
+  },
+  {
+    "path": "source/assets/mini-yoe.js",
+    "size": 25920,
+    "sha256": "9c7de6644b3d84bf9f6726c68fdcdfe794cdf792f143fec31b2b13b6ee3d295a"
+  },
+  {
+    "path": "source/assets/model-modes.css",
+    "size": 1257,
+    "sha256": "f0a3e32a6534d649604f8f704f04d44806c4d0d36c076ecc82bee9e0d7e1750b"
+  },
+  {
+    "path": "source/assets/model-modes.js",
+    "size": 3643,
+    "sha256": "4c3b62647821fbedecc64797f354fd8527ba6d6d9dee3e02bb48930fbeb00f4b"
+  },
+  {
+    "path": "source/assets/output-space.css",
+    "size": 2712,
+    "sha256": "3862c91ed2519b4240983da1336db83cb958505023c79fa777feb33dfade87d6"
+  },
+  {
+    "path": "source/assets/output-space.js",
+    "size": 1334,
+    "sha256": "6aad966e93d3c385cc7c3baf6438fe5a376d2efbb3cec7ac9f47b5b4e120f721"
+  },
+  {
+    "path": "source/assets/precision-text.css",
+    "size": 2705,
+    "sha256": "6e56b09da2276c42685d00c5ff8e07b4453e22fa2ee9ef132dde3a38580aa53c"
+  },
+  {
+    "path": "source/assets/precision-text.js",
+    "size": 12718,
+    "sha256": "e19d95b1a0a074d5582bd6add46b44290b0ac493865a422bfa978715e71ecfbc"
+  },
+  {
+    "path": "source/assets/premium-ui.css",
+    "size": 10373,
+    "sha256": "52cf71100813640e69edbb7c10e5987918b8924e2a30ea2378472ee1338c8b53"
+  },
+  {
+    "path": "source/assets/premium-ui.js",
+    "size": 8702,
+    "sha256": "1497a6cc2a75317a0bc220bdb7b7316a8b9aa523b1313f34d62fef7d227ca2b1"
+  },
+  {
+    "path": "source/assets/read-aloud.js",
+    "size": 6175,
+    "sha256": "bf3cb1c6db4800bd089da9833760c6fe8c61cd8f25aae36327a493f89aff647d"
+  },
+  {
+    "path": "source/assets/refresh.png",
+    "size": 1637,
+    "sha256": "e78de34492d3faee8ef2393247b6d2706a338750daebf4e068ad0779ab1321ff"
+  },
+  {
+    "path": "source/assets/refresh.svg",
+    "size": 252,
+    "sha256": "7c703b1010c84a3c04279efebfebe3ed63d0b5ad09504f09e4da29ca824e8572"
+  },
+  {
+    "path": "source/assets/research-pdf.js",
+    "size": 2113,
+    "sha256": "2516d6098c0ad888a94b629d4ec3639a1bdff501b312ba648515e68e2e4e61f7"
+  },
+  {
+    "path": "source/assets/send.png",
+    "size": 1982,
+    "sha256": "57698b94f3483121dba72b1d227fca479ab84dc8e4042b446370b7b3c3552606"
+  },
+  {
+    "path": "source/assets/send.svg",
+    "size": 203,
+    "sha256": "24c53855ee764a77cacee1ea175ed38bcc4915b4da182982d4bb84b6702e5c81"
+  },
+  {
+    "path": "source/assets/settings.png",
+    "size": 2187,
+    "sha256": "a729da34b95edb2c2fd96ab2250b429b80f2855875c156dcf660d61068691860"
+  },
+  {
+    "path": "source/assets/settings.svg",
+    "size": 258,
+    "sha256": "5f9c66528efb3c9ec9342810a4e14eebef79a9d2c8d83982f75046682d744d95"
+  },
+  {
+    "path": "source/assets/speech-input.js",
+    "size": 5432,
+    "sha256": "d5a5bfb086b11d4a25c849b70a4214af19fa21cc2b5853bfe6958025ca546226"
+  },
+  {
+    "path": "source/assets/speed.png",
+    "size": 1330,
+    "sha256": "86b8487df0bd72415a703db5b87a1bfdd35c904552ce4f12217d8c47549fc3aa"
+  },
+  {
+    "path": "source/assets/speed.svg",
+    "size": 199,
+    "sha256": "44c23606c0a8ac9de2f140ea5c466308c6339e9b2251eadca5039b239c6bd0a9"
+  },
+  {
+    "path": "source/assets/token-usage.js",
+    "size": 3092,
+    "sha256": "acb17ae2addc6f6a925d50c8ed2e4a53889ab2bbd7a15a5a2dab24a2f42b8d90"
+  },
+  {
+    "path": "source/assets/update-autonomy.js",
+    "size": 11398,
+    "sha256": "92e344077e9f6aa370e7d6d8ae3584f0e2f8b16f6836a9f192fb512b3de5fe0a"
+  },
+  {
+    "path": "source/assets/update-dialogue.js",
+    "size": 2206,
+    "sha256": "def2b61f4699b93982fc98f4d6ab00418beb50cccefa62f03c73ab9acfc4e08b"
+  },
+  {
+    "path": "source/assets/update-verification.css",
+    "size": 85,
+    "sha256": "7a0bba558189a7c16c77b15aa6be9ad6008826dce324eca89a2ed8f095ac0163"
+  },
+  {
+    "path": "source/assets/update-yoe.js",
+    "size": 4129,
+    "sha256": "0a14d467b4723efd9a763208c8995727cda15c743ba9c0ff5c05a4be79dd9526"
+  },
+  {
+    "path": "source/assets/video-generation.js",
+    "size": 12738,
+    "sha256": "46b15efb5cfc7e250ece16cb4aecc576940413c4599ca5a2f05fafdd8b16f0ae"
+  },
+  {
+    "path": "source/assets/web-search.js",
+    "size": 7910,
+    "sha256": "2a4fb858a18ec610ff6798e2bcb9f8ffcdab3a91f597ec181f9af9a49208190f"
+  },
+  {
+    "path": "source/assets/windows-conversation.js",
+    "size": 3886,
+    "sha256": "62c185444e92e803d959492750ca89aa53c63f42723caaa62874eeab99713db3"
+  },
+  {
+    "path": "source/assets/windows-explorer.css",
+    "size": 8316,
+    "sha256": "1941dc51743add6ce4daacac576e7d20a7683f055dcf6659d1b582da4a6d26d0"
+  },
+  {
+    "path": "source/assets/windows-explorer.js",
+    "size": 26548,
+    "sha256": "aff70e0326b033c58bab25fef780d9bdef129edd47999fd008e56736df0581ab"
+  },
+  {
+    "path": "source/assets/windows-yoe.css",
+    "size": 2674,
+    "sha256": "3e995c592fa7ffb4a8e9728a264629c2f3f0208830050fe343e587199e0e8cd7"
+  },
+  {
+    "path": "source/assets/windows-yoe.js",
+    "size": 20367,
+    "sha256": "04659c2bfe8cd07877e574e7eaddfb121ef09e368f70208f94c3c4aa48e22cfd"
+  },
+  {
+    "path": "source/assets/windows.png",
+    "size": 1057,
+    "sha256": "a34179870771dd93b52a04f74a7f9083afed7ea839888b06c58f0f5db87fcaad"
+  },
+  {
+    "path": "source/assets/windows.svg",
+    "size": 238,
+    "sha256": "ce7dfd6d0e2a751cd673f8581453b53dfee390d0b2af6c49eded175f391d3bcf"
+  },
+  {
+    "path": "source/assets/writing-check.css",
+    "size": 1477,
+    "sha256": "8b96018cc6cebc563794e5454ae240a6576b0370f5f6c3f69820bc4b730ce1a5"
+  },
+  {
+    "path": "source/assets/writing-check.js",
+    "size": 5239,
+    "sha256": "2bf2288ac959b0ce6172140bd53bcdc7b15586f49022a1eda3cff877d64caf2d"
+  },
+  {
+    "path": "source/assets/yoeai-icon.png",
+    "size": 1359203,
+    "sha256": "055bbb2a29d0d34bc3e60811780189f285ceeed20e4902343b5a53be9685e89b"
+  },
+  {
+    "path": "source/assets/yoeai-mascot.png",
+    "size": 1377274,
+    "sha256": "c6899daea5add9e4e56f9f9f0e90a47044141ec59fefac773dd23ac7fb0d7ed7"
+  },
+  {
+    "path": "source/assets/yoeai.css",
+    "size": 27398,
+    "sha256": "4b88baf92d4fb91b4bdc97c25ce89c593dd30006d51bcbe6e433d90c9868c667"
+  },
+  {
+    "path": "source/assets/yoeai.ico",
+    "size": 105267,
+    "sha256": "1cd886c0cc13a66e03c14395365e7d3969287d1d9fddd94e7ea91640291fc225"
+  },
+  {
+    "path": "source/assets/code-yoe/code-fox.js",
+    "size": 6183,
+    "sha256": "badcea93d871ba51bcce75305c09f8115dbc06c42f5df9e494f73ffa3cab6ab5"
+  },
+  {
+    "path": "source/assets/code-yoe/error-sprites.png",
+    "size": 791591,
+    "sha256": "c6a24deec56e8dd394ff8899b555e7ebd9795d33249f686d318087d70f77cec2"
+  },
+  {
+    "path": "source/assets/code-yoe/error.webp",
+    "size": 302664,
+    "sha256": "f9a8776d8c97e168fb83d8214a5899c7428da30a27e4f4b26e5203c6ce1a7b31"
+  },
+  {
+    "path": "source/assets/code-yoe/happy-sprites.png",
+    "size": 814744,
+    "sha256": "9f64a7026f56718c3e3f0a3b5e78bd16b3d8e7ffd41ddca8e597f0a72a50c293"
+  },
+  {
+    "path": "source/assets/code-yoe/happy.webp",
+    "size": 324750,
+    "sha256": "a51c4d119439c13fc0811019bc12c2c857e0c52bc26074903bdb0e6ca0c8a542"
+  },
+  {
+    "path": "source/assets/code-yoe/idle-pose.png",
+    "size": 193469,
+    "sha256": "abe17bbc6e2e705249f04893368e42aefd654b0df4060307d8c348d8fd4989ae"
+  },
+  {
+    "path": "source/assets/code-yoe/idle-sprites.png",
+    "size": 854055,
+    "sha256": "68ea8999ff37394862183e2eefc482f1f1b2ce797704213a95ca929d3e087149"
+  },
+  {
+    "path": "source/assets/code-yoe/idle.webp",
+    "size": 344622,
+    "sha256": "5c9ef1e426c0ce9e23d7038fa2c627ba8b28ec3e06dde9d3f855d355253f72b9"
+  },
+  {
+    "path": "source/assets/code-yoe/manifest.json",
+    "size": 3746,
+    "sha256": "50957f016e4b5d8ebbf1f4506dc1d7f010f1be0a241224eee3323f3355d74d76"
+  },
+  {
+    "path": "source/assets/code-yoe/poses.png",
+    "size": 735972,
+    "sha256": "00679da9ffb538d2af9e38473932193d1bdaad0c324cc417b3283d9239089533"
+  },
+  {
+    "path": "source/assets/code-yoe/README.md",
+    "size": 2438,
+    "sha256": "ae3207485ccb2c669fb7773fc3dd22d9432514039f6e320abf96e43367eed3c5"
+  },
+  {
+    "path": "source/assets/code-yoe/sleeping-sprites.png",
+    "size": 835145,
+    "sha256": "8c93841bb13e6607150a3f957dcc0bd77d08704a24a2fb5a565a57fbde157e9a"
+  },
+  {
+    "path": "source/assets/code-yoe/sleeping.webp",
+    "size": 339374,
+    "sha256": "0aa2744b5e09fafaed8af4e3dc2440d0c7afc9f3633a4ff99969cbce79c92b3d"
+  },
+  {
+    "path": "source/assets/code-yoe/success-pose.png",
+    "size": 191527,
+    "sha256": "50d4e3c1cc1954a407d8f549f92c6fb1fdbdbf8ff51dbcb128cd1ce2f2c99cbc"
+  },
+  {
+    "path": "source/assets/code-yoe/success-sprites.png",
+    "size": 872029,
+    "sha256": "932d9934d591e1ff032728f3611dfcf0bdc0b162b455f71f1417386f857ec9ff"
+  },
+  {
+    "path": "source/assets/code-yoe/success.webp",
+    "size": 327608,
+    "sha256": "bd0c9da89e93c53d109705369526b1e6a2b40d7626e728d6f93400feb2c69e9f"
+  },
+  {
+    "path": "source/assets/code-yoe/thinking-pose.png",
+    "size": 167105,
+    "sha256": "35b4a86ac0933fa5290df7112b13f0367a0c1399756e7f4679d95454bb68cdaf"
+  },
+  {
+    "path": "source/assets/code-yoe/thinking-sprites.png",
+    "size": 782959,
+    "sha256": "2cb60d7f508dec109f0e39739e146838804fc778a4aff87c31e7c500925afcca"
+  },
+  {
+    "path": "source/assets/code-yoe/thinking.webp",
+    "size": 300562,
+    "sha256": "7098772f9ac2b1b845542417c9b37f00e5da803373bc1009217e3e7b93f9067e"
+  },
+  {
+    "path": "source/assets/code-yoe/typing-pose.png",
+    "size": 184833,
+    "sha256": "0ca15dda1c4fa94b0d1aadcf2baa6ddfb07e9a3a4e1dbc443d467408270654d2"
+  },
+  {
+    "path": "source/assets/code-yoe/typing-sprites.png",
+    "size": 833354,
+    "sha256": "34e0fa9352a24b228f544f90d87bb4de39eafa8de7307cf6bb1eae2def3d5142"
+  },
+  {
+    "path": "source/assets/code-yoe/typing.webp",
+    "size": 335706,
+    "sha256": "fb83296e8a8e32b02cb5a6f56f009e045448dd65db64ae3d542d64a0c74abd86"
+  },
+  {
+    "path": "source/assets/code-yoe/working-sprites.png",
+    "size": 837617,
+    "sha256": "9d1d391f5904cbb3556bd884e3ee7b13ffcf19f41b51d718a00924eea1f92856"
+  },
+  {
+    "path": "source/assets/code-yoe/working.webp",
+    "size": 340288,
+    "sha256": "43b6e780f0083cc5d857b9dd120de2cad487c1f6c7e129733b57260d452261aa"
+  },
+  {
+    "path": "source/assets/design-engine/code-approval.json",
+    "size": 2558,
+    "sha256": "2b100d4fa76f154e780825fcd19a8671a1f2b863c5273c2c5488ce3d0ee5c2b9"
+  },
+  {
+    "path": "source/assets/design-engine/install.py",
+    "size": 7924,
+    "sha256": "b84de98f2978c0af3cf6c36317fa24b023dfaf07e63abff8d67f91db7a1846e2"
+  },
+  {
+    "path": "source/assets/design-engine/model-manifest.json",
+    "size": 10506,
+    "sha256": "13902554e6690967ee23530200c0c48fb23d29c8edc7195e3636c793aeeafd5e"
+  },
+  {
+    "path": "source/assets/design-engine/worker.py",
+    "size": 7638,
+    "sha256": "9cf70b166549783aeb1f12d0c9ece77ada25098780450430dc13a9423cabe117"
+  },
+  {
+    "path": "source/assets/fonts/inter-italic.ttf",
+    "size": 906596,
+    "sha256": "acd98e64795781b2058f07b18475e0ecee2a0fe2b42a49e2f9e37d0d6bf66ce6"
+  },
+  {
+    "path": "source/assets/fonts/inter-OFL.txt",
+    "size": 4377,
+    "sha256": "5b9321a4298cfeb6b34354164a1c3afc3db114569984c502b9b35d988fd58c57"
+  },
+  {
+    "path": "source/assets/fonts/inter.ttf",
+    "size": 876576,
+    "sha256": "29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031"
+  },
+  {
+    "path": "source/assets/fonts/jetbrainsmono-OFL.txt",
+    "size": 4399,
+    "sha256": "b2fe5e8987594e9ffd1d2ca52a2f5d73eb8335243893c5d6254b5ad69269591d"
+  },
+  {
+    "path": "source/assets/fonts/jetbrainsmono.ttf",
+    "size": 187208,
+    "sha256": "48715a42ec242c21e9f02692891e147d022299a52e48d5e413e1a942193ffeda"
+  },
+  {
+    "path": "source/assets/fonts/manrope-OFL.txt",
+    "size": 4387,
+    "sha256": "58172e0c0fac2cda8a37b348164bb55e44b0e69051e557e92b1d3f6910141f7b"
+  },
+  {
+    "path": "source/assets/fonts/manrope.ttf",
+    "size": 164700,
+    "sha256": "3ae11c49db0455a3cc33e37d380f20fdb8c7f8b41dc07625c177e3d87a9d6ae6"
+  },
+  {
+    "path": "source/assets/fonts/noto-sans-arabic-OFL.txt",
+    "size": 4382,
+    "sha256": "07fc70bfeb985cc1a87a8587d0a0c80bab11c86c9dc3fd95b6f0cb332f983e96"
+  },
+  {
+    "path": "source/assets/fonts/noto-sans-arabic.ttf",
+    "size": 844676,
+    "sha256": "63111b5b2e074dd48cc67692e0a2726d86ee94c1c37fe8598257b7b4e87e869e"
+  },
+  {
+    "path": "source/assets/fonts/provenance.json",
+    "size": 2028,
+    "sha256": "a7b5cd33226d782bb27fb9266a9b0ec1b4d7c93d3f4f0a3c58dd7dc13167a55e"
+  },
+  {
+    "path": "source/assets/game-studio/game-fox-cutout.png",
+    "size": 1463688,
+    "sha256": "52cce0fc30610f7d2e7290e8a271395a93f60ffc640d0976eab4ce8d5726b174"
+  },
+  {
+    "path": "source/assets/game-studio/game-studio.css",
+    "size": 7285,
+    "sha256": "8b0213abd2533d5d19bfa059f963c8f74f5e140fae406ae714b15ad91bd6a886"
+  },
+  {
+    "path": "source/assets/game-studio/game-studio.js",
+    "size": 30102,
+    "sha256": "656ff2a29f9beae7951ae23d7e00f11194499b0f9e2c145d5d5e766699796e5f"
+  },
+  {
+    "path": "source/assets/game-studio/reference.png",
+    "size": 2136516,
+    "sha256": "77a68df64adeb2352a917bc49871d29bd0c93948ef2fb91d51d0030980af0783"
+  },
+  {
+    "path": "source/assets/game-studio/template-history.json",
+    "size": 566,
+    "sha256": "b4e1c411148624456b6f8b734c738fc6b2b60e1a53b875d6997546767d6b153b"
+  },
+  {
+    "path": "source/assets/mascot/fox-atlas.png",
+    "size": 1910683,
+    "sha256": "52cb7b6e617dca075ecef36fab5e12e31514555b18e49f8ce659d836cff5a19b"
+  },
+  {
+    "path": "source/assets/mascot/frames.js",
+    "size": 948,
+    "sha256": "ad02e7d1f8a9d04564d6f44e4ce43a787380631e61e445b521d240e3a513b295"
+  },
+  {
+    "path": "source/assets/mascot/frames.json",
+    "size": 2663,
+    "sha256": "3e254cccda3ab425766e8c5b395aeb1fc8ffdca6b41eb0bea40c85884a69e34f"
+  },
+  {
+    "path": "source/assets/mascot/README.md",
+    "size": 833,
+    "sha256": "ac4ed619cb66286c775ba60e47f40414a452541609321435c7d2027b44855f42"
+  },
+  {
+    "path": "source/assets/preview-vendor/Babel-LICENSE.txt",
+    "size": 1106,
+    "sha256": "117da2af0d4ce0fe1c8e19b5cff9dcd806adf973d328d27b11d4448c4ff24f76"
+  },
+  {
+    "path": "source/assets/preview-vendor/babel.js",
+    "size": 3126120,
+    "sha256": "f72cb977ba7831ffb8160a4f5b74dda91567e11ec09665d6c8fc8b7dc1ab5eaf"
+  },
+  {
+    "path": "source/assets/preview-vendor/provenance.json",
+    "size": 1497,
+    "sha256": "ebf67d73ade8601dea24e669131f28f68f8cebcf3a7aa533988015ef49d13816"
+  },
+  {
+    "path": "source/assets/preview-vendor/react-dom.js",
+    "size": 131835,
+    "sha256": "35f4f974f4b2bcd44da73963347f8952e341f83909e4498227d4e26b98f66f0d"
+  },
+  {
+    "path": "source/assets/preview-vendor/React-LICENSE.txt",
+    "size": 1086,
+    "sha256": "52412d7bc7ce4157ea628bbaacb8829e0a9cb3c58f57f99176126bc8cf2bfc85"
+  },
+  {
+    "path": "source/assets/preview-vendor/react.js",
+    "size": 10751,
+    "sha256": "d949f1c3687aedadcedac85261865f29b17cd273997e7f6b2bfc53b2f9d4c4dd"
+  },
+  {
+    "path": "source/assets/preview-vendor/Three-LICENSE.txt",
+    "size": 1081,
+    "sha256": "852e0e8699169bf9f6fdc6bda3e682d078dcbc738b5d33e74df594721bff271d"
+  },
+  {
+    "path": "source/assets/preview-vendor/three.js",
+    "size": 669884,
+    "sha256": "170c6789f43217c96b3170f4b42fafe135de7f7cd48497a4218f9757ee1d49fa"
+  },
+  {
+    "path": "source/assets/research-yoe/asset-prompt.txt",
+    "size": 1578,
+    "sha256": "36995f578b33510cd3e02594fb9fb737cd816d553db60b0fe71a201de5e1575f"
+  },
+  {
+    "path": "source/assets/research-yoe/idle.png",
+    "size": 291999,
+    "sha256": "603a6837f6309bdd259e7c236017084fa3d556e764eb7e37b905bbacd6fd9e98"
+  },
+  {
+    "path": "source/assets/research-yoe/poses.png",
+    "size": 1125733,
+    "sha256": "70ae5904391b68e95d7e1f0dd80d126e69fe364575f10b9e64c0e6141e9b8165"
+  },
+  {
+    "path": "source/assets/research-yoe/research-fox.css",
+    "size": 392,
+    "sha256": "af250bbaba561a7bbae9d4309afe4cf2dff8333f85b3d9bdbd679ee9fe94c677"
+  },
+  {
+    "path": "source/assets/research-yoe/research-fox.js",
+    "size": 8316,
+    "sha256": "c0849c6802614decdc88cef5a1d12d05e50ab6c81e4987e946589272346b3de6"
+  },
+  {
+    "path": "source/assets/research-yoe/researching.png",
+    "size": 308255,
+    "sha256": "dce901f1733fbc2461fc5ca28a7da1846d09ce340f1786133bdbb6a7ecb29d12"
+  },
+  {
+    "path": "source/assets/research-yoe/success.png",
+    "size": 306580,
+    "sha256": "8592a51092de60e6c8e9a1dfa50ce1ee5693ed47008798a4fde57181987309ad"
+  },
+  {
+    "path": "source/assets/research-yoe/thinking.png",
+    "size": 280458,
+    "sha256": "c52d51aeda962023110586ec3dfe0ca2d4c28f0cc1e665877956f301423533f1"
+  },
+  {
+    "path": "source/assets/research-yoe/transparency.json",
+    "size": 757,
+    "sha256": "5093e5356660440c243c8c49d314feb16307c46a5c1901a3c4b498b9a2af5379"
+  },
+  {
+    "path": "source/assets/reverse-yoe/neutral.png",
+    "size": 1811804,
+    "sha256": "e51ff2862739ee4d8332bf2f1245d4a1833f6c185a13834a8db8b6168f31700b"
+  },
+  {
+    "path": "source/assets/reverse-yoe/reverse.js",
+    "size": 6688,
+    "sha256": "d45c5263dad83d466344b8cc198afe20eed6272d83f02ed0c93aad3df1465587"
+  },
+  {
+    "path": "source/assets/speech-input/interactive_worker.py",
+    "size": 9869,
+    "sha256": "e817c122516a725df125be2a305dbfbc1e05c4713e7f8cde0044379533217e77"
+  },
+  {
+    "path": "source/assets/speech-input/pro_worker.py",
+    "size": 4822,
+    "sha256": "69cf77a4402a18a7b1b4e028922f50a41c0754e1ae49596fcde7dacc8dde937c"
+  },
+  {
+    "path": "source/assets/speech-input/worker.py",
+    "size": 3670,
+    "sha256": "6bde53969771ebfddd4b275a9e3c5ef24c37613815dbef75ad297fa0c2a56ae7"
+  },
+  {
+    "path": "source/assets/update-yoe/design-neutral-alternative.png",
+    "size": 218084,
+    "sha256": "b8e5de1eea70dbea04519019f4f729317dc2233aa0d6923e1d691d8e91afaee7"
+  },
+  {
+    "path": "source/assets/update-yoe/fox-cutout.png",
+    "size": 1322387,
+    "sha256": "2b0b4e086c5beeae0a0e93965111bab543aa98ccb3df5f0df3387647f1f3dda3"
+  },
+  {
+    "path": "source/assets/update-yoe/neutral-concept.png",
+    "size": 640986,
+    "sha256": "ababf1a496c4926712e48b2ee6247a368e1640c6f8f4ca01a2630df573812e7b"
+  },
+  {
+    "path": "source/assets/update-yoe/update-fox.js",
+    "size": 4689,
+    "sha256": "b207297c829e96f6aa2416d05a7c4bd059ea416297a5f19c6a71762a92c35ff7"
+  },
+  {
+    "path": "source/assets/vendor/argparse-LICENSE.txt",
+    "size": 12775,
+    "sha256": "de4d1f2d2ad5ad0cfd1657a106476b31cb5db5ef9d1ff842b237c0c81f0c8a23"
+  },
+  {
+    "path": "source/assets/vendor/echarts-LICENSE.txt",
+    "size": 11990,
+    "sha256": "634293835b43a6dd2094fa39182a3d9a6b9ca43b7fdb9ac354e8037af2a3093a"
+  },
+  {
+    "path": "source/assets/vendor/echarts-NOTICE.txt",
+    "size": 168,
+    "sha256": "d491d358344f842685c1b1585970999db65fe30ecf7ef3867af8814f4016c016"
+  },
+  {
+    "path": "source/assets/vendor/echarts.min.js",
+    "size": 1121883,
+    "sha256": "b66b25aeb4df84e33199dc21694014d336d222cbd9deb0e5a7c14bd6aa0d0fd0"
+  },
+  {
+    "path": "source/assets/vendor/entities-LICENSE.txt",
+    "size": 1260,
+    "sha256": "cb992345949ccd6e8394b2cd6c465f7b897c864f845937dbf64e8997f389e164"
+  },
+  {
+    "path": "source/assets/vendor/highlight-LICENSE.txt",
+    "size": 1514,
+    "sha256": "6c081431591d9df696c82dc598fe1423765b8a299b200ed00b281afd0f64c490"
+  },
+  {
+    "path": "source/assets/vendor/highlight.min.js",
+    "size": 129254,
+    "sha256": "8ab71eb09c51f501e5e25157d9cff100e46cc29bcbfc744d0b746d451fca7f53"
+  },
+  {
+    "path": "source/assets/vendor/linkify-it-LICENSE.txt",
+    "size": 1058,
+    "sha256": "95e3f7f0e81e9b4940cdfaa1956aaff5e4dfd2fb1565041e7c78eb9a606f23e3"
+  },
+  {
+    "path": "source/assets/vendor/markdown-it-LICENSE.txt",
+    "size": 1073,
+    "sha256": "792c48c5a849a15fdf9e37e8bcf9e6d1dd13b32b46c642a748a0a46a9919d473"
+  },
+  {
+    "path": "source/assets/vendor/markdown-it.min.js",
+    "size": 115080,
+    "sha256": "635972b985228e8af9f0143647c68616b7a3bb09f6946e7e4a52e43dcf5e7be5"
+  },
+  {
+    "path": "source/assets/vendor/mdurl-LICENSE.txt",
+    "size": 2303,
+    "sha256": "6b6a356c4337e2446841f30f3cdf7e7023af8c5260b5e347c0f987b9f6aa2644"
+  },
+  {
+    "path": "source/assets/vendor/pdf-fonts.js",
+    "size": 854730,
+    "sha256": "23e7c970fa9e75d296ea565939502a69ab2184cf40756c7d4670b6dabf470b58"
+  },
+  {
+    "path": "source/assets/vendor/pdfmake-LICENSE.txt",
+    "size": 1134,
+    "sha256": "963c9bfe4117623556e66c36524176bf38948b749e983c35af93c961caad8ce9"
+  },
+  {
+    "path": "source/assets/vendor/pdfmake-provenance.json",
+    "size": 530,
+    "sha256": "c04edce04e9d2cad5f3575a814da1379357e071e061bd1918237bff9cf5fc9a8"
+  },
+  {
+    "path": "source/assets/vendor/pdfmake.min.js",
+    "size": 1399635,
+    "sha256": "4410187c36ed6dd8cbfbaeea5b6fab6244238b3479c6de1cfe125d2c61fc2ba0"
+  },
+  {
+    "path": "source/assets/vendor/provenance.json",
+    "size": 3547,
+    "sha256": "213fb2c7f7583f00f803f90f5103e4facc9a4d9d699c2c9f2500bdbfa695e43b"
+  },
+  {
+    "path": "source/assets/vendor/punycode.js-LICENSE.txt",
+    "size": 1077,
+    "sha256": "483acb265f182907d1caf6cff9c16c96f31325ed23792832cc5d8b12d5f88c8a"
+  },
+  {
+    "path": "source/assets/vendor/Roboto-LICENSE.txt",
+    "size": 11357,
+    "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+  },
+  {
+    "path": "source/assets/vendor/uc.micro-LICENSE.txt",
+    "size": 1077,
+    "sha256": "483acb265f182907d1caf6cff9c16c96f31325ed23792832cc5d8b12d5f88c8a"
+  },
+  {
+    "path": "source/assets/video-engine/bounded_decode.py",
+    "size": 1761,
+    "sha256": "d9d8a676c1328ed4b7e683120cfa97b97bb3a8f9dba8943aceb33af011beee09"
+  },
+  {
+    "path": "source/assets/video-engine/worker.py",
+    "size": 4675,
+    "sha256": "47478b790809f10f0176a37cc8bd42ff878bd24b89489864a297ca38c9834bb6"
+  },
+  {
+    "path": "source/assets/visual-engine/charts.js",
+    "size": 7875,
+    "sha256": "825a77b63b4239f28547a0613053824628f6da6b3cbeda26cf714d79638fc95c"
+  },
+  {
+    "path": "source/assets/visual-engine/core.js",
+    "size": 23868,
+    "sha256": "b24ee094c28882de9319babca75fc84c947c76871fb04b62bea19105f8500722"
+  },
+  {
+    "path": "source/assets/visual-engine/exports.js",
+    "size": 6718,
+    "sha256": "f9c4d411fd93c7cf49b26d20834163eda700b7e48714806a388cad99cc2c2e07"
+  },
+  {
+    "path": "source/assets/visual-engine/integration.js",
+    "size": 7515,
+    "sha256": "3aaf5f33b3244029890ec65d54b3820754f404ccc5d8aedac6fbf503bb4beafd"
+  },
+  {
+    "path": "source/assets/visual-engine/model-instructions.txt",
+    "size": 2118,
+    "sha256": "e277a388a64266ac735d4b205b2958e22a1455d0f95161b50b9662757ae4fadb"
+  },
+  {
+    "path": "source/assets/visual-engine/renderer.js",
+    "size": 14397,
+    "sha256": "6e538c27527af45f193cef7d579963d89ccc149eb26c5308113290466d4f207d"
+  },
+  {
+    "path": "source/assets/visual-engine/schema.js",
+    "size": 3594,
+    "sha256": "efbefdeade6ea8ef33b61a048ef04155169579026e8ae8cbd041a2937d651742"
+  },
+  {
+    "path": "source/assets/visual-engine/schema.json",
+    "size": 22486,
+    "sha256": "bcae4d6abec919a0a2dcdd58fac2adb19bd347e6faf7fa7d7e1146635f802ecd"
+  },
+  {
+    "path": "source/assets/visual-engine/tables.js",
+    "size": 8044,
+    "sha256": "91ca0745e9004424cd9f9742c78588fb497b54cbc4f2f30843465c14261a951b"
+  },
+  {
+    "path": "source/assets/visual-engine/visual-engine.css",
+    "size": 6369,
+    "sha256": "a8869582f0044e649c3d77fa58c31b8524d3b9f4e6c0d8b479263448a2a9a77a"
+  },
+  {
+    "path": "source/assets/windows-yoe/idle.png",
+    "size": 307120,
+    "sha256": "5bc5bd0bba6edeec8f4d8964fbd70c46089c4283295a5117e8c39d5fc8ac117e"
+  },
+  {
+    "path": "source/assets/windows-yoe/poses.png",
+    "size": 1150850,
+    "sha256": "5790e0e983bd7dc5795690b35ab966fcbad33e0a48cff2609a1a9b6a1c9c6f36"
+  },
+  {
+    "path": "source/assets/windows-yoe/success.png",
+    "size": 313131,
+    "sha256": "67264d51210289414ee9b68f4b6916fff104783e4d7b93380f7ea458dd9a43ab"
+  },
+  {
+    "path": "source/assets/windows-yoe/thinking.png",
+    "size": 284604,
+    "sha256": "e919dddcf2e194eb30050ab7f6a4037adfa13898e94f2259371920c1440b3402"
+  },
+  {
+    "path": "source/assets/windows-yoe/transparency.json",
+    "size": 897,
+    "sha256": "bf28c5dbf561dc47d74b2a27117ed40dc135495d0d730abbf1847cda25c7f673"
+  },
+  {
+    "path": "source/assets/windows-yoe/windows-fox.js",
+    "size": 6563,
+    "sha256": "18ad015796ce565274c0bb52a2388e2f95a399ccd2ab3b7e09aeef848f8bd27a"
+  },
+  {
+    "path": "source/assets/windows-yoe/working.png",
+    "size": 310984,
+    "sha256": "7d7d9bd14b9f729eb2a94fb6e4f889ce0aa1716605feae2c892d15379c10568b"
+  },
+  {
+    "path": "source/assets/update-yoe/Sprites/coding.png",
+    "size": 447980,
+    "sha256": "8795f449e6987b5c069b050bf73baff2d4c1e02ecff5b427f72a97629cc2d012"
+  },
+  {
+    "path": "source/assets/update-yoe/Sprites/designing.png",
+    "size": 447507,
+    "sha256": "8941275dbb6254c4cfe1b14c507255e08c0ae4ade60857336c55a220f085c303"
+  },
+  {
+    "path": "source/assets/update-yoe/Sprites/error.png",
+    "size": 474767,
+    "sha256": "7975a34c3d50c9c419c7e8fbdc49da9376b0ca5f79f119d70cc17da6732ff94e"
+  },
+  {
+    "path": "source/assets/update-yoe/Sprites/idle.png",
+    "size": 446687,
+    "sha256": "14a26c46c503358b66c089683d2b685f28cb60668d0d2c5f8649e8edd65ec56c"
+  },
+  {
+    "path": "source/assets/update-yoe/Sprites/README.txt",
+    "size": 587,
+    "sha256": "88666c5787661a07145090c2a595456757f22794ca4618528da2e47819e6ea81"
+  },
+  {
+    "path": "source/assets/update-yoe/Sprites/scanning.png",
+    "size": 448413,
+    "sha256": "f780f17acce5096d9716dea6a6c7092e0006507e46da682044ddf7e08a2acab2"
+  },
+  {
+    "path": "source/assets/update-yoe/Sprites/success.png",
+    "size": 465305,
+    "sha256": "5c5c605c9ab2a93a7063c0aff900e71e2062516e6bfb16ebb3faf5874c728ee5"
+  },
+  {
+    "path": "source/assets/update-yoe/Sprites/testing.png",
+    "size": 447326,
+    "sha256": "9da0cb7bd2fbc32fc5fc4d8c6a18462b866bd72f6e654cccc137a17cfbad9415"
+  },
+  {
+    "path": "source/assets/update-yoe/Sprites/thinking.png",
+    "size": 476084,
+    "sha256": "5aa37dd09f486d82380ff4d5dbabc6e6390a09629f623fccd95e011e6da240c6"
+  },
+  {
+    "path": "source/assets/game-studio/Unity/YoeCamera.cs",
+    "size": 293,
+    "sha256": "6c0627ddf06a27232e4fd0def827094191cd528cf08b3b83536d401b755159e8"
+  },
+  {
+    "path": "source/assets/game-studio/Unity/YoeEnemy.cs",
+    "size": 298,
+    "sha256": "e5d792394c78bf8b247ac08565b2b62fcad732522784cba147781fc31c6f7183"
+  },
+  {
+    "path": "source/assets/game-studio/Unity/YoeGame.cs",
+    "size": 8531,
+    "sha256": "0b501b0988b2e1a270cee4163fd2d1efc7e9abfd27ffcf42658716e8d071a41a"
+  },
+  {
+    "path": "source/assets/game-studio/Unity/YoeItem.cs",
+    "size": 87,
+    "sha256": "7ea27e7a505c00f6a4998092dc73ab6faa10f0fa25c4b6725b9b76d2cbcf67ef"
+  },
+  {
+    "path": "source/assets/game-studio/Unity/YoePlayer.cs",
+    "size": 2810,
+    "sha256": "387fc6590aa7f53849a88af2f95ee56cab3eceb2824f902e7d32ed4adf3b85e2"
+  },
+  {
+    "path": "source/assets/game-studio/Unity/YoeStudioBridge.cs",
+    "size": 12519,
+    "sha256": "7e1e456c9eeece2859b3926da6307d703eefe72dba76d5d578279bc322a5bff9"
+  },
+  {
+    "path": "source/assets/design-engine/official/gradio_app.py",
+    "size": 38576,
+    "sha256": "156cf1da82ab44ce2d42e4686c945686bc93efa9950b68e5bb94dada15efcf93"
+  },
+  {
+    "path": "source/assets/design-engine/official/gradio_presets.py",
+    "size": 1016,
+    "sha256": "b3781a0d8d6445fb6ea31edd279e79f504cee662361e12d75c38d3f39dd308f7"
+  },
+  {
+    "path": "source/assets/design-engine/official/inference_runtime.py",
+    "size": 2975,
+    "sha256": "4aaf10962566c47da26afd05793f223fce9078ddecf10a49631fa8d99ebb90f9"
+  },
+  {
+    "path": "source/assets/design-engine/official/LICENSE",
+    "size": 11358,
+    "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+  },
+  {
+    "path": "source/assets/design-engine/official/pyproject.toml",
+    "size": 1092,
+    "sha256": "56e1dc4d325e25803fd4e1f5b2726fc991b459e9a6c36b244482e41d035c5486"
+  },
+  {
+    "path": "source/assets/design-engine/official/README.md",
+    "size": 15537,
+    "sha256": "0189c0c327866821c34adbb392253abcc6788c2199c4fcad7c329db833bad817"
+  },
+  {
+    "path": "source/assets/design-engine/official/yoeai-source-revision.json",
+    "size": 56,
+    "sha256": "4106de2709cd78e1a9a278fce2e0928f85e01485ea63ebbc1811b01a25efd060"
+  },
+  {
+    "path": "source/assets/design-engine/official/assets/__init__.py",
+    "size": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+]
