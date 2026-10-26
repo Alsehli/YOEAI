@@ -36,6 +36,10 @@ The result is `dist/YOEAI/YOEAI.exe` plus supporting files. This build does not 
 
 Many regression tests use mocks/disposable fixtures. This does not certify every real Adobe/Unity workflow, hardware configuration or media generation request. CI runs a portable subset; machine-specific tests are retained for appropriately configured Windows machines. Read [QA results](docs/QA-20261025.md) and [release checklist](docs/RELEASE-CHECKLIST.md).
 
+## Contribute and support
+
+[Contribution guide](CONTRIBUTING.md) · [Report a bug](https://github.com/Alsehli/YOEAI/issues/new/choose) · [Optional project support](https://yoeai.online/contribute). Support does not buy software or priority access.
+
 ## License and privacy
 
 Application source: GPL-3.0-only, [LICENSE](LICENSE). Third-party assets retain their notices; see [THIRD-PARTY.md](THIRD-PARTY.md). Optional models, runtimes and applications have separate terms. [Privacy](PRIVACY.md) Â· [Security](SECURITY.md) Â· [Code signing](CODE-SIGNING.md).
