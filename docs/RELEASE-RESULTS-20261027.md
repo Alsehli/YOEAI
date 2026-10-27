@@ -24,3 +24,6 @@ The first document-link check exposed 14 upstream-relative references in the pre
 - The new local LLM4Decompile integration is not imported into this candidate.
 
 This work prepares a source-only candidate, not an assertion that a complete end-user release is ready.
+
+## Follow-up completion — 27 October 2026
+The earlier profile/API and social-upload limitations were resolved through the signed-in browser and the native file picker. Public profile changes and the correct original-fox social preview are now saved and verified. A separate current-app installer test kit is being prepared for the maintainer to test on another PC; it is not the published source candidate and no full binary qualification is claimed here.
