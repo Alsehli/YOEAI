@@ -1,11 +1,13 @@
-# Source candidate validation — 25 October 2026
+# Source candidate validation
 
-- Source/credential-pattern check: 352 candidate files checked, no findings. This heuristic is not a guarantee against every possible secret.
-- Portable CI contract subset: 31 tests passed locally in 1.925 seconds.
-- `python build.py` completed against this public candidate tree with the pinned direct dependency versions already installed in the development environment. This was not a fresh dependency-environment resolution test.
-- Newly built `dist/YOEAI/YOEAI.exe --smoke-test`: PASS, expected Windows commands/Settings menus. Native shell construction only; no model/microphone loaded and a disposable LOCALAPPDATA profile used.
-- Full installed-source qualification: 384 tests passed; see QA-20261025.md for scope and exclusions.
-- GitHub-hosted CI has not yet run at preparation time. Its actual result must be checked on the pull request before merging.
-- Existing bundled third-party notices and the exact original source line endings retained. Cosmetic whitespace in original notices/source was not rewritten for this release.
+## Historical evidence — 25 October 2026
+- 352 candidate files passed the original heuristic source/credential scan.
+- 31 portable contract tests passed locally.
+- The source-tree build and compiled UI smoke test passed in a disposable profile without models or microphone.
+- GitHub-hosted Windows checks passed for 85477e8a83c95b8c9de5082695ce193352b6ac91: https://github.com/Alsehli/YOEAI/actions/runs/40182136471.
+- Full installed-source qualification passed 384 tests; see QA-20261025.md for mocks and limits.
 
-Complete Normal/Lite installer rebuilding and clean-PC qualification remain outstanding. The locally generated source preview launcher is not represented as a complete end-user offline installer.
+## Current documentation work — 27 October 2026
+Source inventory and new documentation validation are run against this update. The scan now includes public docs/workflows as well as source. See RELEASE-AUDIT-20261027.md and RELEASE-RESULTS-20261027.md for actual current results. Do not substitute the historical hosted run for the current head's result.
+
+The application source is preserved; this documentation update does not import later local runtime changes. Normal/Lite installer rebuilds, portable optional-runtime provisioning and exact-asset clean-PC qualification remain outstanding. No newly qualified complete binary installer is claimed.

@@ -24,6 +24,7 @@ jobs:
         run: |
           python tools/check_release.py
           python tools/test_portable.py
+          python tools/check_docs.py
       - name: Build separate unsigned source preview
         run: python build.py
       - name: Check compiled UI without loading models or production data

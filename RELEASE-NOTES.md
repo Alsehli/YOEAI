@@ -9,3 +9,6 @@ No model weights, GPU backend, private user configuration or credentials include
 © 2026 Mohamed Yusuf Alsehli — YOEAI
 
 See [NOTICE](NOTICE) and [LICENSE](LICENSE).
+
+## 27 October documentation refresh
+The current candidate includes the branded README, runtime capability matrix, stronger privacy/security explanations, community templates, source-integrity/doc validation and original-fox social banner. Source-only packaging does not include model weights or newly verified installers. The application build number remains 2.0.20261025.4. Later local development is not silently substituted into this snapshot.

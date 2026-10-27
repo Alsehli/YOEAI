@@ -7,3 +7,10 @@
 - Existing image/video/game/Photoshop/Reverse/Update integration code preserved; optional runtime requirements documented.
 - 384 installed-source regression tests passed after fixing Game Studio fixture-worker cleanup; machine-specific limitations retained in QA report.
 - Public source updated from the October 16 preview. No new signed installer or clean-PC binary qualification claimed.
+
+## Documentation and community refresh — 27 October 2026
+- Branded project overview, explicit runtime matrix and source-candidate status.
+- Privacy/network boundaries and scoped automation guidance.
+- Reproducible official-fox social image, conduct policy and feature request form.
+- Project documentation/inventory validation included in Windows CI; broader public-file credential scan.
+- No application version bump or installer qualification is implied by this documentation update.
