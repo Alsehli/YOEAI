@@ -77,6 +77,6 @@ Reproducible bugs, documentation fixes, accessibility feedback and focused patch
 
 ## License and credits
 
-Application source: **GPL-3.0-only**, [LICENSE](LICENSE). Preserve [NOTICE](NOTICE) and [third-party notices](THIRD-PARTY.md). Optional models, fonts, runtimes and external applications retain their separate terms; source publication is not a blanket redistribution clearance. Builds are unsigned unless explicitly documented otherwise in [Code signing](CODE-SIGNING.md).
+Application source: **GPL-3.0-only**, [LICENSE](LICENSE). Preserve [NOTICE](NOTICE) and [third-party notices](THIRD-PARTY.md). Optional models, fonts, runtimes and external applications retain their separate terms; source publication is not a blanket redistribution clearance. Builds are unsigned unless explicitly documented otherwise in [Code signing policy](CODE-SIGNING.md).
 
 © 2026 Mohamed Yusuf Alsehli — YOEAI

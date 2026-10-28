@@ -1,9 +1,17 @@
 # Code signing policy
 
-Status: unsigned source preview. No SignPath acceptance or Microsoft Store certification has been obtained.
+## Current status
+YOEAI's published Windows previews are unsigned. A SignPath Foundation eligibility application is being prepared. No acceptance, certificate, SignPath account access or signing coverage is claimed.
 
-The intended maintainer and release approver is Mohamed Yusuf Alsehli (GitHub Alsehli). Contributions and build-script changes must be reviewed before release. Builds must be traceable to reviewed source, with dependency/license notices and manually approved signing requests. Account MFA and actual service roles must be verified before enrollment.
+If accepted and activated, the required provider attribution will be: “Free code signing provided by SignPath.io, certificate by SignPath Foundation.” This conditional statement is not a current sponsorship claim. See [SignPath's conditions](https://signpath.org/terms.html).
 
-SignPath Foundation is a proposed provider, not an existing sponsor. If accepted, its required attribution and actual certificate identity will be documented here. No certificate or private signing material is stored in this repository. Signing does not guarantee freedom from Windows warnings.
+## People and responsibilities
+Maintainer, committer, reviewer and release-signing approver: [Mohamed Yusuf Alsehli / Alsehli](https://github.com/Alsehli). External contributions and signing/build changes require maintainer review. Each release-signing request requires an explicit maintainer approval. Signing credentials must never be committed to this repository.
 
-See https://signpath.org/terms.html and PRIVACY.md. Application prerequisites remain incomplete, including reputation evidence and a verified public release/build process.
+## Before signing is enabled
+Verify account MFA, provider-approved roles, exact source/build provenance, artifact metadata and third-party eligibility. The current Windows installers were built locally; their matching source archives accompany the release. Existing source-shell GitHub CI does not prove those exact installers originated from a trusted CI build. No workflow may silently substitute or sign a different artifact.
+
+CUDA redistributables and the authorized static reverse-engineering/security-review capability are disclosed for provider assessment. Acceptance is the provider's decision; these capabilities will not be hidden or silently removed to seek approval.
+
+## Privacy and signature verification
+Read [Privacy](PRIVACY.md) for local storage and network boundaries. Signing does not authorize telemetry or data uploads, change tool permissions, or guarantee absence of Windows warnings. Signed files, if approved later, must be timestamped, verified and published with new hashes while preserving prior release records.
