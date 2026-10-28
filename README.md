@@ -4,13 +4,13 @@
 
 **Your AI. Your PC. Your Rules.** A local-first AI assistant for Windows.
 
-[![Windows](https://img.shields.io/badge/Windows-x64-2465ed)](docs/SETUP.md) [![Python](https://img.shields.io/badge/Python-3.13-2465ed)](requirements-build.txt) [![GPL](https://img.shields.io/badge/License-GPL--3.0--only-2465ed)](LICENSE) [![Windows checks](https://github.com/Alsehli/YOEAI/actions/workflows/windows-preview.yml/badge.svg?branch=release%2F2.0-20261025-candidate)](https://github.com/Alsehli/YOEAI/actions/workflows/windows-preview.yml) [![Status](https://img.shields.io/badge/Release-source_candidate-amber)](docs/RELEASE-CHECKLIST.md)
+[![Windows](https://img.shields.io/badge/Windows-x64-2465ed)](docs/SETUP.md) [![Python](https://img.shields.io/badge/Python-3.13-2465ed)](requirements-build.txt) [![GPL](https://img.shields.io/badge/License-GPL--3.0--only-2465ed)](LICENSE) [![Windows checks](https://github.com/Alsehli/YOEAI/actions/workflows/windows-preview.yml/badge.svg?branch=release%2F2.0-20261025-candidate)](https://github.com/Alsehli/YOEAI/actions/workflows/windows-preview.yml) [![Status](https://img.shields.io/badge/Release-source_prerelease-blue)](docs/RELEASE-CHECKLIST.md)
 
 [Website](https://yoeai.online) · [Setup](docs/SETUP.md) · [Release readiness](docs/RELEASE-CHECKLIST.md) · [Report a bug](https://github.com/Alsehli/YOEAI/issues/new/choose) · [Contribute](CONTRIBUTING.md)
 
 YOEAI combines local language models, practical Windows tools and specialized Mini YOE agents in one desktop workspace. It is a personal, non-profit project created and maintained by **[Mohamed Yusuf Alsehli](https://github.com/Alsehli)**. The cream-white YOE fox is its own visual identity.
 
-> **Source candidate, not a complete installer release.** This branch contains Normal 16GB source based on build 2.0.20261025.4 and the verified voice error-display correction. [PR #1](https://github.com/Alsehli/YOEAI/pull/1) remains a draft. Model weights, inference binaries, private profiles and optional runtimes are excluded. Older setup executables must not be treated as builds of this candidate. See [publication gates](docs/PUBLICATION.md).
+> **Source prerelease, not a complete installer release.** This branch contains Normal 16GB source based on build 2.0.20261025.4 and the verified voice error-display correction. See the [source release](https://github.com/Alsehli/YOEAI/releases) and [publication record](docs/RELEASE-PUBLICATION-20261028.md). Model weights, inference binaries, private profiles and optional runtimes are excluded. Older setup executables must not be treated as builds of this candidate. See [publication gates](docs/PUBLICATION.md).
 
 ## What is included?
 
@@ -48,7 +48,7 @@ Output: `dist/YOEAI/YOEAI.exe` and supporting files. Keep the directory intact. 
 ## Verification, with scope
 
 - Historical qualification: **384 regression tests passed** on 25 October 2026. [Detailed QA](docs/QA-20261025.md) identifies mocks, external-runtime limits and untested scenarios.
-- The previous source candidate passed GitHub-hosted Windows validation, build and compiled-shell smoke checks: [recorded run](https://github.com/Alsehli/YOEAI/actions/runs/40182136471). The badge above shows the current branch result.
+- The preserved application source passed GitHub-hosted Windows validation, build and compiled-shell smoke checks: [recorded run](https://github.com/Alsehli/YOEAI/actions/runs/40535799989). The badge above shows the current branch result.
 - CI runs a **31-test portable subset** and constructs the compiled UI in a disposable profile without loading models. It does not run a physical microphone or clean-PC installation test.
 - [Current release audit](docs/RELEASE-AUDIT-20261027.md) and [validation record](docs/RELEASE-VALIDATION.md) separate new checks from historical evidence.
 
