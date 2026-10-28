@@ -4,17 +4,15 @@
 
 **Your AI. Your PC. Your Rules.** A local-first AI assistant for Windows.
 
-[![Windows](https://img.shields.io/badge/Windows-x64-2465ed)](https://github.com/Alsehli/YOEAI/blob/release/2.0-20261025-candidate/docs/SETUP.md) [![Python](https://img.shields.io/badge/Python-3.13-2465ed)](https://github.com/Alsehli/YOEAI/blob/release/2.0-20261025-candidate/requirements-build.txt) [![GPL](https://img.shields.io/badge/License-GPL--3.0--only-2465ed)](https://github.com/Alsehli/YOEAI/blob/release/2.0-20261025-candidate/LICENSE) [![Windows checks](https://github.com/Alsehli/YOEAI/actions/workflows/windows-preview.yml/badge.svg?branch=release%2F2.0-20261025-candidate)](https://github.com/Alsehli/YOEAI/actions/workflows/windows-preview.yml) [![Status](https://img.shields.io/badge/Release-source_candidate-amber)](https://github.com/Alsehli/YOEAI/blob/release/2.0-20261025-candidate/docs/RELEASE-CHECKLIST.md)
+[![Windows](https://img.shields.io/badge/Windows-x64-2465ed)](docs/SETUP.md) [![Python](https://img.shields.io/badge/Python-3.13-2465ed)](requirements-build.txt) [![GPL](https://img.shields.io/badge/License-GPL--3.0--only-2465ed)](LICENSE) [![Windows checks](https://github.com/Alsehli/YOEAI/actions/workflows/windows-preview.yml/badge.svg?branch=release%2F2.0-20261025-candidate)](https://github.com/Alsehli/YOEAI/actions/workflows/windows-preview.yml) [![Status](https://img.shields.io/badge/Release-source_prerelease-blue)](docs/RELEASE-CHECKLIST.md)
 
-[Website](https://yoeai.online) · [Setup](https://github.com/Alsehli/YOEAI/blob/release/2.0-20261025-candidate/docs/SETUP.md) · [Release readiness](https://github.com/Alsehli/YOEAI/blob/release/2.0-20261025-candidate/docs/RELEASE-CHECKLIST.md) · [Report a bug](https://github.com/Alsehli/YOEAI/issues/new/choose) · [Contribute](https://github.com/Alsehli/YOEAI/blob/release/2.0-20261025-candidate/CONTRIBUTING.md)
+[Website](https://yoeai.online) · [Setup](docs/SETUP.md) · [Release readiness](docs/RELEASE-CHECKLIST.md) · [Report a bug](https://github.com/Alsehli/YOEAI/issues/new/choose) · [Contribute](CONTRIBUTING.md)
 
 YOEAI combines local language models, practical Windows tools and specialized Mini YOE agents in one desktop workspace. It is a personal, non-profit project created and maintained by **[Mohamed Yusuf Alsehli](https://github.com/Alsehli)**. The cream-white YOE fox is its own visual identity.
 
-> **Source candidate, not a complete installer release.** The [release candidate branch](https://github.com/Alsehli/YOEAI/tree/release/2.0-20261025-candidate) contains Normal 16GB source based on build 2.0.20261025.4 and the verified voice error-display correction. [PR #1](https://github.com/Alsehli/YOEAI/pull/1) remains a draft. Model weights, inference binaries, private profiles and optional runtimes are excluded. Older setup executables must not be treated as builds of this candidate. See [publication gates](https://github.com/Alsehli/YOEAI/blob/release/2.0-20261025-candidate/docs/PUBLICATION.md).
+> **Source prerelease, not a complete installer release.** This branch contains Normal 16GB source based on build 2.0.20261025.4 and the verified voice error-display correction. See the [source release](https://github.com/Alsehli/YOEAI/releases) and [publication record](docs/RELEASE-PUBLICATION-20261028.md). Model weights, inference binaries, private profiles and optional runtimes are excluded. Older setup executables must not be treated as builds of this candidate. See [publication gates](docs/PUBLICATION.md).
 
-**Default branch notice:** `main` retains the older application snapshot. The feature table and build instructions below describe the separately reviewed release candidate. This homepage update changes documentation only.
-
-## What is included in the candidate?
+## What is included?
 
 | Workspace | Implemented capability | Requirements and limits |
 |---|---|---|
@@ -35,8 +33,6 @@ Tools operate through their existing permission system. Model output is fallible
 The tested shell build uses **Python 3.13 x64**. Speech uses a separate external Python 3.11 environment. Start in a fresh checkout and install the pinned direct build dependencies:
 
 ```powershell
-git clone --branch release/2.0-20261025-candidate https://github.com/Alsehli/YOEAI.git
-cd YOEAI
 py -3.13 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements-build.txt
 .\.venv\Scripts\python.exe tools/check_release.py
@@ -45,31 +41,31 @@ py -3.13 -m venv .venv
 .\.venv\Scripts\python.exe build.py
 ```
 
-Output: `dist/YOEAI/YOEAI.exe` and supporting files. Keep the directory intact. This builds the shell; it does not provision models, CUDA or optional runtimes. Follow [setup and portability](https://github.com/Alsehli/YOEAI/blob/release/2.0-20261025-candidate/docs/SETUP.md) to configure your local backend. Test against a disposable profile before using existing history. Do not copy developer process-ownership records or private configuration.
+Output: `dist/YOEAI/YOEAI.exe` and supporting files. Keep the directory intact. This builds the shell; it does not provision models, CUDA or optional runtimes. Follow [setup and portability](docs/SETUP.md) to configure your local backend. Test against a disposable profile before using existing history. Do not copy developer process-ownership records or private configuration.
 
 **Hardware:** Windows x64 and a compatible NVIDIA CUDA backend for the documented Normal GPU configuration. Fast and Advanced performance depends on the selected weights, offload/context settings and free VRAM. A 16GB GPU is the development target, not a guarantee that every model and media engine can run together. Lite uses a different framework/package and is not built by this tree.
 
 ## Verification, with scope
 
-- Historical qualification: **384 regression tests passed** on 25 October 2026. [Detailed QA](https://github.com/Alsehli/YOEAI/blob/release/2.0-20261025-candidate/docs/QA-20261025.md) identifies mocks, external-runtime limits and untested scenarios.
-- The previous source candidate passed GitHub-hosted Windows validation, build and compiled-shell smoke checks: [recorded run](https://github.com/Alsehli/YOEAI/actions/runs/40182136471). The badge above shows the current branch result.
+- Historical qualification: **384 regression tests passed** on 25 October 2026. [Detailed QA](docs/QA-20261025.md) identifies mocks, external-runtime limits and untested scenarios.
+- The preserved application source passed GitHub-hosted Windows validation, build and compiled-shell smoke checks: [recorded run](https://github.com/Alsehli/YOEAI/actions/runs/40535799989). The badge above shows the current branch result.
 - CI runs a **31-test portable subset** and constructs the compiled UI in a disposable profile without loading models. It does not run a physical microphone or clean-PC installation test.
-- [Current release audit](https://github.com/Alsehli/YOEAI/blob/release/2.0-20261025-candidate/docs/RELEASE-AUDIT-20261027.md) and [validation record](https://github.com/Alsehli/YOEAI/blob/release/2.0-20261025-candidate/docs/RELEASE-VALIDATION.md) separate new checks from historical evidence.
+- [Current release audit](docs/RELEASE-AUDIT-20261027.md) and [validation record](docs/RELEASE-VALIDATION.md) separate new checks from historical evidence.
 
 No latest-verified-binary badge is shown because this candidate has no newly qualified complete installer release.
 
 ## Privacy and security
 
-Local chat uses the configured loopback backend. Web research, external links and optional downloads have network boundaries; local-first does not mean every feature is offline. Microphone use is explicit. Read [Privacy](https://github.com/Alsehli/YOEAI/blob/release/2.0-20261025-candidate/PRIVACY.md) and [Security](https://github.com/Alsehli/YOEAI/blob/release/2.0-20261025-candidate/SECURITY.md) before configuring automation or exposing services.
+Local chat uses the configured loopback backend. Web research, external links and optional downloads have network boundaries; local-first does not mean every feature is offline. Microphone use is explicit. Read [Privacy](PRIVACY.md) and [Security](SECURITY.md) before configuring automation or exposing services.
 
 ## Contribute and support
 
-Reproducible bugs, documentation fixes, accessibility feedback and focused patches are welcome. See [Contributing](https://github.com/Alsehli/YOEAI/blob/release/2.0-20261025-candidate/CONTRIBUTING.md), the [conduct policy](https://github.com/Alsehli/YOEAI/blob/release/2.0-20261025-candidate/CODE_OF_CONDUCT.md) and [issue templates](https://github.com/Alsehli/YOEAI/issues/new/choose).
+Reproducible bugs, documentation fixes, accessibility feedback and focused patches are welcome. See [Contributing](CONTRIBUTING.md), the [conduct policy](CODE_OF_CONDUCT.md) and [issue templates](https://github.com/Alsehli/YOEAI/issues/new/choose).
 
 [Optional project support](https://yoeai.online/contribute) does not buy software, access or priority service. YOEAI is a personal non-profit project, not represented as a registered charity.
 
 ## License and credits
 
-Application source: **GPL-3.0-only**, [LICENSE](https://github.com/Alsehli/YOEAI/blob/release/2.0-20261025-candidate/LICENSE). Preserve [NOTICE](https://github.com/Alsehli/YOEAI/blob/release/2.0-20261025-candidate/NOTICE) and [third-party notices](https://github.com/Alsehli/YOEAI/blob/release/2.0-20261025-candidate/THIRD-PARTY.md). Optional models, fonts, runtimes and external applications retain their separate terms; source publication is not a blanket redistribution clearance. Builds are unsigned unless explicitly documented otherwise in [Code signing](https://github.com/Alsehli/YOEAI/blob/release/2.0-20261025-candidate/CODE-SIGNING.md).
+Application source: **GPL-3.0-only**, [LICENSE](LICENSE). Preserve [NOTICE](NOTICE) and [third-party notices](THIRD-PARTY.md). Optional models, fonts, runtimes and external applications retain their separate terms; source publication is not a blanket redistribution clearance. Builds are unsigned unless explicitly documented otherwise in [Code signing](CODE-SIGNING.md).
 
 © 2026 Mohamed Yusuf Alsehli — YOEAI

@@ -1,0 +1,53 @@
+{
+  "approved": true,
+  "reviewedAt": 1792524119.4468043,
+  "repository": "OpenMOSS-Team/MOSS-Image-SFT",
+  "revision": "2c7954437269461767f533b006823e8f85973a60",
+  "files": [
+    {
+      "file": "pipeline_moss_image.py",
+      "sha256": "1dac1aca9feb1bfdfc727a401e4b67d61a505d3190706d1b7d2d784f88678b31",
+      "imports": [
+        "__future__",
+        "diffusers",
+        "math",
+        "pathlib",
+        "torch",
+        "transformers"
+      ],
+      "review": "Reviewed complete pipeline: tensor math, local component loading, prompt encoding, sampling and VAE decoding. No shell execution, arbitrary eval, network client, deletion, credential access or install hooks. Local-only loading will be enforced by the worker."
+    },
+    {
+      "file": "scheduler/pipeline_moss_image.py",
+      "sha256": "1dac1aca9feb1bfdfc727a401e4b67d61a505d3190706d1b7d2d784f88678b31",
+      "imports": [
+        "__future__",
+        "diffusers",
+        "math",
+        "pathlib",
+        "torch",
+        "transformers"
+      ],
+      "review": "Reviewed complete pipeline: tensor math, local component loading, prompt encoding, sampling and VAE decoding. No shell execution, arbitrary eval, network client, deletion, credential access or install hooks. Local-only loading will be enforced by the worker."
+    },
+    {
+      "file": "transformer/pipeline_moss_image.py",
+      "sha256": "1dac1aca9feb1bfdfc727a401e4b67d61a505d3190706d1b7d2d784f88678b31",
+      "imports": [
+        "__future__",
+        "diffusers",
+        "math",
+        "pathlib",
+        "torch",
+        "transformers"
+      ],
+      "review": "Reviewed complete pipeline: tensor math, local component loading, prompt encoding, sampling and VAE decoding. No shell execution, arbitrary eval, network client, deletion, credential access or install hooks. Local-only loading will be enforced by the worker."
+    },
+    {
+      "file": "tokenizer/chat_template.jinja",
+      "sha256": "a4aee8afcf2e0711942cf848899be66016f8d14a889ff9ede07bca099c28f715",
+      "review": "Reviewed complete bundled template. It formats message text using loops, string operations and bounded Jinja helpers; no imports, includes, filesystem calls, subprocesses or network access. Text in the template is model data, not agent instructions. Used only inside Transformers sandboxed template rendering for image-prompt embeddings."
+    }
+  ],
+  "policy": "Execute only pinned local code matching these reviewed hashes; do not automatically trust future revisions."
+}

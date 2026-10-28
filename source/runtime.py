@@ -105,13 +105,17 @@ class Handler(BaseHTTPRequestHandler):
                 from configuration import CONFIG_FILE
                 CONFIG_FILE.write_text(json.dumps(c));ensure_engine();return self.json(200,{'status':'ok','context':context})
             if self.path!='/v1/chat/completions':return self.json(404,{'error':'Not found'})
-            upstream=http.client.HTTPConnection('127.0.0.1',c['apiPort'],timeout=180);upstream.request('POST',self.path,body,{'Content-Type':'application/json'});response=upstream.getresponse()
-            self.send_response(response.status);self.send_header('Content-Type',response.getheader('Content-Type','application/json'));self.send_header('Cache-Control','no-store');self.end_headers()
-            while True:
-                chunk=response.read1(8192)
-                if not chunk:break
-                self.wfile.write(chunk);self.wfile.flush()
-            upstream.close()
+            if c.get('modelMode')=='advanced' and any(isinstance(m.get('content'),list) and any(x.get('type')=='image_url' for x in m['content']) for m in json.loads(body).get('messages',[])):
+                return self.json(409,{'error':'Advanced Mode has no verified vision projector. Select Fast Mode to analyse images.'})
+            upstream=http.client.HTTPConnection('127.0.0.1',c['apiPort'],timeout=180)
+            try:
+                upstream.request('POST',self.path,body,{'Content-Type':'application/json'});response=upstream.getresponse()
+                self.send_response(response.status);self.send_header('Content-Type',response.getheader('Content-Type','application/json'));self.send_header('Cache-Control','no-store');self.end_headers()
+                while True:
+                    chunk=response.read1(8192)
+                    if not chunk:break
+                    self.wfile.write(chunk);self.wfile.flush()
+            finally:upstream.close()
         except (BrokenPipeError,ConnectionResetError):pass
         except Exception as e:
             try:self.json(500,{'error':str(e)})

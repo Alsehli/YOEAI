@@ -1,7 +1,19 @@
-# Source-preview privacy information
+# Privacy and local-data boundaries
 
-The default local interface uses a loopback llama.cpp backend. Prompts and uploaded images are submitted to that configured local backend. Browser/application history persists locally; logs may contain technical paths or errors. Other software on the PC and backups can access local files according to Windows permissions.
+YOEAI is local-first. With a loopback llama.cpp backend, prompts and submitted images are processed on the configured PC. Selecting a different endpoint changes that boundary; verify configuration yourself.
 
-Normal source UI rendering does not use a cloud AI service. Setup downloads model/backend files from configured sources when explicitly initiated. External links open in the system browser. Developer-selected models and external launchers require separate review. Do not assume that website checkout, account, support or commercial activation services are offline; they are outside this source snapshot.
+## Stored on your PC
+Conversation history, agent task history, preferences, memory, reports and technical logs may persist in the configured Windows profile. Logs can contain local paths and error details. Local files are subject to Windows account permissions and backups. Use the application's history/memory controls to remove unwanted records; deleting an entry does not erase external backups. Back up the profile before updates.
 
-Do not share chat history, screenshots, logs or credentials in public issues. General support: hello@bahraini.online. This technical source-preview note is not the website's final legal privacy policy.
+## Features that use a network
+- Enabled web search sends your search query to the configured search service. Opening result pages contacts those sites; they have their own policies. Do not include secrets in queries.
+- Explicit model/runtime downloads contact their configured distribution hosts. Review the origin, license and destination first.
+- Website visits, support email, optional project-support payments and GitHub are separate services. This repository does not provide their privacy controls.
+
+Do not assume an optional adapter is offline merely because the chat model is local. Review its configuration and permitted tools.
+
+## Microphone and files
+Voice capture begins through an explicit microphone/session action. The documented configured speech pipeline is local; workers/model files are separately installed. End or mute the session when finished. Selected files, screenshots and application text may contain sensitive information. Grant scoped access only to content you intend to process. Transcription does not itself approve a Windows command or a message submission.
+
+## Before sharing a bug report
+Remove names, local paths, chat content, screenshots, tokens, credentials and device identifiers you do not want public. Never upload private profiles, binaries or model weights merely to reproduce an issue. Privacy questions can use the contact in SECURITY.md. This is technical source-preview information, not a promise that every external service is private or offline.

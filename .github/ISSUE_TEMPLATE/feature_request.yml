@@ -1,0 +1,22 @@
+name: Feature request
+description: Suggest a focused improvement to YOEAI
+title: "[Feature]: "
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve?
+      description: Describe your workflow without private documents or credentials.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior and alternatives
+    validations:
+      required: true
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      options: [Conversation, Voice, Mini YOE, Creative tools, Installation, Documentation, Other]

@@ -1,0 +1,37 @@
+name: Bug report
+description: Report a reproducible YOEAI problem without sharing private data.
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: "Remove credentials, private text and personal paths. Report security vulnerabilities using SECURITY.md."
+  - type: input
+    id: version
+    attributes:
+      label: Edition and build or commit
+      placeholder: Normal or Lite, exact build number
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Windows version, GPU/VRAM and selected model
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Include the relevant feature or agent and a safe sample request.
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Expected and actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Redacted logs or screenshots

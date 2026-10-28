@@ -1,0 +1,10 @@
+{
+  "2.0.20261024.2": {
+    "YoeCamera.cs": "6c0627ddf06a27232e4fd0def827094191cd528cf08b3b83536d401b755159e8",
+    "YoeEnemy.cs": "e5d792394c78bf8b247ac08565b2b62fcad732522784cba147781fc31c6f7183",
+    "YoeGame.cs": "01f2b4ae553bb843070b5eed1466acb8bc39742c096285ccaa8e05e834d6622b",
+    "YoeItem.cs": "7ea27e7a505c00f6a4998092dc73ab6faa10f0fa25c4b6725b9b76d2cbcf67ef",
+    "YoePlayer.cs": "0ea99091e015c7c95e0f63324f27ffc1e2c46f766ce53d882e15106984358088",
+    "YoeStudioBridge.cs": "c38303114e1accf61a2acb5c823bce69fdf7045dd628de8b1d958b231d1fc2c6"
+  }
+}

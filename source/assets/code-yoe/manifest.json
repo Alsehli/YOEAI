@@ -1,0 +1,116 @@
+{
+  "version": "1.0",
+  "fps": 10,
+  "framesPerState": 8,
+  "frameSize": [
+    512,
+    512
+  ],
+  "runtimeAtlas": "poses.png",
+  "runtimeAtlasSize": [
+    1024,
+    1024
+  ],
+  "runtimeDecodeBytes": 4194304,
+  "states": [
+    "idle",
+    "thinking",
+    "typing",
+    "working",
+    "happy",
+    "success",
+    "error",
+    "sleeping"
+  ],
+  "method": "Four reference-preserving imagegen-cleaned poses, normalized with connected-subject alpha cleanup; additional frames derive from Canvas transforms, eyelid overlays, paw patches and subtle effects. Not extraction of 64 original drawings.",
+  "files": {
+    "code-fox.js": {
+      "bytes": 6183,
+      "sha256": "badcea93d871ba51bcce75305c09f8115dbc06c42f5df9e494f73ffa3cab6ab5"
+    },
+    "error-sprites.png": {
+      "bytes": 791591,
+      "sha256": "c6a24deec56e8dd394ff8899b555e7ebd9795d33249f686d318087d70f77cec2"
+    },
+    "error.webp": {
+      "bytes": 302664,
+      "sha256": "f9a8776d8c97e168fb83d8214a5899c7428da30a27e4f4b26e5203c6ce1a7b31"
+    },
+    "happy-sprites.png": {
+      "bytes": 814744,
+      "sha256": "9f64a7026f56718c3e3f0a3b5e78bd16b3d8e7ffd41ddca8e597f0a72a50c293"
+    },
+    "happy.webp": {
+      "bytes": 324750,
+      "sha256": "a51c4d119439c13fc0811019bc12c2c857e0c52bc26074903bdb0e6ca0c8a542"
+    },
+    "idle-pose.png": {
+      "bytes": 193469,
+      "sha256": "abe17bbc6e2e705249f04893368e42aefd654b0df4060307d8c348d8fd4989ae"
+    },
+    "idle-sprites.png": {
+      "bytes": 854055,
+      "sha256": "68ea8999ff37394862183e2eefc482f1f1b2ce797704213a95ca929d3e087149"
+    },
+    "idle.webp": {
+      "bytes": 344622,
+      "sha256": "5c9ef1e426c0ce9e23d7038fa2c627ba8b28ec3e06dde9d3f855d355253f72b9"
+    },
+    "poses.png": {
+      "bytes": 735972,
+      "sha256": "00679da9ffb538d2af9e38473932193d1bdaad0c324cc417b3283d9239089533"
+    },
+    "sleeping-sprites.png": {
+      "bytes": 835145,
+      "sha256": "8c93841bb13e6607150a3f957dcc0bd77d08704a24a2fb5a565a57fbde157e9a"
+    },
+    "sleeping.webp": {
+      "bytes": 339374,
+      "sha256": "0aa2744b5e09fafaed8af4e3dc2440d0c7afc9f3633a4ff99969cbce79c92b3d"
+    },
+    "success-pose.png": {
+      "bytes": 191527,
+      "sha256": "50d4e3c1cc1954a407d8f549f92c6fb1fdbdbf8ff51dbcb128cd1ce2f2c99cbc"
+    },
+    "success-sprites.png": {
+      "bytes": 872029,
+      "sha256": "932d9934d591e1ff032728f3611dfcf0bdc0b162b455f71f1417386f857ec9ff"
+    },
+    "success.webp": {
+      "bytes": 327608,
+      "sha256": "bd0c9da89e93c53d109705369526b1e6a2b40d7626e728d6f93400feb2c69e9f"
+    },
+    "thinking-pose.png": {
+      "bytes": 167105,
+      "sha256": "35b4a86ac0933fa5290df7112b13f0367a0c1399756e7f4679d95454bb68cdaf"
+    },
+    "thinking-sprites.png": {
+      "bytes": 782959,
+      "sha256": "2cb60d7f508dec109f0e39739e146838804fc778a4aff87c31e7c500925afcca"
+    },
+    "thinking.webp": {
+      "bytes": 300562,
+      "sha256": "7098772f9ac2b1b845542417c9b37f00e5da803373bc1009217e3e7b93f9067e"
+    },
+    "typing-pose.png": {
+      "bytes": 184833,
+      "sha256": "0ca15dda1c4fa94b0d1aadcf2baa6ddfb07e9a3a4e1dbc443d467408270654d2"
+    },
+    "typing-sprites.png": {
+      "bytes": 833354,
+      "sha256": "34e0fa9352a24b228f544f90d87bb4de39eafa8de7307cf6bb1eae2def3d5142"
+    },
+    "typing.webp": {
+      "bytes": 335706,
+      "sha256": "fb83296e8a8e32b02cb5a6f56f009e045448dd65db64ae3d542d64a0c74abd86"
+    },
+    "working-sprites.png": {
+      "bytes": 837617,
+      "sha256": "9d1d391f5904cbb3556bd884e3ee7b13ffcf19f41b51d718a00924eea1f92856"
+    },
+    "working.webp": {
+      "bytes": 340288,
+      "sha256": "43b6e780f0083cc5d857b9dd120de2cad487c1f6c7e129733b57260d452261aa"
+    }
+  }
+}

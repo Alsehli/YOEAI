@@ -1,0 +1,37 @@
+/* Use the available window for results, keeping the existing theme and controls. */
+:root{--reading-width:100%}
+.workspace{max-width:none!important;padding:8px 14px 6px!important}
+.topbar{min-height:56px!important;padding:8px 16px!important}
+.stats.system-status{margin-bottom:6px}
+.system-status>.stat{padding-top:6px;padding-bottom:6px}
+.output-heading{max-width:none;padding-bottom:4px}
+.chat{padding:6px 2px 10px!important}
+.message{max-width:none!important;padding:16px 18px;margin-bottom:12px}
+.message.user{padding:10px 16px}
+#input-panel{max-width:none!important}
+.composer{padding:8px 12px!important;gap:4px!important}
+.workspace>footer{margin-top:3px;padding-top:2px;padding-bottom:2px}
+#mini-yoe{max-width:none;padding:0 0 4px}
+#mini-yoe .mini-workspace-header{padding:6px 12px;margin-bottom:8px;gap:10px}
+#mini-yoe .mini-workspace-header>canvas{width:40px;height:40px}
+#mini-yoe .mini-workspace-header h2{font-size:19px}
+#mini-yoe .mini-work,#mini-yoe .wy-layout{gap:8px}
+#mini-yoe .mini-editor,#mini-yoe .premium-windows-center{height:var(--output-editor-height,calc(100dvh - 180px))!important;min-height:160px!important;gap:6px}
+#mini-yoe .mini-conversation-thread{min-height:60px;max-height:none!important;padding:2px 4px 6px 0}
+#mini-yoe .mini-output{max-width:none!important}
+#mini-yoe .mini-assistant-message{padding:12px 16px;margin:8px 0}
+#mini-yoe #mini-current-objective,#mini-yoe #wy-objective-title{padding:9px 12px;margin-bottom:10px;font-size:13px!important}
+#mini-yoe .mini-plan-card{padding:9px 12px;margin:6px 0}
+#mini-yoe .mini-plan-card:not([open]) summary{margin-bottom:0!important}
+#mini-yoe .mini-progress{margin:6px 0!important;padding:7px 10px}
+#mini-yoe .research-yoe-progress{padding:0 4px;gap:8px}
+#mini-yoe .research-yoe-progress>canvas{width:36px;height:36px;flex-basis:36px}
+#mini-yoe .mini-composer{padding:6px 10px}
+#mini-yoe .mini-composer-disclosure{margin:3px 4px 0}
+#mini-yoe #windows-yoe>.mini-notice{margin:4px 0 8px;font-size:10px}
+@media(max-width:760px){.workspace{padding-left:8px!important;padding-right:8px!important}.topbar{padding:6px 10px!important}.message{padding:12px}.mini-workspace-actions{gap:4px}#mini-yoe .mini-editor,#mini-yoe .premium-windows-center{min-height:150px!important}}
+@media(max-height:600px){.workspace>footer{display:none}#mini-yoe .mini-workspace-header p{display:none}.topbar p{font-size:10px}#mini-yoe .mini-composer-disclosure{font-size:9px}}
+@media(max-height:600px){#mini-yoe .mini-composer textarea{max-height:80px!important;overflow-y:auto!important}}
+
+/* User removed these bottom utility rows to expand the result area. */
+.composer-bottom,.workspace>footer{display:none!important}
