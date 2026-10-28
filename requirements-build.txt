@@ -3,7 +3,7 @@ PyInstaller==6.22.3
 Pillow==13.0.0
 reportlab==5.0.1
 psutil==7.2.2
-pywin32==311; sys_platform == "win32"
+pywin32==312; sys_platform == "win32"
 pywinauto==0.6.9; sys_platform == "win32"
 comtypes==1.4.17; sys_platform == "win32"
 playwright==1.64.0
