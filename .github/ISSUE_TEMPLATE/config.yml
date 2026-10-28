@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Installation and downloads
+    url: https://github.com/Alsehli/YOEAI/wiki/Installation
+    about: Choose Lite or Normal, verify checksums, and review optional runtimes.
+  - name: Private vulnerability report
+    url: https://github.com/Alsehli/YOEAI/security/advisories/new
+    about: Do not publish vulnerabilities or private diagnostics in public issues.
+  - name: Project website
+    url: https://yoeai.online
+    about: Project information and tutorials.
