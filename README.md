@@ -6,7 +6,7 @@
 
 [![Windows](https://img.shields.io/badge/Windows-x64-2465ed)](docs/SETUP.md) [![Python](https://img.shields.io/badge/Python-3.13-2465ed)](requirements-build.txt) [![GPL](https://img.shields.io/badge/License-GPL--3.0--only-2465ed)](LICENSE) [![Windows checks](https://github.com/Alsehli/YOEAI/actions/workflows/windows-preview.yml/badge.svg?branch=main)](https://github.com/Alsehli/YOEAI/actions/workflows/windows-preview.yml) [![Status](https://img.shields.io/badge/Release-Windows_preview-blue)](docs/RELEASE-CHECKLIST.md)
 
-[Website](https://yoeai.online) · [Setup](docs/SETUP.md) · [Release readiness](docs/RELEASE-CHECKLIST.md) · [Report a bug](https://github.com/Alsehli/YOEAI/issues/new/choose) · [Contribute](CONTRIBUTING.md)
+[Website](https://yoeai.online) · [Setup](docs/SETUP.md) · [Release readiness](docs/RELEASE-CHECKLIST.md) · [Report a bug](https://github.com/Alsehli/YOEAI/issues/new/choose) · [Contribute](CONTRIBUTING.md) · [Wiki](https://github.com/Alsehli/YOEAI/wiki) · [Roadmap](docs/ROADMAP.md) · [Repository guide](docs/REPOSITORY-GUIDE.md)
 
 YOEAI combines local language models, practical Windows tools and specialized Mini YOE agents in one desktop workspace. It is a personal, non-profit project created and maintained by **[Mohamed Yusuf Alsehli](https://github.com/Alsehli)**. The cream-white YOE fox is its own visual identity.
 

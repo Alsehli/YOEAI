@@ -4,7 +4,7 @@
 This repository is an unsigned development source candidate, not a certified security product. No production support SLA or guaranteed remediation schedule is offered. Use the current candidate and report the exact commit/build when filing a report.
 
 ## Report privately
-Email **hello@bahraini.online** for suspected vulnerabilities. Include minimal reproduction steps, affected commit, impact and a redacted diagnostic sample. Do not publish credentials, private conversation data, device identifiers or an exploit containing someone else's files. If private reporting is enabled on GitHub, that is another available channel; this document does not claim it has been enabled.
+Email **hello@bahraini.online** for suspected vulnerabilities. Include minimal reproduction steps, affected commit, impact and a redacted diagnostic sample. Do not publish credentials, private conversation data, device identifiers or an exploit containing someone else's files. Private vulnerability reporting is enabled: [report a vulnerability](https://github.com/Alsehli/YOEAI/security/advisories/new).
 
 ## Operational boundaries
 - Keep the UI/inference API on loopback. Do not expose an unauthenticated endpoint to the internet or an untrusted LAN.
