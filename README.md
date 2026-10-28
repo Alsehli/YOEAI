@@ -4,13 +4,24 @@
 
 **Your AI. Your PC. Your Rules.** A local-first AI assistant for Windows.
 
-[![Windows](https://img.shields.io/badge/Windows-x64-2465ed)](docs/SETUP.md) [![Python](https://img.shields.io/badge/Python-3.13-2465ed)](requirements-build.txt) [![GPL](https://img.shields.io/badge/License-GPL--3.0--only-2465ed)](LICENSE) [![Windows checks](https://github.com/Alsehli/YOEAI/actions/workflows/windows-preview.yml/badge.svg?branch=release%2F2.0-20261025-candidate)](https://github.com/Alsehli/YOEAI/actions/workflows/windows-preview.yml) [![Status](https://img.shields.io/badge/Release-source_prerelease-blue)](docs/RELEASE-CHECKLIST.md)
+[![Windows](https://img.shields.io/badge/Windows-x64-2465ed)](docs/SETUP.md) [![Python](https://img.shields.io/badge/Python-3.13-2465ed)](requirements-build.txt) [![GPL](https://img.shields.io/badge/License-GPL--3.0--only-2465ed)](LICENSE) [![Windows checks](https://github.com/Alsehli/YOEAI/actions/workflows/windows-preview.yml/badge.svg?branch=main)](https://github.com/Alsehli/YOEAI/actions/workflows/windows-preview.yml) [![Status](https://img.shields.io/badge/Release-Windows_preview-blue)](docs/RELEASE-CHECKLIST.md)
 
 [Website](https://yoeai.online) · [Setup](docs/SETUP.md) · [Release readiness](docs/RELEASE-CHECKLIST.md) · [Report a bug](https://github.com/Alsehli/YOEAI/issues/new/choose) · [Contribute](CONTRIBUTING.md)
 
 YOEAI combines local language models, practical Windows tools and specialized Mini YOE agents in one desktop workspace. It is a personal, non-profit project created and maintained by **[Mohamed Yusuf Alsehli](https://github.com/Alsehli)**. The cream-white YOE fox is its own visual identity.
 
-> **Source prerelease, not a complete installer release.** This branch contains Normal 16GB source based on build 2.0.20261025.4 and the verified voice error-display correction. See the [source release](https://github.com/Alsehli/YOEAI/releases) and [publication record](docs/RELEASE-PUBLICATION-20261028.md). Model weights, inference binaries, private profiles and optional runtimes are excluded. Older setup executables must not be treated as builds of this candidate. See [publication gates](docs/PUBLICATION.md).
+## Download for Windows
+
+| Edition | Installer | Size |
+|---|---|---|
+| **Lite · 8GB GPU** | [Download Lite setup](https://github.com/Alsehli/YOEAI/releases/download/v2.0.20261028-windows-preview/YOEAI-Lite-Setup-2.0.2.exe) | 1.27 GB |
+| **Normal · 16GB GPU** | [Download Normal setup](https://github.com/Alsehli/YOEAI/releases/download/v2.0.20261028-windows-preview/YOEAI-Normal-Setup-2.0.20261027.1.exe) | 1.54 GB |
+
+[Windows release, matching source and checksums](https://github.com/Alsehli/YOEAI/releases/tag/v2.0.20261028-windows-preview) · [Installation guide](docs/WINDOWS-DOWNLOADS.md) · [Developer source prerelease](https://github.com/Alsehli/YOEAI/releases/tag/v2.0.20261028-rc.1)
+
+> **Unsigned Windows preview.** Choose the edition for your hardware and read the release notes. Chat/image/video weights are not bundled; initial setup needs matching offline files or internet access for setup downloads. Optional voice/creative/application engines require separate configuration. The maintainer reports Lite other-PC installation and online/offline chat passed, and Normal installation/chat/restart/offline checks passed on the current PC. These are user-reported results, not certification of every feature or device.
+
+The Git source tree below is the verified Normal developer snapshot based on build 2.0.20261025.4. The Windows installers are newer: **use their attached matching source archives**, not this older snapshot, for binary correspondence. See [publication record](docs/RELEASE-PUBLICATION-20261028.md). Models and private profiles remain excluded from source publication.
 
 ## What is included?
 
@@ -52,7 +63,7 @@ Output: `dist/YOEAI/YOEAI.exe` and supporting files. Keep the directory intact. 
 - CI runs a **31-test portable subset** and constructs the compiled UI in a disposable profile without loading models. It does not run a physical microphone or clean-PC installation test.
 - [Current release audit](docs/RELEASE-AUDIT-20261027.md) and [validation record](docs/RELEASE-VALIDATION.md) separate new checks from historical evidence.
 
-No latest-verified-binary badge is shown because this candidate has no newly qualified complete installer release.
+The Windows preview has separately documented maintainer-reported qualification. Source CI does not qualify every optional runtime or hardware configuration.
 
 ## Privacy and security
 
