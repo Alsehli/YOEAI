@@ -1,6 +1,6 @@
 # Project roadmap
 
-This is a living backlog, not a promise of release dates or completed security qualification. Use the linked GitHub issues and project board for evidence and status.
+This is a living backlog, not a promise of release dates or completed security qualification. Use the [release milestone](https://github.com/Alsehli/YOEAI/milestone/1) and [public project board](https://github.com/users/Alsehli/projects/2) for evidence and status.
 
 ## Current verified baseline
 
