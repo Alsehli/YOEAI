@@ -27,7 +27,7 @@ These are **unsigned previews**, not a newly clean-PC-qualified stable release. 
 
 | Workspace | Implemented capability | Requirements and limits |
 |---|---|---|
-| Conversation | Shared Fast Qwen3.5 9B / Advanced Qwen3.8 27B selection, history, local memory, Markdown, document/image interactions | Compatible local llama.cpp backend, model and configuration; vision needs a compatible projector |
+| Conversation | Shared Fast Qwen3.5 9B / Advanced Qwen3.8 27B selection, history, local memory, Markdown, document/image interactions | Bundled native runtime and compatible GGUF; vision needs a supported matching projector |
 | Interactive Voice | Local speech recognition and responses, interruption, microphone/speaker controls, transcript | External Python 3.11 Bark Pro and Kokoro/eSpeak runtime; developer paths are not portable setup; Arabic ASR is unavailable in this candidate |
 | Windows YOE | File browsing/storage analysis, diagnostics, supported desktop automation | Windows tool adapters, authorized locations and approval for sensitive actions; application-specific support varies |
 | Code YOE | Code explanation, debugging, patch proposals and live previews | Uses the selected shared model; running code or applying changes follows tool approvals |
@@ -52,7 +52,7 @@ py -3.13 -m venv .venv
 .\.venv\Scripts\python.exe build.py
 ```
 
-Output: `dist/YOEAI/YOEAI.exe` and supporting files. Keep the directory intact. This builds the shell; it does not provision models, CUDA or optional runtimes. Follow [setup and portability](docs/SETUP.md) to configure your local backend. Test against a disposable profile before using existing history. Do not copy developer process-ownership records or private configuration.
+Output: `dist/YOEAI/YOEAI.exe` and supporting files. Keep the directory intact. This builds the shell and private worker; supply an existing verified native runtime with --native-runtime. It does not download model weights or optional runtimes. Follow [setup and portability](docs/SETUP.md) to configure your local backend. Test against a disposable profile before using existing history. Do not copy developer process-ownership records or private configuration.
 
 **Hardware:** Windows x64 and a compatible NVIDIA CUDA backend for the documented Normal GPU configuration. Fast and Advanced performance depends on the selected weights, offload/context settings and free VRAM. A 16GB GPU is the development target, not a guarantee that every model and media engine can run together. Lite uses a different framework/package and is not built by this tree.
 
@@ -60,7 +60,7 @@ Output: `dist/YOEAI/YOEAI.exe` and supporting files. Keep the directory intact. 
 
 - Historical qualification: **384 regression tests passed** on 25 October 2026. [Detailed QA](docs/QA-20261025.md) identifies mocks, external-runtime limits and untested scenarios.
 - The preserved application source passed GitHub-hosted Windows validation, build and compiled-shell smoke checks: [recorded run](https://github.com/Alsehli/YOEAI/actions/runs/40535799989). The badge above shows the current branch result.
-- CI runs a **31-test portable subset** and constructs the compiled UI in a disposable profile without loading models. It does not run a physical microphone or clean-PC installation test.
+- CI runs a **51-test portable subset** and constructs the compiled UI in a disposable profile without loading models. It does not run a physical microphone or clean-PC installation test.
 - [Current release audit](docs/RELEASE-AUDIT-20261027.md) and [validation record](docs/RELEASE-VALIDATION.md) separate new checks from historical evidence.
 
 The Windows preview has separately documented maintainer-reported qualification. Source CI does not qualify every optional runtime or hardware configuration.

@@ -1,6 +1,6 @@
 # Privacy and local-data boundaries
 
-YOEAI is local-first. With a loopback llama.cpp backend, prompts and submitted images are processed on the configured PC. Selecting a different endpoint changes that boundary; verify configuration yourself.
+YOEAI is local-first. The current native chat backend processes prompts and supported submitted images on the configured PC through embedded llama.cpp libraries and a private-pipe worker. It does not require an HTTP model endpoint. The desktop UI transport remains local; do not expose it to other devices without reviewing authentication and access controls.
 
 ## Stored on your PC
 Conversation history, agent task history, preferences, memory, reports and technical logs may persist in the configured Windows profile. Logs can contain local paths and error details. Local files are subject to Windows account permissions and backups. Use the application's history/memory controls to remove unwanted records; deleting an entry does not erase external backups. Back up the profile before updates.
