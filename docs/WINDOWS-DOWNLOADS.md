@@ -2,7 +2,7 @@
 
 Download from the [7 November unsigned prerelease](https://github.com/Alsehli/YOEAI/releases/tag/v2.0.20261107-native-preview). Lite targets compatible NVIDIA 8GB systems; Normal targets 16GB. Hardware and model architecture compatibility still apply.
 
-1. Download the edition installer and SHA256SUMS.txt. Lite is ZIP-compressed because its EXE exceeds GitHub's per-file limit. Extract it before running.
+1. Download the edition installer and SHA256SUMS.txt. Lite exceeds GitHub's per-file limit: download all three numbered parts plus Join-Lite.ps1 together. Run the joiner to reconstruct and checksum-verify the EXE; it does not run setup automatically.
 2. Verify the downloaded file using `Get-FileHash -Algorithm SHA256` and compare against the same release's checksum file.
 3. Back up your profile and preserve existing model files. Run setup, choose an existing compatible GGUF, and open the edition shortcut. You can change GGUF later in Settings.
 4. The installer bundles the native inference runtime and private worker. No separate llama-server is needed. Chat/image/video model weights are not bundled; optional engines require their own supported configuration.

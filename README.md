@@ -16,7 +16,7 @@ YOEAI combines local language models, practical Windows tools and specialized Mi
 
 [Latest native preview: installers, matching sources and checksums](https://github.com/Alsehli/YOEAI/releases/tag/v2.0.20261107-native-preview)
 
-- Lite 8GB: extract the Lite ZIP, then run its unchanged setup EXE.
+- Lite 8GB: download all three Lite `.part1`–`.part3` files and `Join-Lite.ps1` into one folder. Run the joiner to reconstruct and verify the unchanged setup EXE, then run setup manually.
 - Normal 16GB: run the Normal setup EXE.
 - Verify SHA256SUMS.txt before installing. Back up your profile and preserve model files.
 
