@@ -1,7 +1,8 @@
+from native_ai.client import Connection as NativeConnection
 """Advanced multimodal chat extension; protected legacy runtime stays unchanged.
 The caller holds the existing shared inference gate for this whole request.
 """
-import json,http.client
+import json
 from configuration import read_config
 
 def route(handler):
@@ -20,7 +21,7 @@ def route(handler):
   if any(isinstance(m.get('content'),list) and any(x.get('type')=='image_url' for x in m['content']) for m in payload['messages']):
    from model_modes import require_advanced_vision
    require_advanced_vision(c)
-  upstream=http.client.HTTPConnection('127.0.0.1',c['apiPort'],timeout=180)
+  upstream=NativeConnection(timeout=180)
   try:
    upstream.request('POST',handler.path,body,{'Content-Type':'application/json'});response=upstream.getresponse()
    handler.send_response(response.status);handler.send_header('Content-Type',response.getheader('Content-Type','application/json'));handler.send_header('Cache-Control','no-store');handler.end_headers()

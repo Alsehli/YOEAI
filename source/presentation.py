@@ -13,6 +13,8 @@ class PresentationHandler(runtime.Handler):
             value += "; frame-src 'self' http://localhost:"+str(read_config()['uiPort'])
         return super().send_header(name,value)
     def do_POST(self):
+        from model_settings import route as local_models_route
+        if local_models_route(self,True):return
         from interactive_voice import route as interactive_route
         if interactive_route(self,True):return
         if self.path in ('/models/switch','/context','/imagegen/create','/videogen/create'):
@@ -60,7 +62,7 @@ class PresentationHandler(runtime.Handler):
         from image_generation_adapter import route
         if route(self,True):return
         from configuration import read_config
-        if self.path!='/context' or not read_config().get('externalBackend'):
+        if self.path!='/context':
             return super().do_POST()
         if not self.allowed() or self.headers.get('Origin')!=f"http://127.0.0.1:{read_config()['uiPort']}":
             return self.json(403,{'error':'Only the local Settings screen may restart this engine.'})
@@ -75,6 +77,8 @@ class PresentationHandler(runtime.Handler):
         except Exception as error:return self.json(409,{'error':str(error)})
 
     def do_GET(self):
+        from model_settings import route as local_models_route
+        if local_models_route(self):return
         from interactive_voice import route as interactive_route
         if interactive_route(self):return
         from speech_input import route as dictation_route

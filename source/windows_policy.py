@@ -3,7 +3,7 @@ import hashlib,json,os,re,time
 from pathlib import Path
 from urllib.parse import urlsplit
 
-APPS=('notepad','explorer','edge','chrome','word','excel','settings','taskmanager','photoshop','calculator','powerpoint','yoeai')
+APPS=('notepad','explorer','edge','chrome','word','excel','settings','taskmanager','photoshop','calculator','powerpoint','yoeai','font')
 MODES=('ADVISOR','ASSISTED','ADVANCED')
 SPECS={
  'files_explorer':('Open interactive file/storage results for an approved folder. Use view=scan for largest files, categories, duplicate candidates, cleanup or organization; browse for browsing. category may be Documents, Images, Videos, Audio, Applications, Archives, AI Models, Programming, Games, Temporary Files, Other or empty. sort may be name, size, date, type, -size or -date. This prepares the widget, not a completed scan or deletion.','file_read',('path','view','category','sort')),
@@ -42,6 +42,8 @@ SPECS={
  'files_recycle':('Move a single approved file to the Recycle Bin','destructive',('path',)),
  'browser_open':('Navigate the isolated agent browser to an approved origin','network',('app','url')),
  'browser_read':('Read the isolated browser page as untrusted evidence','private',()),
+ 'browser_scroll':('Scroll the approved browser page up or down','position',('direction',)),
+ 'browser_click':('Click one uniquely named ordinary button after explicit approval; submissions require manual takeover','change',('label',)),
  'browser_fill':('Fill one ordinary labelled field in the isolated browser','transmit',('label','text')),
  'browser_link':('Follow one labelled same-scope link in the isolated browser','network',('label',)),
  'browser_download':('Download a bounded public file to the approved folder','transmit',('url','destination')),
@@ -132,6 +134,10 @@ def validate_action(action,scope):
  if not isinstance(action,dict) or action.get('tool') not in SPECS:raise ValueError('Unsupported Windows tool. Shell commands are not capabilities.')
  name=action['tool'];params=action.get('params',{})
  if not isinstance(params,dict) or set(params)-set(SPECS[name][2]):raise ValueError('Unexpected tool parameters.')
+ if name=='browser_open' and not params.get('app'):
+  browsers=[a for a in scope['apps'] if a in ['edge','chrome']]
+  if len(browsers)!=1:raise ValueError('Choose one approved browser for this navigation.')
+  params={**params,'app':browsers[0]}
  for k,v in params.items():
   if type(v) not in (str,int,float,bool) or isinstance(v,str) and len(v)>12000:raise ValueError('Tool parameters must be bounded scalar values.')
   if isinstance(v,str):reject_secret(v)
@@ -162,6 +168,8 @@ def validate_action(action,scope):
   p=scoped_path(scope.get('folder'),params.get('destination',''),False)
   if p.suffix.lower() not in {'.pdf','.txt','.csv','.json','.png','.jpg','.jpeg','.webp','.zip'}:raise ValueError('Only supported document/image/archive downloads are allowed; executable downloads are blocked.')
  if name=='browser_fill' and PRIVATE_NAME.search(params.get('label','')):raise ValueError('Credential entry requires the user to take over.')
+ if name=='browser_click' and (not params.get('label') or SENSITIVE_UI.search(params['label'])):raise ValueError('Sensitive or unnamed buttons require manual takeover.')
+ if name=='browser_scroll' and params.get('direction') not in ['up','down']:raise ValueError('Choose up or down.')
  if name=='window_state' and params.get('state') not in ['minimise','maximise','restore','resize']:raise ValueError('Unsupported window state.')
  if name=='window_state' and params['state']=='resize' and not all(type(params.get(k))==int and 400<=params[k]<=3840 for k in ['width','height']):raise ValueError('Choose window dimensions between 400 and 3840 pixels.')
  if name=='ui_key' and params.get('key') not in ['CTRL+A','CTRL+S','CTRL+SHIFT+S','ESC','TAB','ENTER','UP','DOWN','PAGEUP','PAGEDOWN']:raise ValueError('Only the displayed safe keyboard shortcuts are supported.')
@@ -192,6 +200,7 @@ def plan_schema():
   if name=='files_explorer':
    params['view']['enum']=['browse','scan'];params['category']['enum']=['','Documents','Images','Videos','Audio','Applications','Archives','AI Models','Programming','Games','Temporary Files','Other'];params['sort']['enum']=['name','size','date','type','-size','-date']
   required_by_tool={'photoshop_preview':['width','height'],'photoshop_export':['draft','destination'],'office_create':['destination','format','title','text'],'office_pdf':['path','destination'],'images_pdf':['paths','destination','size'],'pdf_transform':['paths','destination','operation'],'image_transform':['paths','destination','operation'],'calendar_draft':['destination','title','start','minutes'],'app_shortcut':['app','destination'],'document_info':['path'],'document_preview':['path'],'media_info':['path'],'files_stat':['path'],'known_folder':['name'],'app_info':['app'],'selected_files':['window'],'web_search':['query']}
+  required_by_tool.update(browser_open=['app','url'],browser_fill=['label','text'],browser_click=['label'],browser_link=['label'],browser_scroll=['direction'])
   required=required_by_tool.get(name,[])
   variants.append({'type':'object','properties':{'tool':{'type':'string','enum':[name]},'params':{'type':'object','properties':params,'required':required,'additionalProperties':False},'why':{'type':'string'},'expected':{'type':'string'}},'required':['tool','params','why','expected'],'additionalProperties':False})
  step['anyOf']=variants

@@ -1,13 +1,11 @@
-# Developer source setup and portability
+# Developer source setup
 
-For the packaged Lite/Normal Windows downloads, use [Windows installation](WINDOWS-DOWNLOADS.md). The instructions below describe the separate developer Git snapshot.
+Use Windows x64 and Python 3.13. Install `requirements-build.txt`, then run `python tools/test_portable.py`, `python tools/check_release.py`, and `python tools/check_docs.py`.
 
-The source build is a launcher/UI, not a bundled offline model distribution. The existing configuration.py reads LOCALAPPDATA/AlsehliAI-Preview/config.json. Back up your profile before testing a new build; use a separate LOCALAPPDATA directory for development.
+`python build.py` builds the desktop UI and private inference worker without downloading models or runtime libraries. This default build can run the UI smoke test but cannot infer until the runtime is supplied.
 
-Required for local chat: Windows x64, an installed compatible llama.cpp CUDA server, a compatible GGUF model, and an appropriate configuration containing model, projector (where supported), apiPort, uiPort, context and externalBackend. Keep UI and inference on loopback. Default paths are placeholders under the profile; source does not contain your working configuration.
+For native inference, use `python build.py --native-runtime PATH` with an existing, trusted b11784 directory containing its runtime-manifest.json and matching DLLs. The build verifies all hashes and the ABI before copying. Include the native license notices. Do not use random DLL replacements. Configure an existing compatible GGUF through Settings; model weights are not bundled.
 
-Normal model switching uses its existing model catalog and backend ownership records. The current local 27B file was tested at 8192 context; developer defaults/reference paths are not portable discovery guarantees. Never copy another PC's ownership/PID files.
+Use a separate LOCALAPPDATA profile for development. Never copy production credentials, ownership records or private histories. Optional speech/image/video/Ghidra/Unity/Adobe components require separate supported configuration and are not installed by this build.
 
-Optional components need separate configuration: Image Turbo/Design, LTX video, local speech, SearXNG, Ghidra/JDK, Unity and Adobe applications. They are not downloaded by build.py. Some adapters preserve development-machine paths; absence must be reported, not silently advertised as working. Interactive Voice needs SpeechInput/interactive-config.json referring to the external speech environment, worker, speech model and Kokoro/eSpeak directory. No private config is distributed here.
-
-Do not point setup at a working installation. Installation policy drafts and activation services are not release-qualified in this source candidate. The newer Windows preview installers have their own matching source archives and setup guide; do not build them from this older Git snapshot. A source-built preview requires its own dependency/notices audit before redistribution as a complete binary bundle.
+See [current preview limitations](RELEASE-20261107.md) and [Windows downloads](WINDOWS-DOWNLOADS.md). The desktop UI transport remains local HTTP; inference uses private pipes and embedded native libraries, not an HTTP model server.

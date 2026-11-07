@@ -1,3 +1,4 @@
+from native_ai.client import Connection as NativeConnection
 """Read-only, bounded first-party audit. Source is parsed, never imported/executed."""
 import ast,contextlib,hashlib,importlib.metadata,json,os,re,time,uuid,threading
 from pathlib import Path
@@ -18,7 +19,7 @@ def metric(text):
 def collect(engine,t,root=None,scope='all'):
  from configuration import APP_DIR
  from mini_agents import reject_secrets
- root=Path(root or APP_DIR);report={'id':uuid.uuid4().hex,'created':time.time(),'status':'Audit completed','scope':{'source':str(root/'Source'),'logs':'Only diagnostic log metadata and exception-type counts; no chat text','network':'Loopback model health only; no external network','readOnly':True},'checks':[],'files':[],'findings':[],'missing':[],'testRuns':[],'measurements':{},'limits':{'maxSourceFiles':MAX_FILES,'maxSourceBytes':LIMIT,'maxTotalSourceBytes':4_000_000,'noSourceExecution':True,'coverageMeasured':False,'semanticCorrectnessProven':False}}
+ root=Path(root or APP_DIR);report={'id':uuid.uuid4().hex,'created':time.time(),'status':'Audit completed','scope':{'source':str(root/'Source'),'logs':'Only diagnostic log metadata and exception-type counts; no chat text','network':'Native worker state only; no model HTTP or external network','readOnly':True},'checks':[],'files':[],'findings':[],'missing':[],'testRuns':[],'measurements':{},'limits':{'maxSourceFiles':MAX_FILES,'maxSourceBytes':LIMIT,'maxTotalSourceBytes':4_000_000,'noSourceExecution':True,'coverageMeasured':False,'semanticCorrectnessProven':False}}
  def check(name,status,evidence):report['checks'].append({'name':name,'status':status,'evidence':evidence})
  def missing(name,reason):report['missing'].append({'check':name,'reason':str(reason)[:250]})
  source=root/'Source';approved={};total=0;python_count=0
@@ -85,16 +86,14 @@ def collect(engine,t,root=None,scope='all'):
  try:
   cfg=engine.config();safe={k:cfg.get(k) for k in ['modelMode','context','apiPort','uiPort','externalBackend','gpuLayers']}
   report['configuration']=safe
-  import http.client
-  conn=http.client.HTTPConnection('127.0.0.1',int(cfg['apiPort']),timeout=2)
-  try:conn.request('GET','/health');response=conn.getresponse();response.read(10000);health=response.status
-  finally:conn.close()
+  from native_ai.manager import INSTANCE as native
+  health={key:native.state.get(key) for key in ('loaded','busy','phase','runtime','transport','error')}
   measurements=[]
   for task in engine.tasks()[:50]:
    timing=task.get('timings',{})
    if timing:measurements.append({'task':task['id'],'agent':task['agent'],'time':task['updated'],'generationTokensPerSecond':timing.get('predicted_per_second'),'promptTokensPerSecond':timing.get('prompt_per_second'),'generationMilliseconds':timing.get('predicted_ms'),'promptMilliseconds':timing.get('prompt_ms'),'historical':True})
   report['measurements']['inference']=measurements[:12]
-  check('AI model loading and inference','OBSERVED',{'healthHTTP':health,'configuration':safe,'recentTimings':measurements[:12],'loadingBenchmark':'Not run; no model unloading or switching during read-only audit.','timeToFirstToken':'Not measured by this scan.'})
+  check('AI model loading and inference','OBSERVED',{'nativeState':health,'configuration':safe,'recentTimings':measurements[:12],'loadingBenchmark':'Not run; no model unloading or switching during read-only audit.','timeToFirstToken':'Not measured by this scan.'})
  except Exception as ex:missing('model performance',type(ex).__name__+': '+str(ex)[:150])
  try:
   import psutil

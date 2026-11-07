@@ -1,6 +1,7 @@
 """Exact direct app-launch intent only. No paths, shell, editing or chained actions."""
 import re
 ALIASES={
+ 'font':'font','font app':'font','فونت':'font',
  'photoshop':'photoshop','adobe photoshop':'photoshop','فوتوشوب':'photoshop','الفوتوشوب':'photoshop',
  'notepad':'notepad','المفكرة':'notepad','chrome':'chrome','google chrome':'chrome','كروم':'chrome',
  'edge':'edge','microsoft edge':'edge','word':'word','microsoft word':'word','وورد':'word',
@@ -10,7 +11,7 @@ ALIASES={
 def direct_app(text):
  if not isinstance(text,str):return None
  value=' '.join(text.strip().lower().split()).rstrip('.!?؟')
- match=re.fullmatch(r'(?:(?:please|can you|could you) )?(?:open|launch|start|افتح|شغل|شغّل) (.+?)(?: please)?',value)
+ match=re.fullmatch(r'(?:(?:please|can you|could you) )?(?:open|opne|launch|start|افتح|شغل|شغّل) (.+?)(?: please)?',value)
  return ALIASES.get(match.group(1)) if match else None
 
 def prepare(e,t):

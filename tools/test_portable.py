@@ -3,7 +3,7 @@ import os,sys,tempfile,unittest
 from pathlib import Path
 R=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(R/'source'));sys.path.insert(0,str(R/'tests'))
-MODULES=['test_interactive_voice','test_chat_reliability','test_memory_index','test_maximum_memory','test_language_understanding']
+MODULES=['test_interactive_voice','test_chat_reliability','test_memory_index','test_maximum_memory','test_language_understanding','test_model_settings','test_model_settings_bugs','test_native_recovery']
 with tempfile.TemporaryDirectory(prefix='yoeai-ci-') as profile:
  os.environ['LOCALAPPDATA']=profile
  suite=unittest.TestSuite(unittest.defaultTestLoader.loadTestsFromName(n) for n in MODULES)

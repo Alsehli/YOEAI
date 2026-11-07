@@ -1,15 +1,13 @@
-# Installing the Windows preview
+# Installing the native Windows preview
 
-Download one edition from the [Windows release](https://github.com/Alsehli/YOEAI/releases/tag/v2.0.20261028-windows-preview): Lite for the compatible NVIDIA 8GB configuration, Normal for the 16GB configuration. These are unsigned Windows x64 personal-project previews. They are free to download; optional support does not purchase access.
+Download from the [7 November unsigned prerelease](https://github.com/Alsehli/YOEAI/releases/tag/v2.0.20261107-native-preview). Lite targets compatible NVIDIA 8GB systems; Normal targets 16GB. Hardware and model architecture compatibility still apply.
 
-1. Download the complete setup EXE and `SHA256SUMS-WINDOWS.txt` from the same release.
-2. Check the file hash with PowerShell: `Get-FileHash -Algorithm SHA256 .\YOEAI-Lite-Setup-2.0.2.exe` (use the Normal filename if applicable). Compare the value with the checksum file.
-3. Run setup and use the resulting edition shortcut. Preserve existing profiles/model folders and keep a backup of important data.
-4. Initial setup requires matching offline model/runtime files or an internet connection for setup downloads. Chat/image/video weights are not included in the installer download. Core chat can run offline once configured.
-5. Optional Advanced 27B, Interactive Voice, image/Design/video, Ghidra/JDK, Unity and Adobe integrations need their own supported installation/configuration. Read `OPTIONAL-COMPONENTS.json` and `INSTALL-WINDOWS.md` attached to the release.
+1. Download the edition installer and SHA256SUMS.txt. Lite is ZIP-compressed because its EXE exceeds GitHub's per-file limit. Extract it before running.
+2. Verify the downloaded file using `Get-FileHash -Algorithm SHA256` and compare against the same release's checksum file.
+3. Back up your profile and preserve existing model files. Run setup, choose an existing compatible GGUF, and open the edition shortcut. You can change GGUF later in Settings.
+4. The installer bundles the native inference runtime and private worker. No separate llama-server is needed. Chat/image/video model weights are not bundled; optional engines require their own supported configuration.
+5. Do not bypass Windows security warnings blindly. These builds are unsigned; signing and comprehensive clean-PC qualification remain pending.
 
-Lite 2.0.2 and Normal 2.0.20261027.1 are the unchanged tested installer files. The maintainer reports Lite installed and chat worked online/offline on another PC, and Normal installation/chat/restart/offline checks passed on the current PC. These results are user-reported. Older preview/pending labels inside the installers were retained to preserve tested bytes. Signing/certification and comprehensive optional-engine qualification are not claimed.
+Read [actual tests and limitations](RELEASE-20261107.md). Older user-reported online/offline installation tests do not qualify newly rebuilt installers. Matching edition sources are attached to the release; preserve the included licenses and third-party notices.
 
-The three source archives attached to the Windows release correspond to these newer installers. The earlier developer Git tag is a separate snapshot; do not treat a passing source-only CI run as proof that the Windows installer was built from that older source. Preserve each edition's application and bundled third-party notices.
-
-For reproducible problems, [report a bug](https://github.com/Alsehli/YOEAI/issues/new/choose) with the edition, installer filename, Windows version, hardware and error message. Do not include passwords, keys or private documents.
+[Report a reproducible bug](https://github.com/Alsehli/YOEAI/issues/new/choose) with edition, filename, Windows/GPU details and sanitized errors. Never publish private documents or credentials.

@@ -1,0 +1,7 @@
+.local-model-settings{border-top:1px solid var(--border,#dbe4f1);padding-top:16px;margin-top:16px;display:grid;gap:8px;color:inherit}
+.local-model-settings h3{margin:0;font-size:16px}.local-model-settings p{margin:0 0 6px;line-height:1.5;font-size:13px}.local-model-settings label{font-size:13px;font-weight:600}.local-model-path-row{display:flex;gap:6px;align-items:center;min-width:0}.local-model-path-row input{min-width:0;flex:1;padding:9px;border:1px solid var(--border,#dbe4f1);border-radius:9px;color:inherit;background:transparent}.local-model-settings select{width:100%;padding:8px;color:inherit;background:transparent;border:1px solid var(--border,#dbe4f1);border-radius:9px}.local-model-settings button{padding:8px 10px;white-space:nowrap;font-size:12px}.local-model-help{opacity:.8}.local-model-settings #local-model-status{overflow-wrap:anywhere;min-height:20px}.local-model-settings #local-model-load{justify-self:start;background:#2463eb;color:white;border:0;border-radius:9px;padding:10px 15px}
+@media(max-width:560px){.local-model-path-row{flex-wrap:wrap}.local-model-path-row input{flex-basis:100%}}
+
+/* Keep the native modal stable while GPU work and status polling continue. */
+#appearance-settings{scrollbar-gutter:stable;overscroll-behavior:contain;overflow-anchor:none;animation:none;transition:none}
+#appearance-settings::backdrop{backdrop-filter:none;-webkit-backdrop-filter:none;background:#101a2a88}

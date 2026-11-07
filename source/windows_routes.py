@@ -10,7 +10,27 @@ def route_windows(handler,e,body,post):
   from windows_explorer import route
   return route(handler,e,body,post)
  try:
-  if post and path=='/mini/windows/pick':
+  if post and path=='/mini/windows/control-route':
+   from control_router import choose
+   value=choose(e,body)
+  elif post and path=='/mini/windows/control-evidence':
+   from control_web_evidence import gather
+   value=gather(body.get('results'))
+  elif post and path=='/mini/windows/storage/start':
+   if not e.windows_enabled:raise ValueError('Enable YOE Control before scanning.')
+   from control_storage import service
+   value=service(e).start(body.get('text'))
+  elif re.fullmatch(r'/mini/windows/storage/[0-9a-f]{32}(?:/(?:pause|resume|cancel))?',path):
+   from control_storage import service
+   parts=path.strip('/').split('/')
+   if post and len(parts)==5:value=service(e).action(parts[3],parts[4])
+   elif not post and len(parts)==4:value=service(e).snapshot(parts[3])
+   else:raise ValueError('Unsupported storage request.')
+  elif not post and re.fullmatch(r'/mini/windows/control-task/[0-9a-f]{32}',path):
+   task=e.get(path.rsplit('/',1)[1])
+   if task.get('agent')!='windows':raise ValueError('Choose a Windows YOE control task.')
+   value={k:v for k,v in task.items() if k not in ['snapshots','documents','memory','draft','recall']}
+  elif post and path=='/mini/windows/pick':
    if body.get('approve') is not True:raise ValueError('Open the selection dialog yourself.')
    from windows_picker import pick
    value=pick(body.get('kind'),body.get('folder'))
@@ -21,6 +41,8 @@ def route_windows(handler,e,body,post):
    if body.get('approve') is not True or type(body.get('enabled'))!=bool:raise ValueError('Explicit enable/disable choice is required.')
    e.windows_enabled=body['enabled']
    if not e.windows_enabled:
+    if hasattr(e,'control_storage'):
+     for job in e.control_storage.jobs.values():job['cancel'].set()
     if hasattr(e,'file_explorer'):
      for job in list(e.file_explorer.jobs.values()):job['cancel'].set()
     for t in e.tasks():

@@ -1,5 +1,6 @@
+from native_ai.client import Connection as NativeConnection
 """Bounded, local proofreading; never edits or sends the user's text."""
-import json,http.client,threading,time,uuid,re,asyncio,io
+import json,threading,time,uuid,re,asyncio,io
 from language_understanding import protected
 _jobs={}
 _early_cancel={}
@@ -59,7 +60,7 @@ def check(text,port,job=None):
   if len(content)>30000:raise ValueError('Writing response exceeds its bound.')
   return validate(text,json.loads(content)['edits'])
  else:
-  conn=http.client.HTTPConnection('127.0.0.1',port,timeout=35)
+  conn=NativeConnection(timeout=35)
   try:
    conn.request('POST','/v1/chat/completions',json.dumps(payload),{'Content-Type':'application/json'});response=conn.getresponse();status=response.status;raw=response.read(30001)
   finally:conn.close()
@@ -67,30 +68,16 @@ def check(text,port,job=None):
  data=json.loads(raw);edits=json.loads(data['choices'][0]['message']['content'])['edits'];return validate(text,edits)
 
 async def cancellable_response(port,payload,cancel):
- """Bounded localhost-only HTTP request; cancellation closes its own transport."""
- if cancel.is_set():raise InterruptedError('Writing check yielded to Send.')
- reader,writer=await asyncio.wait_for(asyncio.open_connection('127.0.0.1',port),1)
- try:
-  data=json.dumps(payload).encode('utf-8')
-  writer.write(('POST /v1/chat/completions HTTP/1.1\r\nHost: 127.0.0.1:'+str(port)+'\r\nContent-Type: application/json\r\nConnection: close\r\nContent-Length: '+str(len(data))+'\r\n\r\n').encode('ascii')+data);await writer.drain()
-  deadline=time.monotonic()+35;raw=bytearray()
-  while True:
-   if cancel.is_set():raise InterruptedError('Writing check yielded to Send.')
-   if time.monotonic()>=deadline:raise TimeoutError('Writing check timed out.')
-   try:chunk=await asyncio.wait_for(reader.read(4096),.1)
-   except asyncio.TimeoutError:continue
-   if not chunk:break
-   raw.extend(chunk)
-   if len(raw)>400000:raise ValueError('Writing response exceeds its bound.')
-  class BufferedSocket:
-   def makefile(self,*args,**kwargs):return io.BytesIO(raw)
-  response=http.client.HTTPResponse(BufferedSocket());response.begin()
-  try:return response.status,response.read(400001)
-  finally:response.close()
- finally:
-  writer.close()
-  try:await asyncio.wait_for(writer.wait_closed(),.5)
-  except (OSError,asyncio.TimeoutError):pass
+ """Cancellable native inference; no model socket is opened."""
+ def work():
+  conn=NativeConnection()
+  conn.cancel=cancel
+  try:
+   conn.request('POST','/v1/chat/completions',json.dumps(payload));response=conn.getresponse()
+   return response.status,response.read(400001)
+  finally:conn.close()
+ return await asyncio.to_thread(work)
+
 
 def route(h,post=False):
  from urllib.parse import urlsplit

@@ -1,7 +1,8 @@
+from native_ai.client import Connection as NativeConnection
 """Mini YOE: bounded, permission-scoped workflows over the existing local engine.
 No model loader, command runner, shell, package installer or arbitrary URL fetcher.
 """
-import ast,contextlib,difflib,hashlib,http.client,json,os,queue,re,socket,sqlite3,threading,time,uuid
+import ast,contextlib,difflib,hashlib,json,os,queue,re,socket,sqlite3,threading,time,uuid
 from pathlib import Path
 from urllib.parse import urlsplit,parse_qs
 from configuration import HOME,read_config
@@ -242,18 +243,22 @@ class Engine:
   if not runtime.healthy(c['apiPort']):raise ValueError('The existing local model is offline. Start YOEAI chat, then Retry.')
   # Ask the existing tokenizer before inference. Reject rather than silently dropping evidence.
   def token_count(text):
-   self.check(t);conn=http.client.HTTPConnection('127.0.0.1',c['apiPort'],timeout=30)
+   self.check(t);conn=NativeConnection(timeout=30)
    try:
     conn.request('POST','/tokenize',json.dumps({'content':text,'add_special':True}),{'Content-Type':'application/json'});r=conn.getresponse();raw=r.read()
     if r.status!=200:raise ValueError('Cannot verify the model context budget. Try again when the backend is ready.')
     return len(json.loads(raw)['tokens'])
    finally:conn.close()
-  context=int(c.get('context',16384));count=token_count('\n'.join(m['content'] for m in messages))+2048*len(images or [])
+  context_text='\n'.join(m['content'] for m in messages)
+  if schema:
+   from native_ai.structured import schema_instruction
+   context_text=schema_instruction(schema)+'\n'+context_text
+  context=int(c.get('context',16384));count=token_count(context_text)+2048*len(images or [])
   tokens=min(tokens,max(128,context-count-512));budget=context-tokens-512
   if count>budget:raise ValueError(f'Task evidence needs {count} input tokens; safe budget is {budget}. Select fewer/smaller files or increase context in Settings.')
   chosen=fit_recall(t.get('recall',[]),token_count,max(0,budget-count-64));messages[-1]['content']+=memory_text(chosen)
   t['memoryUsage']={'context':context,'currentInputTokens':count,'historyTasksUsed':len(chosen),'historyTokenLimit':max(0,budget-count-64),'outputTokenLimit':tokens};self.save(t)
-  conn=http.client.HTTPConnection('127.0.0.1',c['apiPort'],timeout=180);self.live_connections[t['id']]=conn
+  conn=NativeConnection(timeout=180);self.live_connections[t['id']]=conn
   try:
    if images:
     if len(images)!=1:raise ValueError('Approve one window image at a time.')

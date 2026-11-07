@@ -1,9 +1,8 @@
 """Opt-in local GGUF workspace. Never rewrites the bundled model configuration."""
-import json,os,sys,struct,subprocess,threading,time,socket,http.client,urllib.request,mimetypes,webbrowser,base64
+import json,os,sys,struct,subprocess,threading,time,socket,mimetypes,webbrowser,base64
 from pathlib import Path
 from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
 from urllib.parse import unquote,urlsplit
-HTTP=urllib.request.build_opener(urllib.request.ProxyHandler({}))
 def inspect_gguf(path):
  p=Path(path).expanduser().resolve()
  if p.suffix.lower()!='.gguf' or not p.is_file():raise ValueError('Choose an existing local .gguf file.')
@@ -26,37 +25,26 @@ class Workspace:
  def __init__(self,backend,ui,home,port):
   self.backend=Path(backend);self.ui=Path(ui);self.home=Path(home)/'DeveloperMode';self.home.mkdir(parents=True,exist_ok=True);self.port=port;self.api=port+1;self.process=None;self.server=None;self.profile=None;self.lock=threading.RLock()
  def request(self,path,body=None):
-  req=urllib.request.Request(f'http://127.0.0.1:{self.api}'+path,data=json.dumps(body).encode() if body is not None else None,headers={'Content-Type':'application/json'})
-  with HTTP.open(req,timeout=180) as r:return json.load(r)
+  from native_ai.client import Connection
+  conn=Connection()
+  try:
+   conn.request('POST'if body is not None else'GET',path,json.dumps(body)if body is not None else None)
+   return json.loads(conn.getresponse().read())
+  finally:conn.close()
  def stop(self):
   if self.server:self.server.shutdown();self.server.server_close();self.server=None
-  if self.process and self.process.poll() is None:
-   self.process.terminate()
-   try:self.process.wait(timeout=15)
-   except subprocess.TimeoutExpired:raise RuntimeError('Custom model is still closing. Default services were not touched.')
-  self.process=None;self.profile=None
+  from native_ai.manager import INSTANCE
+  INSTANCE.close();self.profile=None
  def test(self,value):
   value=validated(value)
-  if not self.backend.is_file():raise ValueError('Installed llama-server.exe could not be found.')
-  self.stop()
-  with socket.socket() as s:s.bind(('127.0.0.1',self.api))
-  args=[str(self.backend),'-m',value['model'],'--host','127.0.0.1','--port',str(self.api),'-c',str(value['context']),'-ngl',str(value['gpuLayers']),'-np','1','-b','128','-ub','64','--alias','deepseek-local']
-  if value['projector']:args+=['--mmproj',value['projector'],'--no-mmproj-offload']
-  self.log=self.home/('model-'+time.strftime('%Y%m%d-%H%M%S')+'.log')
-  with self.log.open('w',encoding='utf-8') as log:self.process=subprocess.Popen(args,cwd=str(self.backend.parent),stdin=subprocess.DEVNULL,stdout=log,stderr=log,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
-  start=time.monotonic()
+  from native_ai.manager import INSTANCE
+  self.stop();started=time.monotonic();INSTANCE.start()
   try:
-   while time.monotonic()-start<240:
-    if self.process.poll() is not None:raise RuntimeError('Model load failed. See '+str(self.log))
-    try:
-     if self.request('/health').get('status')=='ok':break
-    except Exception:pass
-    time.sleep(.3)
-   else:raise RuntimeError('Model loading timed out. Try fewer GPU layers or a smaller model/context.')
-   answer=self.request('/v1/chat/completions',{'model':'deepseek-local','messages':[{'role':'user','content':'Say hello.'}],'max_tokens':128,'stream':False,'chat_template_kwargs':{'enable_thinking':False}})
-   if not answer.get('choices') or not answer['choices'][0].get('message',{}).get('content','').strip():raise RuntimeError('The model did not return a chat completion. Its architecture/template may be unsupported.')
+   list(INSTANCE.request('load',runtime=str(INSTANCE.runtime),model=value['model'],context=value['context'],layers=value['gpuLayers'],projector=value['projector']or None))
+   answer=self.request('/v1/chat/completions',{'messages':[{'role':'user','content':'Say hello.'}],'max_tokens':128,'stream':False})
+   if not answer.get('choices')or not answer['choices'][0].get('message',{}).get('content','').strip():raise ValueError('Native model returned no text.')
    self.profile=value
-   return {'status':'PASS','loadAndTextSeconds':round(time.monotonic()-start,2),'profile':value,'vision':'NOT TESTED','response':answer['choices'][0]['message'].get('content',''),'log':str(self.log)}
+   return {'status':'PASS','loadAndTextSeconds':round(time.monotonic()-started,2),'profile':value,'vision':'NOT TESTED','response':answer['choices'][0]['message']['content'],'transport':'private IPC'}
   except Exception:self.stop();raise
  def vision_test(self,image):
   if not self.profile or not self.profile['projector']:raise ValueError('Test a profile with its compatible projector first.')
@@ -66,7 +54,8 @@ class Workspace:
   answer=self.request('/v1/chat/completions',{'messages':[{'role':'user','content':[{'type':'text','text':'Briefly describe this image.'},{'type':'image_url','image_url':{'url':data}}]}],'max_tokens':100,'stream':False,'chat_template_kwargs':{'enable_thinking':False}})
   return answer['choices'][0]['message']['content']
  def activate(self):
-  if not self.profile or self.process.poll() is not None:raise RuntimeError('Test this profile successfully before opening chat.')
+  from native_ai.manager import INSTANCE
+  if not self.profile or not INSTANCE.state['loaded']:raise RuntimeError('Test this profile successfully before opening chat.')
   workspace=self
   class Handler(BaseHTTPRequestHandler):
    def log_message(self,*a):pass
@@ -101,7 +90,8 @@ class Workspace:
       if isinstance(message.get('content'),list):
        for item in message['content']:
         if item.get('type')=='image_url' and (not workspace.profile['projector'] or not item.get('image_url',{}).get('url','').startswith('data:image/')):raise ValueError('Vision requires a compatible tested projector and an uploaded image.')
-     conn=http.client.HTTPConnection('127.0.0.1',workspace.api,timeout=180);conn.request('POST','/v1/chat/completions',json.dumps(payload),{'Content-Type':'application/json'});r=conn.getresponse();self.send_response(r.status);self.send_header('Content-Type',r.getheader('Content-Type','application/json'));self.send_header('Connection','close');self.end_headers();self.close_connection=True
+     from native_ai.client import Connection
+     conn=Connection();conn.request('POST','/v1/chat/completions',json.dumps(payload),{'Content-Type':'application/json'});r=conn.getresponse();self.send_response(r.status);self.send_header('Content-Type',r.getheader('Content-Type','application/json'));self.send_header('Connection','close');self.end_headers();self.close_connection=True
      try:
       while True:
        chunk=r.read1(8192)
@@ -116,8 +106,7 @@ def main(app_dir,default,home,lite=False,ui_dir=None):
  import tkinter as tk
  from tkinter import ttk,filedialog,messagebox
  app_dir=Path(app_dir);home=Path(home);ui_dir=Path(ui_dir or app_dir)
- backend=Path(default.get('backend',app_dir/'backend/llama-server.exe'))
- if not backend.is_file() and not lite:backend=Path('C:/AI/llama.cpp/llama-server.exe')
+ backend=app_dir/'NativeRuntime/b11784/llama.dll'
  work=Workspace(backend,ui_dir,home,18090 if lite else 18092);profiles=work.home/'profiles.json'
  saved=json.loads(profiles.read_text()) if profiles.exists() else []
  window=tk.Tk();window.title(('Lite' if lite else 'YOEAI')+' · Developer Mode');window.geometry('850x730');window.configure(bg='#0B0F19')

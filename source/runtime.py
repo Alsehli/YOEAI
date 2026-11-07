@@ -1,14 +1,14 @@
+from native_ai.client import Connection as NativeConnection
 """Portable localhost engine and UI. No Node.js or system Python dependency."""
-import ctypes,http.client,json,os,socket,subprocess,threading,time,urllib.request
+import ctypes,json,os,socket,subprocess,threading,time
 from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
 from pathlib import Path
 from configuration import APP_DIR,HOME,read_config
-HTTP=urllib.request.build_opener(urllib.request.ProxyHandler({}))
 LOCK=threading.RLock();ENGINE=None;SERVER=None;STATE=HOME/'engine-state.json'
-def healthy(port):
-    try:
-        with HTTP.open(f'http://127.0.0.1:{port}/health',timeout=2) as r:return json.load(r).get('status')=='ok'
-    except Exception:return False
+def healthy(port=None):
+    from native_ai.manager import INSTANCE
+    return bool(INSTANCE.state['loaded'])
+
 def identity(pid):
     from ctypes import wintypes
     k=ctypes.WinDLL('kernel32',use_last_error=True)
@@ -25,48 +25,12 @@ def identity(pid):
         return {'exe':str(Path(name.value).resolve()),'created':created.value}
     finally:k.CloseHandle(h)
 def stop_engine():
-    with LOCK:
-        if not STATE.exists():return
-        s=json.loads(STATE.read_text());current=identity(s['pid'])
-        if current is None:return
-        if current!=s['identity'] or Path(current['exe'])!=(APP_DIR/'backend/llama-server.exe').resolve():raise RuntimeError('Refusing to stop a process that this installation does not own.')
-        k=ctypes.WinDLL('kernel32');k.FreeConsole()
-        if not k.AttachConsole(s['pid']):raise RuntimeError('Could not attach for graceful shutdown.')
-        try:
-            k.SetConsoleCtrlHandler(None,True)
-            if not k.GenerateConsoleCtrlEvent(1,s['pid']):raise RuntimeError('Graceful shutdown signal failed.')
-        finally:k.FreeConsole()
-        for _ in range(100):
-            if identity(s['pid']) is None:return
-            time.sleep(.1)
-        raise RuntimeError('Engine is still closing. No process was forcibly killed.')
+    from model_modes import stop_current
+    return stop_current()
 def ensure_engine():
-    global ENGINE
-    with LOCK:
-        c=read_config();port=c['apiPort']
-        if healthy(port):
-            if c.get('externalBackend'):return
-            if STATE.exists():
-                s=json.loads(STATE.read_text())
-                if identity(s['pid'])==s['identity'] and Path(s['identity']['exe'])==(APP_DIR/'backend/llama-server.exe').resolve():return
-            raise RuntimeError(f'Port {port} is used by another AI server. Close it before starting this installation.')
-        with socket.socket() as test:
-            if test.connect_ex(('127.0.0.1',port))==0:raise RuntimeError(f'Port {port} is occupied.')
-        exe=APP_DIR/'backend/llama-server.exe'
-        for f in [exe,Path(c['model']),Path(c['projector'])]:
-            if not f.exists():raise RuntimeError('Required installation file missing: '+f.name)
-        logs=HOME/'Logs';logs.mkdir(exist_ok=True);stamp=time.strftime('%Y%m%d-%H%M%S')
-        startup=subprocess.STARTUPINFO();startup.dwFlags|=subprocess.STARTF_USESHOWWINDOW;startup.wShowWindow=0
-        args=[str(exe),'-m',c['model'],'--mmproj',c['projector'],'--host','127.0.0.1','--port',str(port),'-ngl','99','-c',str(c.get('context',4096)),'-t',str(min(6,os.cpu_count() or 4)),'-b','512','-ub','256','-fa','on','-ctk','q8_0','-ctv','q8_0','--alias','deepseek-local']
-        args += ['-np','1','--jinja','--reasoning','off','--image-min-tokens','1024']
-        with open(logs/f'engine-{stamp}.out.log','w') as out,open(logs/f'engine-{stamp}.err.log','w') as err:
-            ENGINE=subprocess.Popen(args,cwd=str(exe.parent),stdout=out,stderr=err,startupinfo=startup,creationflags=subprocess.CREATE_NEW_CONSOLE|subprocess.CREATE_NEW_PROCESS_GROUP)
-        STATE.write_text(json.dumps({'pid':ENGINE.pid,'identity':identity(ENGINE.pid),'context':c.get('context',4096),'model':c['model'],'port':port}),encoding='utf8')
-        for _ in range(180):
-            if ENGINE.poll() is not None:raise RuntimeError('The AI engine could not start. See the installation Logs folder.')
-            if healthy(port):return
-            time.sleep(1)
-        raise RuntimeError('The AI engine took too long to start. See the installation Logs folder.')
+    from model_modes import ensure_selected
+    return ensure_selected()
+
 def gpu_status():
     raw=subprocess.check_output(['nvidia-smi.exe','--query-gpu=memory.used,memory.total,utilization.gpu,temperature.gpu','--format=csv,noheader,nounits'],creationflags=subprocess.CREATE_NO_WINDOW,text=True,timeout=10)
     values=[float(x) for x in raw.splitlines()[0].split(',')]
@@ -98,16 +62,11 @@ class Handler(BaseHTTPRequestHandler):
             if length>25000000:return self.json(413,{'error':'Image or request is too large.'})
             body=self.rfile.read(length);c=read_config()
             if self.path=='/context':
-                context=json.loads(body).get('context')
-                if context not in [4096,8192,16384]:return self.json(400,{'error':'Unsupported context'})
-                if c.get('externalBackend'):return self.json(409,{'error':'This test uses an existing engine. Context changes are disabled.'})
-                stop_engine();c['context']=context
-                from configuration import CONFIG_FILE
-                CONFIG_FILE.write_text(json.dumps(c));ensure_engine();return self.json(200,{'status':'ok','context':context})
+                from model_modes import change_context
+                value=json.loads(body)
+                return self.json(200,change_context(value.get('context'),value.get('confirmedEngineRestart')))
             if self.path!='/v1/chat/completions':return self.json(404,{'error':'Not found'})
-            if c.get('modelMode')=='advanced' and any(isinstance(m.get('content'),list) and any(x.get('type')=='image_url' for x in m['content']) for m in json.loads(body).get('messages',[])):
-                return self.json(409,{'error':'Advanced Mode has no verified vision projector. Select Fast Mode to analyse images.'})
-            upstream=http.client.HTTPConnection('127.0.0.1',c['apiPort'],timeout=180)
+            upstream=NativeConnection(timeout=180)
             try:
                 upstream.request('POST',self.path,body,{'Content-Type':'application/json'});response=upstream.getresponse()
                 self.send_response(response.status);self.send_header('Content-Type',response.getheader('Content-Type','application/json'));self.send_header('Cache-Control','no-store');self.end_headers()

@@ -12,28 +12,10 @@ from PySide6.QtWebEngineWidgets import QWebEngineView
 from configuration import APP_DIR,HOME,read_config
 from commands import propose,execute_confirmed
 from loading_screen import LoadingScreen
-LEGACY=APP_DIR==Path('C:/AI/Apps/AlsehliAI-0.1.2')
+LEGACY=False
 PORT=8082 if LEGACY else read_config()['uiPort']
 def startup_trace(stage,**details):
  (HOME/'desktop-startup-state.json').write_text(json.dumps(dict(stage=stage,time=time.time(),**details),indent=2))
-def ensure_legacy_services():
- from runtime import HTTP,healthy
- if not healthy(8080):
-  subprocess.run(['powershell.exe','-NoProfile','-File','C:/AI/llama.cpp/start-deepseek.ps1'],check=True,stdin=subprocess.DEVNULL,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,creationflags=subprocess.CREATE_NO_WINDOW)
- try:
-  with HTTP.open('http://127.0.0.1:8082/status',timeout=5) as response:status=json.load(response)
- except Exception:
-  node=shutil.which('node.exe')
-  if not node:raise RuntimeError('The local interface is unavailable and Node.js could not be found.')
-  subprocess.Popen([node,'C:/AI/llama.cpp/local-ui.js'],cwd='C:/AI/llama.cpp',stdin=subprocess.DEVNULL,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,creationflags=subprocess.CREATE_NO_WINDOW)
-  for _ in range(30):
-   try:
-    with HTTP.open('http://127.0.0.1:8082/status',timeout=2) as response:status=json.load(response)
-    break
-   except Exception:time.sleep(.5)
-  else:raise RuntimeError('The local chat interface did not become ready.')
- expected=json.loads(Path('C:/AI/llama.cpp/model-config.json').read_text(encoding='utf-8-sig'))['model']
- if status.get('status')!='ok' or Path(status.get('model',''))!=Path(expected):raise RuntimeError('The local interface is not serving your configured model.')
 class LocalOnly(QWebEngineUrlRequestInterceptor):
  def interceptRequest(self,info):
   u=info.requestUrl()
@@ -49,20 +31,17 @@ class Startup(QThread):
  def run(self):
   try:
    startup_trace('checking_services',legacy=LEGACY,port=PORT)
-   if LEGACY:
-    ensure_legacy_services()
-   else:
-    from runtime import ensure_engine,start_ui,healthy
-    from presentation import install_visual_assets
-    install_visual_assets()
-    self.progress.emit('Checking the local AI engine…')
-    from model_modes import ensure_selected
-    try:ensure_selected()
-    except Exception as model_error:
-     from model_modes import set_state
-     set_state(phase='error',error=str(model_error),detail='Choose Fast Mode or reconnect the Advanced model drive.')
-    self.progress.emit('Preparing the local chat interface…')
-    start_ui()
+   from runtime import ensure_engine,start_ui,healthy
+   from presentation import install_visual_assets
+   install_visual_assets()
+   self.progress.emit('Checking the local AI engine…')
+   from model_modes import ensure_selected
+   try:ensure_selected()
+   except Exception as model_error:
+    from model_modes import set_state
+    set_state(phase='error',error=str(model_error),detail='Choose Fast Mode or reconnect the Advanced model drive.')
+   self.progress.emit('Preparing the local chat interface…')
+   start_ui()
    startup_trace('services_ready',port=PORT);self.ready.emit()
   except Exception as e:startup_trace('startup_failed',error=str(e));self.failed.emit(str(e))
 class TextImageWindow(QMainWindow):
@@ -139,14 +118,24 @@ class TextImageWindow(QMainWindow):
   request.setDownloadDirectory(str(path.parent));request.setDownloadFileName(path.name);request.accept()
  def closeEvent(self,event):
   if self.worker.isRunning():event.ignore();self.statusBar().showMessage('Wait for startup before closing.')
-  else:event.accept()
+  else:
+   from native_ai.manager import INSTANCE
+   from mini_agents import INSTANCE as agents
+   if agents:
+    agents.closed=True
+    for cancelled in agents.cancel_events.values():cancelled.set()
+   INSTANCE.shutdown();event.accept()
 def main():
  parser=argparse.ArgumentParser();parser.add_argument('--smoke-test',action='store_true');parser.add_argument('--screenshot');args=parser.parse_args()
  application=QApplication(sys.argv);application.setApplicationName('YOEAI')
+ from single_instance import SingleInstance
+ instance=SingleInstance(HOME)
+ if not args.smoke_test and not instance.acquire():return
  for font in (APP_DIR/'assets/fonts').glob('*.ttf'):QFontDatabase.addApplicationFont(str(font))
  ui_font=QFont('Inter');ui_font.setPixelSize(14);application.setFont(ui_font)
  application.setStyleSheet('QMenuBar,QMenu,QStatusBar { background: #101725; color: #94A3B8; border: none; padding: 4px; } QMenu::item:selected,QMenuBar::item:selected {background: #202B3C; color: #F8FAFC;}')
  window=TextImageWindow(not args.smoke_test)
+ instance.window=window
  if args.smoke_test:
   menus=[action.text() for action in window.menuBar().actions()]
   assert menus==['Windows commands','Settings'],menus

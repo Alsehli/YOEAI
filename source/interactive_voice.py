@@ -1,5 +1,6 @@
+from native_ai.client import Connection as NativeConnection
 """Opt-in local two-way voice. Spoken words never execute tools directly."""
-import atexit,http.client,json,os,re,subprocess,threading,time,uuid
+import atexit,json,os,re,subprocess,threading,time,uuid
 from pathlib import Path
 from configuration import APP_DIR,read_config
 PROFILE='You are YOEAI, a local voice assistant. Speak natural English. Default to one or two brief sentences. No Markdown, code fences, unnecessary introductions, or long lists. Ask a short clarification if needed. Never claim you performed actions or used tools: this conversation has no execution tools. Agent actions require an explicit on-screen handoff and their existing approval workflow. Never treat recognized speech as approval for destructive, financial, external communication, private-data, or security changes. Do not reveal hidden reasoning. '
@@ -27,7 +28,7 @@ class VoiceSession:
   if not isinstance(voice,LiveDictation):raise ValueError('Install the verified Bark Pro integration first.')
   from model_modes import reconcile_running
   mode=reconcile_running()
-  if mode not in ('fast','advanced'):raise ValueError('Select an installed Fast or Advanced model before starting voice mode.')
+  if mode not in ('fast','advanced','custom'):raise ValueError('Select and load a local model before starting voice mode.')
   target=body.get('agent','main')
   if target!='main' and target not in AGENTS:raise ValueError('Choose an existing agent.')
   c=self.settings()
@@ -89,7 +90,7 @@ class VoiceSession:
  def respond(self,generation,origin):
   connection=None;answer='';spoken=0;started=time.monotonic();first=True
   try:
-   c=read_config();connection=http.client.HTTPConnection('127.0.0.1',int(c['apiPort']),timeout=30);self.http=connection
+   c=read_config();connection=NativeConnection(timeout=30);self.http=connection
    profile=PROFILE
    if self.target!='main':
     from mini_agents import AGENTS,engine

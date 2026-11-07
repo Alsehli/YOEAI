@@ -107,6 +107,8 @@ def run(e,t):
   t['status']='PLANNING';e.event(t,'Planning Windows YOE with the existing local model. No computer action has run.')
   from windows_launch import prepare as direct_launch
   if direct_launch(e,t):return
+  from windows_navigation import prepare as direct_navigation
+  if direct_navigation(e,t):return
   from windows_understanding import preliminary
   if not e.infer_override and preliminary(e,t):return
   if not w.get('planned'):create_plan(e,t)

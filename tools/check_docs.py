@@ -24,10 +24,9 @@ banner=R/'docs/images/social-preview.png'
 if not banner.exists() or Image.open(banner).size!=(1280,640):errors.append('Social banner must be 1280x640')
 inventory=json.loads((R/'docs/source-inventory.json').read_text(encoding='utf-8-sig'))
 for row in inventory:
- # Inventory records Git object bytes, which can differ from checkout CRLF bytes.
- data=subprocess.check_output(['git','show',f'HEAD:{row["path"]}'],cwd=R)
+ p=R/row['path']
+ if not p.is_file():errors.append('Source inventory file missing: '+row['path']);continue
+ data=p.read_bytes()
  if len(data)!=row['size'] or hashlib.sha256(data).hexdigest()!=row['sha256']:errors.append('Source inventory mismatch: '+row['path'])
- changed=subprocess.run(['git','diff','--quiet','HEAD','--',row['path']],cwd=R).returncode
- if changed:errors.append('Inventoried source modified: '+row['path'])
 result={'passed':not errors,'documents':documents,'relativeLinks':links,'inventoryFiles':len(inventory),'errors':errors}
 print(json.dumps(result,indent=2));sys.exit(bool(errors))

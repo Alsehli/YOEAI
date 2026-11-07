@@ -1,0 +1,47 @@
+{
+  "repository": "LLM4Binary/llm4decompile-1.3b-v2",
+  "revision": "a347dabcb1ea9f21c9339bd764c150262e993b95",
+  "files": {
+    "LICENSE": {
+      "size": 13759,
+      "sha256": null,
+      "gitBlob": "ac09290cb2947183ab7f19d7477511dad3600a7a"
+    },
+    "README.md": {
+      "size": 7721,
+      "sha256": null,
+      "gitBlob": "f2f3b688cd41843167b9c387f74719f9d6069335"
+    },
+    "config.json": {
+      "size": 726,
+      "sha256": null,
+      "gitBlob": "5c860a84f9f0dccf699605e8d17a4862b238d258"
+    },
+    "generation_config.json": {
+      "size": 119,
+      "sha256": null,
+      "gitBlob": "78a5bffe3094f3c3b91b559872166dae80198032"
+    },
+    "model.safetensors": {
+      "size": 2692969128,
+      "sha256": "54b2497da08eeedefe880e2bad040e754ca754a959f79cffce68131cf5bf9fa8",
+      "gitBlob": "2b18269c27d4b7c6ea453dcd43f70e5f75deb212"
+    },
+    "special_tokens_map.json": {
+      "size": 482,
+      "sha256": null,
+      "gitBlob": "5ff8f57b46ed9d045d6a786cc8e89e79c0005742"
+    },
+    "tokenizer.json": {
+      "size": 1368930,
+      "sha256": null,
+      "gitBlob": "fed3a0a32025fa15517fdea2835b71c170bfaaa5"
+    },
+    "tokenizer_config.json": {
+      "size": 4204,
+      "sha256": null,
+      "gitBlob": "424128dc347cda6aa408018582f184b1307150c1"
+    }
+  },
+  "licenseNotice": "Model card says MIT; bundled LICENSE is DeepSeek License Agreement. Preserve and review both."
+}

@@ -8,6 +8,18 @@ def profile_matches(arguments,profile):
  expected=os.path.normcase(os.path.abspath(profile))
  return any(a.startswith('--user-data-dir=') and os.path.normcase(os.path.abspath(a.split('=',1)[1]))==expected for a in arguments)
 
+def live_profile_process(state):
+ """Chromium launch stubs may exit; bind to the exact private profile owner."""
+ import psutil
+ for process in psutil.process_iter(['pid','name','cmdline','create_time']):
+  with contextlib.suppress(psutil.Error,OSError,ValueError):
+   info=process.info
+   if info['name'].lower() not in ['msedge.exe','chrome.exe']:continue
+   args=info.get('cmdline') or []
+   if any(a.startswith('--type=') for a in args):continue
+   if profile_matches(args,state['profile']):return process
+ return None
+
 def session(context,scope,app=None):
  from windows_tools import app_paths
  import psutil
@@ -17,6 +29,10 @@ def session(context,scope,app=None):
   with contextlib.suppress(psutil.Error,OSError,ValueError):
    p=psutil.Process(s['pid'])
    if p.create_time()==s['created'] and profile_matches(p.cmdline(),s['profile']) and s['app'] in scope['apps'] and (not app or app==s['app']):return s
+  if s.get('app') in scope['apps'] and (not app or app==s['app']):
+   owner=live_profile_process(s)
+   if owner is not None:
+    s.update(pid=owner.pid,created=owner.create_time());state.write_text(json.dumps(s));return s
  if not app or app not in ['chrome','edge'] or app not in scope['apps']:raise ValueError('Open an approved Chrome or Edge agent session first.')
  entry=app_paths()[app]
  if not entry['installed']:raise ValueError('This browser is not installed.')
@@ -29,6 +45,8 @@ def session(context,scope,app=None):
  for _ in range(40):
   try:
    with urllib.request.urlopen('http://127.0.0.1:'+str(port)+'/json/version',timeout=.5) as r:json.load(r)
+   owner=live_profile_process(s)
+   if owner is not None:s.update(pid=owner.pid,created=owner.create_time());state.write_text(json.dumps(s))
    return s
   except OSError:time.sleep(.15)
  raise ValueError('The isolated browser did not become ready. No personal profile was used.')
@@ -72,7 +90,20 @@ def execute_browser(name,p,scope,context):
    if origin(page.url) not in scope['origins']:raise ValueError('The current browser origin is not approved for this task.')
    if name=='browser_read':
     text=page.locator('body').inner_text(timeout=6000)
-    return {'url':page.url,'title':redact(page.title()),'text':redact(text[:10000]),'truncated':len(text)>10000,'untrusted':True,'verified':True}
+    return {'url':page.url,'title':redact(page.title()),'text':redact(text[:10000]),'truncated':len(text)>10000,'untrusted':True,'verified':True,'controls':page.locator('body').aria_snapshot(timeout=6000)[:10000]}
+   if name=='browser_scroll':
+    before=page.evaluate('window.scrollY');page.mouse.wheel(0,650 if p['direction']=='down' else -650);page.wait_for_timeout(150);after=page.evaluate('window.scrollY')
+    return {'url':page.url,'before':before,'after':after,'verified':before!=after,'notice':'At the page boundary, scrolling may not change the position.'}
+   if name=='browser_click':
+    label=p.get('label','')
+    if SENSITIVE_UI.search(label):raise ValueError('Sensitive buttons require manual takeover.')
+    button=page.get_by_role('button',name=label,exact=True)
+    if button.count()!=1:raise ValueError('Button is missing or ambiguous; nothing was clicked.')
+    # Ordinary buttons only. A form submission or unknown custom control must
+    # never inherit a generic click approval. Do not use arbitrary JS selectors.
+    safe=button.evaluate("e => e.tagName === 'BUTTON' && e.type === 'button' && !e.form && !e.closest('form')")
+    if not safe:raise ValueError('This control may submit a form. Please perform that step yourself.')
+    button.click();return {'url':page.url,'button':label,'delivered':True,'verified':False,'notice':'Click delivered. Read the page again to verify the actual result.'}
    if name=='browser_fill':
     label=p.get('label','')
     if SENSITIVE_UI.search(label):raise ValueError('Sensitive form fields require manual user takeover.')

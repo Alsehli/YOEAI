@@ -61,6 +61,11 @@ def app_paths():
  'excel':[pf/'Microsoft Office/root/Office16/EXCEL.EXE',pf86/'Microsoft Office/root/Office16/EXCEL.EXE']}
  from configuration import APP_DIR
  candidates['yoeai']=[APP_DIR/'YOEAI.exe']
+ # Existing FONT installation, plus ordinary per-user/vendor install locations.
+ # Trust the precise installation directory, never arbitrary executables on E:.
+ font_local=Path.home()/'AppData/Local/Programs/FONT'
+ font_development=Path('E:/FONT-Premium-1.2-20261028/dist/FONT')
+ candidates['font']=[pf/'FONT/FONT.exe',font_local/'FONT.exe',font_development/'FONT.exe']
  for app,filename in [('photoshop','Photoshop.exe'),('powerpoint','POWERPNT.EXE'),('word','WINWORD.EXE'),('excel','EXCEL.EXE'),('chrome','chrome.exe'),('edge','msedge.exe')]:
   for hive in [winreg.HKEY_LOCAL_MACHINE,winreg.HKEY_CURRENT_USER]:
    with contextlib.suppress(OSError):
@@ -68,6 +73,7 @@ def app_paths():
  result={}
  for app,paths in candidates.items():
   trusted=[windows,pf,pf86,Path.home()/'AppData/Local/Google/Chrome/Application']+([APP_DIR] if app=='yoeai' else [])
+  if app=='font':trusted.extend([font_local,font_development])
   found=next((p for p in paths if p.is_file() and any(p.resolve().is_relative_to(root.resolve()) for root in trusted)),None);version=None
   if found:
    with contextlib.suppress(Exception):
@@ -97,7 +103,7 @@ def psutil_identity(pid):
  p=psutil.Process(pid);return {'pid':pid,'created':p.create_time(),'exe':p.exe()}
 
 def identify_app(exe):
- names={'photoshop.exe':'photoshop','calculatorapp.exe':'calculator','calculator.exe':'calculator','calc.exe':'calculator','powerpnt.exe':'powerpoint','yoeai.exe':'yoeai','notepad.exe':'notepad','explorer.exe':'explorer','msedge.exe':'edge','chrome.exe':'chrome','winword.exe':'word','excel.exe':'excel','systemsettings.exe':'settings','taskmgr.exe':'taskmanager'}
+ names={'font.exe':'font','photoshop.exe':'photoshop','calculatorapp.exe':'calculator','calculator.exe':'calculator','calc.exe':'calculator','powerpnt.exe':'powerpoint','yoeai.exe':'yoeai','notepad.exe':'notepad','explorer.exe':'explorer','msedge.exe':'edge','chrome.exe':'chrome','winword.exe':'word','excel.exe':'excel','systemsettings.exe':'settings','taskmgr.exe':'taskmanager'}
  app=names.get(Path(exe).name.lower())
  if not app:return None
  actual=Path(exe).resolve();expected=app_paths().get(app,{}).get('path')

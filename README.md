@@ -1,3 +1,5 @@
+> **7 November update:** [Native GGUF & Settings preview](docs/RELEASE-20261107.md). Updated source uses embedded native llama.cpp through a private worker; no external model server is required. The older release notes below describe historical builds. New unsigned preview downloads are available from the [release page](https://github.com/Alsehli/YOEAI/releases/tag/v2.0.20261107-native-preview).
+
 <p align="center"><img src="docs/images/social-preview.png" alt="YOEAI 2.0 — Your AI. Your PC. Your Rules." width="100%"></p>
 
 # YOEAI 2.0
@@ -12,16 +14,14 @@ YOEAI combines local language models, practical Windows tools and specialized Mi
 
 ## Download for Windows
 
-| Edition | Installer | Size |
-|---|---|---|
-| **Lite · 8GB GPU** | [Download Lite setup](https://github.com/Alsehli/YOEAI/releases/download/v2.0.20261028-windows-preview/YOEAI-Lite-Setup-2.0.2.exe) | 1.27 GB |
-| **Normal · 16GB GPU** | [Download Normal setup](https://github.com/Alsehli/YOEAI/releases/download/v2.0.20261028-windows-preview/YOEAI-Normal-Setup-2.0.20261027.1.exe) | 1.54 GB |
+[Latest native preview: installers, matching sources and checksums](https://github.com/Alsehli/YOEAI/releases/tag/v2.0.20261107-native-preview)
 
-[Windows release, matching source and checksums](https://github.com/Alsehli/YOEAI/releases/tag/v2.0.20261028-windows-preview) · [Installation guide](docs/WINDOWS-DOWNLOADS.md) · [Developer source prerelease](https://github.com/Alsehli/YOEAI/releases/tag/v2.0.20261028-rc.1)
+- Lite 8GB: extract the Lite ZIP, then run its unchanged setup EXE.
+- Normal 16GB: run the Normal setup EXE.
+- Verify SHA256SUMS.txt before installing. Back up your profile and preserve model files.
 
-> **Unsigned Windows preview.** Choose the edition for your hardware and read the release notes. Chat/image/video weights are not bundled; initial setup needs matching offline files or internet access for setup downloads. Optional voice/creative/application engines require separate configuration. The maintainer reports Lite other-PC installation and online/offline chat passed, and Normal installation/chat/restart/offline checks passed on the current PC. These are user-reported results, not certification of every feature or device.
+These are **unsigned previews**, not a newly clean-PC-qualified stable release. Models are not bundled. Read the [current verification and limitations](docs/RELEASE-20261107.md) and [installation guide](docs/WINDOWS-DOWNLOADS.md). Older installer qualifications apply only to their original builds.
 
-The Git source tree below is the verified Normal developer snapshot based on build 2.0.20261025.4. The Windows installers are newer: **use their attached matching source archives**, not this older snapshot, for binary correspondence. See [publication record](docs/RELEASE-PUBLICATION-20261028.md). Models and private profiles remain excluded from source publication.
 
 ## What is included?
 
@@ -67,7 +67,7 @@ The Windows preview has separately documented maintainer-reported qualification.
 
 ## Privacy and security
 
-Local chat uses the configured loopback backend. Web research, external links and optional downloads have network boundaries; local-first does not mean every feature is offline. Microphone use is explicit. Read [Privacy](PRIVACY.md) and [Security](SECURITY.md) before configuring automation or exposing services.
+Local chat uses the private-pipe native worker. Web research, external links and optional downloads have network boundaries; local-first does not mean every feature is offline. Microphone use is explicit. Read [Privacy](PRIVACY.md) and [Security](SECURITY.md) before configuring automation or exposing services.
 
 ## Contribute and support
 

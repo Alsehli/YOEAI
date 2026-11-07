@@ -15,7 +15,7 @@ def install(options,log):
     manifest=json.loads((APP_DIR/'manifest.json').read_text())
     final_target=HOME/'App'/'0.2.0-preview'
     if final_target.exists():raise RuntimeError('Preview installation already exists. It was preserved. Choose a new version before reinstalling.')
-    shortcut=Path(os.environ['USERPROFILE'])/'Desktop'/'Alsehli AI Preview.lnk'
+    shortcut=Path(os.environ['USERPROFILE'])/'Desktop'/'YOEAI Native Preview.lnk'
     if shortcut.exists():raise RuntimeError('An existing Preview shortcut was preserved. No installation or configuration was changed.')
     target=final_target.parent/('.staging-'+uuid.uuid4().hex)
     free=shutil.disk_usage(HOME).free
@@ -44,36 +44,19 @@ def install(options,log):
     log('Installing the desktop app…')
     target.parent.mkdir(parents=True,exist_ok=True)
     shutil.copytree(APP_DIR,target)
-    backend=target/'backend';backend.mkdir()
-    for archive in manifest['runtime']:
-        cache=HOME/'Downloads'/archive['name'];cache.parent.mkdir(exist_ok=True)
-        if not cache.exists():
-            partial=cache.with_suffix(cache.suffix+'.part')
-            log('Downloading official CUDA runtime: '+archive['name'])
-            with urllib.request.urlopen(archive['url'],timeout=60) as response,open(partial,'wb') as output:shutil.copyfileobj(response,output,8*1024*1024)
-            if partial.stat().st_size!=archive['size'] or digest(partial)!=archive['sha256']:raise RuntimeError('CUDA archive integrity check failed. Partial download preserved for diagnosis.')
-            partial.rename(cache)
-        if cache.stat().st_size!=archive['size'] or digest(cache)!=archive['sha256']:raise RuntimeError('CUDA archive integrity check failed.')
-        with zipfile.ZipFile(cache) as z:
-            for member in z.infolist():
-                resolved=(backend/member.filename).resolve()
-                if not resolved.is_relative_to(backend.resolve()):raise RuntimeError('Unsafe archive path rejected.')
-            z.extractall(backend)
-    # Official releases may contain a single enclosing directory.
-    servers=list(backend.rglob('llama-server.exe'))
-    if len(servers)!=1:raise RuntimeError('Expected exactly one llama-server executable.')
-    if servers[0].parent!=backend:
-        for file in servers[0].parent.iterdir():
-            if file.is_file():shutil.copy2(file,backend/file.name)
-    config=dict(model=str(Path(paths['models'])/manifest['files'][0]['path']),projector=str(Path(paths['models'])/'mmproj-F32.gguf'),apiPort=8080,uiPort=8085,context=16384,externalBackend=bool(options.get('externalBackend',False)))
+    native=target/'NativeRuntime/b11784'
+    if not(native/'llama.dll').is_file()or not(target/'NativeEngine/YOEAI-Inference.exe').is_file():raise RuntimeError('Bundled native inference files are missing; repair this installer package.')
+    from native_ai.integrity import verify
+    verify(native)
+    config=dict(model=str(Path(paths['models'])/manifest['files'][0]['path']),projector=str(Path(paths['models'])/'mmproj-F32.gguf'),apiPort=8080,uiPort=8085,context=16384,externalBackend=False,inferenceEngine='native')
     target.rename(final_target)
     target=final_target.resolve()
-    ps="$s=(New-Object -ComObject WScript.Shell).CreateShortcut('"+str(shortcut).replace("'","''")+"');$s.TargetPath='"+str(target/'AlsehliAI.exe').replace("'","''")+"';$s.WorkingDirectory='"+str(target).replace("'","''")+"';$s.Save()"
+    ps="$s=(New-Object -ComObject WScript.Shell).CreateShortcut('"+str(shortcut).replace("'","''")+"');$s.TargetPath='"+str(target/'YOEAI.exe').replace("'","''")+"';$s.WorkingDirectory='"+str(target).replace("'","''")+"';$s.Save()"
     subprocess.run(['powershell','-NoProfile','-Command',ps],check=True,creationflags=subprocess.CREATE_NO_WINDOW)
     CONFIG_FILE.write_text(json.dumps(config,indent=2))
-    report=dict(status='PASS',app=str(target/'AlsehliAI.exe'),gpu=gpu.strip(),verifiedFiles=len(manifest['files']),config=config)
+    report=dict(status='PASS',app=str(target/'YOEAI.exe'),gpu=gpu.strip(),verifiedFiles=len(manifest['files']),config=config)
     (HOME/'installation-result.json').write_text(json.dumps(report,indent=2))
-    log('Setup complete. Use the Alsehli AI Preview desktop shortcut.')
+    log('Setup complete. Use the YOEAI Native Preview desktop shortcut.')
     return report
 
 class Worker(QThread):

@@ -1,3 +1,4 @@
+from native_ai.client import Connection as NativeConnection
 """Deterministic, bounded Update YOE transactions. No LLM command executor.
 Existing UI text resources only; executable, policy, model and database updates denied.
 """
@@ -234,13 +235,8 @@ class Manager:
   from mini_agents import GATE
   if (psutil.cpu_percent() if cpu is None else cpu)>value['cpuLimit'] or GATE.locked() or engine.gpu_busy() or any(t['status'] in {'QUEUED','PLANNING','RUNNING'} for t in engine.tasks()):return False
   if not getattr(engine,'infer_override',None):
-   import http.client
-   conn=http.client.HTTPConnection('127.0.0.1',engine.config()['apiPort'],timeout=1)
-   try:
-    conn.request('GET','/slots');response=conn.getresponse()
-    if response.status!=200 or any(x.get('is_processing') for x in json.loads(response.read(100000))):return False
-   except Exception:return False
-   finally:conn.close()
+   from native_ai.manager import INSTANCE as native
+   if not native.state['loaded'] or native.state['busy']:return False
   # No private logs or source are sent. Only bounded, local structural metadata.
   measurements={'files':[],'cpuPercent':psutil.cpu_percent(),'availableRamBytes':psutil.virtual_memory().available,'time':now}
   for file in ['ui.html','assets/premium-ui.css','assets/mini-premium.css']:

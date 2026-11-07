@@ -24,6 +24,16 @@ def route(h,post=False):
    raw=file.read_bytes()
    if hashlib.sha256(raw).hexdigest()!=record['sha256']:raise ValueError('Evidence integrity failed.')
    h.send_response(200);h.send_header('Content-Type','application/json');h.send_header('Cache-Control','no-store');h.send_header('Content-Length',str(len(raw)));h.end_headers();h.wfile.write(raw);return True
+  elif path=='/reverse/specialist/status' and not post:
+   from reverse_specialist import status
+   result=status()
+  elif post and path in ['/reverse/specialist/settings','/reverse/specialist/install','/reverse/specialist/cancel']:
+   import reverse_specialist as specialist
+   if path.endswith('/settings'):result=specialist.configure(body.get('mode'))
+   elif path.endswith('/install'):
+    if body.get('approve') is not True:raise ValueError('Approve the official model download first.')
+    result=specialist.install()
+   else:result=specialist.cancel_install()
   elif post and path=='/reverse/pick':
    if body.get('approve') is not True:raise ValueError('Choose files explicitly.')
    from windows_picker import pick
@@ -33,6 +43,15 @@ def route(h,post=False):
    name=body.get('name','');raw=base64.b64decode(body.get('data',''),validate=True)
    if not isinstance(name,str) or Path(name).name!=name or Path(name).suffix.lower() not in EXT or not 1<=len(raw)<=25_000_000:raise ValueError('Choose a supported file up to 25 MB for drag and drop.')
    folder=e.home/'ReverseUploads'/uuid.uuid4().hex;folder.mkdir(parents=True);p=folder/name;p.write_bytes(raw);result={'inputs':register([p])}
+  elif post and path=='/reverse/function':
+   from reverse_yoe import register,INPUTS
+   t=e.get(body.get('task'));address=body.get('address');sha=body.get('sha256')
+   if t['agent']!='reverse' or t['status']!='COMPLETED' or not any(x['address']==address and x['sha256']==sha for x in t.get('reverseFunctionList',[])):raise ValueError('Select an observed function from a completed analysis.')
+   item=next(x for x in t['reverseInputs'] if x.get('sha256')==sha)
+   snapshot=Path(item['snapshot'])
+   if hashlib.sha256(snapshot.read_bytes()).hexdigest()!=sha:raise ValueError('Approved binary snapshot changed.')
+   inputs=register([snapshot]);token=inputs[0]['token'];INPUTS[token]['functionAddress']=address
+   result=e.create({'agent':'reverse','objective':'Explain the observed function '+address+' and compare its original and refined pseudocode.','reverseInputs':[token]})
   elif post and path=='/reverse/handoff':
    if body.get('approve') is not True:raise ValueError('Approve sending this report to Code YOE.')
    t=e.get(body.get('task'));objective=body.get('objective')
