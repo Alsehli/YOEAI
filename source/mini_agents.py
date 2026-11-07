@@ -365,6 +365,7 @@ class Engine:
    raw=self.call(t,'Return ONLY a JSON object with keys path, find, replace, explanation. path must equal the approved filename. find must be a nonempty exact unique substring of the original source. replace is its proposed replacement. No shell commands, no additional files. If no change is needed return {"noChange":true}.',t['objective']+'\nAPPROVED FILE '+rel+'\n'+snapshots[rel]['text']+'\nREVIEWED SOLUTION:\n'+draft,768)
    try:
     text=re.sub(r'^```(?:json)?\s*|\s*```$','',raw.strip());patch=json.loads(text)
+    if not isinstance(patch,dict):raise ValueError('Patch must be a JSON object.')
     if patch.get('noChange'):t['status']='COMPLETED'
     else:
      self.check_patch(t,patch);t['patch']=patch;t['diff']=''.join(difflib.unified_diff(snapshots[rel]['text'].splitlines(True),snapshots[rel]['text'].replace(patch['find'],patch['replace'],1).splitlines(True),fromfile=rel,tofile=rel));t['status']='WAITING_FOR_APPROVAL';self.event(t,'Patch ready. Review the exact diff; applying it needs your approval.')

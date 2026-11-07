@@ -60,7 +60,7 @@ Output: `dist/YOEAI/YOEAI.exe` and supporting files. Keep the directory intact. 
 
 - Historical qualification: **384 regression tests passed** on 25 October 2026. [Detailed QA](docs/QA-20261025.md) identifies mocks, external-runtime limits and untested scenarios.
 - The preserved application source passed GitHub-hosted Windows validation, build and compiled-shell smoke checks: [recorded run](https://github.com/Alsehli/YOEAI/actions/runs/40535799989). The badge above shows the current branch result.
-- CI runs a **51-test portable subset** and constructs the compiled UI in a disposable profile without loading models. It does not run a physical microphone or clean-PC installation test.
+- CI runs a **55-test portable subset** and constructs the compiled UI in a disposable profile without loading models. It does not run a physical microphone or clean-PC installation test.
 - [Current release audit](docs/RELEASE-AUDIT-20261027.md) and [validation record](docs/RELEASE-VALIDATION.md) separate new checks from historical evidence.
 
 The Windows preview has separately documented maintainer-reported qualification. Source CI does not qualify every optional runtime or hardware configuration.
