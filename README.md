@@ -1,3 +1,5 @@
+> **8 November Lite update:** [Image Turbo preview](docs/RELEASE-20261108-LITE-IMAGE.md) adds local image generation to Lite. [Downloads](https://github.com/Alsehli/YOEAI/releases/tag/v2.0.20261108-lite-image-preview). Tested on an 8GB card; 24GB and fresh-PC image qualification remain pending.
+
 > **7 November update:** [Native GGUF & Settings preview](docs/RELEASE-20261107.md). Updated source uses embedded native llama.cpp through a private worker; no external model server is required. The older release notes below describe historical builds. New unsigned preview downloads are available from the [release page](https://github.com/Alsehli/YOEAI/releases/tag/v2.0.20261107-native-preview).
 
 <p align="center"><img src="docs/images/social-preview.png" alt="YOEAI 2.0 — Your AI. Your PC. Your Rules." width="100%"></p>
@@ -14,13 +16,15 @@ YOEAI combines local language models, practical Windows tools and specialized Mi
 
 ## Download for Windows
 
-[Latest native preview: installers, matching sources and checksums](https://github.com/Alsehli/YOEAI/releases/tag/v2.0.20261107-native-preview)
+[Lite Image Turbo: installer, matching source and checksums](https://github.com/Alsehli/YOEAI/releases/tag/v2.0.20261108-lite-image-preview) · [Normal native preview](https://github.com/Alsehli/YOEAI/releases/tag/v2.0.20261107-native-preview)
 
-- Lite 8GB: download all three Lite `.part1`–`.part3` files and `Join-Lite.ps1` into one folder. Run the joiner to reconstruct and verify the unchanged setup EXE, then run setup manually.
+- Lite Image Turbo 8GB: download both Lite `.part1`–`.part2` files and `Join-Lite.ps1` into one folder. Run the joiner to reconstruct and verify the unchanged setup EXE, then run setup manually.
 - Normal 16GB: run the Normal setup EXE.
 - Verify SHA256SUMS.txt before installing. Back up your profile and preserve model files.
 
-These are **unsigned previews**, not a newly clean-PC-qualified stable release. Models are not bundled. Read the [current verification and limitations](docs/RELEASE-20261107.md) and [installation guide](docs/WINDOWS-DOWNLOADS.md). Older installer qualifications apply only to their original builds.
+See the [Lite-specific source and build notes](editions/lite/README.md).
+
+These are **unsigned previews**, not a newly clean-PC-qualified stable release. Models are not bundled. Read the [Lite verification and limitations](docs/RELEASE-20261108-LITE-IMAGE.md), [Normal native-preview notes](docs/RELEASE-20261107.md) and [installation guide](docs/WINDOWS-DOWNLOADS.md). Older installer qualifications apply only to their original builds.
 
 
 ## What is included?

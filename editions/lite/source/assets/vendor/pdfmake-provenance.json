@@ -1,0 +1,11 @@
+{
+  "version": "0.2.23",
+  "license": "MIT",
+  "source": "https://registry.npmjs.org/pdfmake/-/pdfmake-0.2.23.tgz",
+  "integrity": "sha512-A/IksoKb/ikOZH1edSDJ/2zBbqJKDghD4+fXn3rT7quvCJDlsZMs3NmIB3eajLMMFU9Bd3bZPVvlUMXhvFI+bQ==",
+  "files": {
+    "pdfmake.min.js": "4410187c36ed6dd8cbfbaeea5b6fab6244238b3479c6de1cfe125d2c61fc2ba0",
+    "pdf-fonts.js": "23e7c970fa9e75d296ea565939502a69ab2184cf40756c7d4670b6dabf470b58",
+    "pdfmake-LICENSE.txt": "963c9bfe4117623556e66c36524176bf38948b749e983c35af93c961caad8ce9"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "product": "YOEAI",
+  "version": "2.0.1",
+  "displayVersion": "2.0",
+  "edition": "Lite 8GB",
+  "date": "2026-10-18",
+  "imageGeneration": false,
+  "readAloud": true,
+  "releaseStatus": "local UI/PDF/voice update; clean 8GB-PC retest and signing remain pending",
+  "pdfCreation": true,
+  "ui": "shared Normal layout; Lite model/runtime preserved"
+}

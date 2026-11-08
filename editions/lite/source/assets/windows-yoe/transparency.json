@@ -1,0 +1,58 @@
+[
+  {
+    "state": "idle",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "fullyTransparentPixels": 112880,
+    "fullyOpaquePixels": 322
+  },
+  {
+    "state": "thinking",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "fullyTransparentPixels": 123157,
+    "fullyOpaquePixels": 319
+  },
+  {
+    "state": "working",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "fullyTransparentPixels": 111033,
+    "fullyOpaquePixels": 269
+  },
+  {
+    "state": "success",
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "fullyTransparentPixels": 107258,
+    "fullyOpaquePixels": 306
+  }
+]

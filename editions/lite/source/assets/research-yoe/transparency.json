@@ -1,0 +1,54 @@
+[
+  {
+    "state": "idle",
+    "mode": "RGBA",
+    "size": [
+      512,
+      512
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "transparentPixels": 127772
+  },
+  {
+    "state": "thinking",
+    "mode": "RGBA",
+    "size": [
+      512,
+      512
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "transparentPixels": 133751
+  },
+  {
+    "state": "researching",
+    "mode": "RGBA",
+    "size": [
+      512,
+      512
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "transparentPixels": 118844
+  },
+  {
+    "state": "success",
+    "mode": "RGBA",
+    "size": [
+      512,
+      512
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "transparentPixels": 119485
+  }
+]

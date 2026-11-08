@@ -21,7 +21,7 @@ for folder in (public,):
     try:compile(text,str(p),'exec')
     except SyntaxError as ex:findings.append({'file':rel,'check':'Python syntax','line':ex.lineno})
   if p.suffix in ('.js','.cjs'):
-   c=subprocess.run(['node','--check',str(p)],capture_output=True,text=True)
+   c=subprocess.run(['node','--check',str(p)],capture_output=True,text=True,encoding='utf8')
    if c.returncode:findings.append({'file':rel,'check':'JavaScript syntax'})
 result={'passed':not findings,'filesChecked':count,'findings':findings,'scope':'Git tracked and nonignored candidate files including documentation and workflow metadata; heuristic credential scan, not a guarantee of absence.'}
 (R/'release-check.json').write_text(json.dumps(result,indent=2),encoding='utf8');print(json.dumps(result,indent=2));sys.exit(0 if not findings else 1)

@@ -14,3 +14,8 @@
 - Reproducible official-fox social image, conduct policy and feature request form.
 - Project documentation/inventory validation included in Windows CI; broader public-file credential scan.
 - No application version bump or installer qualification is implied by this documentation update.
+
+
+## 2.0.20261108.1 - Lite Image Turbo preview
+
+Added Lite Create image, CUDA image tools, model-folder selection and chat pause/restore. Real 8GB compiled-app and installer tests passed; fresh Windows and 24GB qualification remain pending. See [verification](docs/RELEASE-20261108-LITE-IMAGE.md).

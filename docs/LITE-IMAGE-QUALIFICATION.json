@@ -1,0 +1,23 @@
+{
+  "revision": "2.0.20261108.1",
+  "gpu": "NVIDIA RTX 2080 SUPER 8GB",
+  "generationSizesTested": [
+    512
+  ],
+  "generationStageSeconds": [
+    35.7,
+    9.8
+  ],
+  "deviceWidePeakMiB": 5914,
+  "inlineSaveHistoryPassed": true,
+  "chatBeforeAndAfterPassed": true,
+  "cancelSeconds": 0.2192407,
+  "installerPayloadFiles": 6398,
+  "installerProfilePreserved": true,
+  "installerShortcutVerified": true,
+  "imageToolsAndCrtCopied": true,
+  "cleanWindowsTested": false,
+  "gpu24GBTested": false,
+  "size768Tested": false,
+  "scope": "Maintainer-PC tests, not a general quality/speed guarantee"
+}
