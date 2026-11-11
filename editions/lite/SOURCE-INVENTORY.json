@@ -1036,8 +1036,8 @@
   },
   {
     "path": "installer/kandinsky-requirements-lock.txt",
-    "bytes": 1901,
-    "sha256": "59fb0f3a910e742f972d2aab530de39dbc8cfaff8d3e3a72eab2e70778df960b"
+    "bytes": 1727,
+    "sha256": "60618f7c9f055956dda0fb1abaeb89e39ce1a53b3c574df334c2b367dd5caa55"
   },
   {
     "path": "installer/offline.py",
