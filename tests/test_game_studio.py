@@ -7,9 +7,14 @@ from game_assets import prepare
 
 class GameStudioTests(unittest.TestCase):
  def setUp(self):
-  parent=Path('D:/YOEAI-GameStudio-Verification/Unit');parent.mkdir(parents=True,exist_ok=True);self.tmp=tempfile.TemporaryDirectory(dir=parent);self.root=Path(self.tmp.name);self.s=Studio(self.root/'Profile');self.doc=self.s.create({'parent':str(self.root),'approve':True,'spec':{'title':'لعبة Fox'}});self.p,self.d=self.s.project(self.doc['id'])
+  # File/approval regressions use a discovery fixture; they never execute Unity.
+  if os.environ.get('YOEAI_TEST_REAL_UNITY')!='1':
+   fixture={'hub':None,'editors':[{'version':'6000.6.0f1','path':'fixture-only-Unity.exe','targets':['Windows','WebGL'],'packages':{'com.unity.2d.sprite':'1.0.0'}}]}
+   self.discovery=patch('game_studio.detect',return_value=fixture);self.discovery.start();self.addCleanup(self.discovery.stop)
+  parent=Path(__file__).resolve().parent;self.tmp=tempfile.TemporaryDirectory(dir=parent);self.addCleanup(self.tmp.cleanup);self.root=Path(self.tmp.name);self.s=Studio(self.root/'Profile');self.doc=self.s.create({'parent':str(self.root),'approve':True,'spec':{'title':'لعبة Fox'}});self.p,self.d=self.s.project(self.doc['id'])
  def tearDown(self):self.tmp.cleanup()
  def test_detection_uses_installed_editor(self):
+  if os.environ.get('YOEAI_TEST_REAL_UNITY')!='1':self.skipTest('Real installed Unity qualification is opt-in; fixture checks do not qualify Unity.')
   caps=detect();self.assertTrue(caps['editors']);self.assertIn('Windows',caps['editors'][0]['targets']);self.assertIn('com.unity.2d.sprite',caps['editors'][0]['packages'])
  def test_creation_and_memory_manifest(self):
   self.assertTrue((self.p/'Assets/Editor/YoeStudioBridge.cs').is_file());self.assertEqual(self.d['spec']['title'],'لعبة Fox');self.s.integrity(self.p,self.d);other=Studio(self.root/'Profile');self.assertEqual(other.projects()[0]['id'],self.d['id'])
@@ -34,6 +39,12 @@ class GameStudioTests(unittest.TestCase):
   for rel in ['../config.json','C:/Windows/win.ini','Assets/no.exe']:
    with self.assertRaises(ValueError):self.s.file(self.d['id'],rel)
   with self.assertRaises(ValueError):self.s.start({'project':self.d['id'],'operation':'powershell','approve':True})
+ def test_checkpoint_rejects_manifest_path_escape(self):
+  self.d['trusted']['../outside.json']='untrusted'
+  with self.assertRaises(ValueError):self.s.checkpoint(self.p,self.d)
+ def test_preview_rejects_stream_and_device_names(self):
+  for rel in ['Assets/data.json:stream','Assets/NUL.json']:
+   with self.assertRaises(ValueError):self.s.file(self.d['id'],rel)
  def test_invalid_specs(self):
   for v in [{'levels':100},{'speed':float('nan')},{'genre':'unimplemented'},{'seed':'42'},{'title':'\n'}]:
    with self.assertRaises(ValueError):specification(v)
