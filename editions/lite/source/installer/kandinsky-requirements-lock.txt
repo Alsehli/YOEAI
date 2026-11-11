@@ -47,7 +47,7 @@ numpy==2.5.4
 omegaconf==2.4.0
 packaging==26.3
 pillow==13.0.0
-pip @ file:///C:/actions-runner/python-build-standalone/python-build-standalone/build/pip-26.2.2-py3-none-any.whl#sha256=fd7f4dfa8190e014013b9f08f3e973f4e4c26ffd179a204895533a7254813a70
+pip==26.2.2
 platformdirs==4.14.5
 pooch==1.9.0
 psutil==7.2.2
