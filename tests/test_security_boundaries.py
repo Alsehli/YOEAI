@@ -58,4 +58,36 @@ class SecurityBoundaryTests(unittest.TestCase):
  def test_secret_rejection_is_bounded_and_still_matches_headers(self):
   mini_agents.reject_secrets('-----BEGIN '*10000)
   with self.assertRaises(ValueError):mini_agents.reject_secrets('-----BEGIN '+'PRIVATE KEY-----')
+class LegacyMediaBoundaryTests(unittest.TestCase):
+ def test_video_output_and_preview_reject_escape_before_access(self):
+  from video_generation import VideoGenerator
+  with tempfile.TemporaryDirectory(dir=ROOT/'tests') as d:
+   v=VideoGenerator(Path(d)/'config.json',Path(d)/'output')
+   for name in ['../outside','a'*32+'/x','A'*32]:
+    for operation in [v.output_path,v.preview_path]:
+     with self.subTest(name=name),self.assertRaises(ValueError):operation(name)
+   self.assertEqual(v.output_path('a'*32),Path(d)/'output'/('a'*32+'.mp4'))
+ def test_audio_rejects_escape_and_reads_owned_file(self):
+  from read_aloud import SpeechJobs
+  with tempfile.TemporaryDirectory(dir=ROOT/'tests') as d:
+   job=SpeechJobs.__new__(SpeechJobs);job.output=Path(d)
+   (Path(d)/('a'*32+'.wav')).write_bytes(b'fixture')
+   self.assertEqual(job.audio('a'*32),b'fixture')
+   with self.assertRaises(ValueError):job.audio('../private')
+ def test_literals_keep_entire_filename_and_ignore_plain_long_words(self):
+  from language_understanding import protected
+  self.assertEqual(protected('A'*100000),[])
+  self.assertEqual(protected('keep long-model_name.gguf'),['long-model_name.gguf'])
+ def test_design_shards_cannot_escape_bundle(self):
+  # Exercise the production bundle validator without importing heavyweight inference dependencies.
+  import ast
+  path=ROOT/'source/assets/design-engine/official/gradio_app.py'
+  tree=ast.parse(path.read_text(encoding='utf8'));function=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='is_model_bundle')
+  namespace={'json':json,'relative_path':p.relative_path,'COMPONENTS':('transformer','text_encoder','tokenizer','vae','scheduler')}
+  exec(compile(ast.Module(body=[function],type_ignores=[]),str(path),'exec'),namespace)
+  with tempfile.TemporaryDirectory(dir=ROOT/'tests') as d:
+   root=Path(d);(root/'pipeline_moss_image.py').write_text('fixture');(root/'model_index.json').write_text(json.dumps({k:[] for k in namespace['COMPONENTS']}))
+   for k in namespace['COMPONENTS']:(root/k).mkdir()
+   (root/'transformer/config.json').write_text('{}');(root/'transformer/weights.safetensors.index.json').write_text(json.dumps({'weight_map':{'weight':'../../outside.safetensors'}}))
+   self.assertFalse(namespace['is_model_bundle'](root))
 if __name__=='__main__':unittest.main()

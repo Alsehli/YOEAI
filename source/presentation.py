@@ -113,7 +113,9 @@ class PresentationHandler(runtime.Handler):
             data=('window.YoeLanguagePolicy='+json.dumps(POLICY)+';').encode('utf-8')
             self.send_response(200);self.send_header('Content-Type','application/javascript; charset=utf-8');self.send_header('Cache-Control','no-store');self.send_header('Content-Length',str(len(data)));self.end_headers();self.wfile.write(data);return
         base=(APP_DIR/'assets').resolve()
-        file=(APP_DIR/route.lstrip('/')).resolve()
+        from security_paths import relative_path
+        try:file=relative_path(base,route[len('/assets/'):]).resolve()
+        except ValueError:return self.json(404,{'error':'Visual asset not found'})
         if not file.is_relative_to(base) or file.suffix.lower() not in {'.css','.js','.ttf','.svg','.png','.ico'} or not file.is_file():
             return self.json(404,{'error':'Visual asset not found'})
         stat=file.stat();signature=(stat.st_mtime_ns,stat.st_size)
@@ -126,7 +128,7 @@ class PresentationHandler(runtime.Handler):
             if len(_asset_versions)>512:_asset_versions.clear()
             _asset_versions[file]=(signature,etag)
         self.send_response(200)
-        self.send_header('Content-Type',mimetypes.guess_type(str(file))[0] or 'application/octet-stream')
+        self.send_header('Content-Type',{'.css':'text/css','.js':'application/javascript','.ttf':'font/ttf','.svg':'image/svg+xml','.png':'image/png','.ico':'image/x-icon'}[file.suffix.lower()])
         self.send_header('X-Content-Type-Options','nosniff')
         self.send_header('ETag',etag)
         self.send_header('Cache-Control','private, no-cache')

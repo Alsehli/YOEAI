@@ -55,7 +55,8 @@ class VideoGenerator:
    from video_inputs import normalise_image
    if source is not None:
     if body.get('image') is not None or not isinstance(source,str) or not re.fullmatch('[0-9a-f]{32}',source):raise ValueError('Invalid source photo reference.')
-    previous=self.home/(source+'.input.png')
+    from security_paths import job_id
+    source=job_id(source);previous=self.home/(source+'.input.png')
     if not previous.is_file():raise ValueError('The original photo is unavailable. Attach it again.')
     import base64
     image=normalise_image('data:image/png;base64,'+base64.b64encode(previous.read_bytes()).decode('ascii'))
@@ -104,10 +105,14 @@ class VideoGenerator:
  def digest(path):
   with path.open('rb') as f:return hashlib.file_digest(f,'sha256').hexdigest()
  def output_path(self,job):
+  from security_paths import job_id
+  job=job_id(job)
   # Preserve historical clips when the optional model runtime moves drives.
   roots=[self.home,Path('F:/YOEAI-Video-Generation/Outputs'),self.config_path.parent/'Outputs']
   return next((root/(job+'.mp4') for root in roots if (root/(job+'.mp4')).is_file()),self.home/(job+'.mp4'))
  def preview_path(self,job):
+  from security_paths import job_id
+  job=job_id(job)
   if not re.fullmatch('[0-9a-f]{32}',job):raise ValueError('Invalid video reference.')
   source=self.output_path(job)
   if not source.is_file():raise ValueError('Video not found. Reconnect its original drive.')
@@ -222,6 +227,8 @@ def handle_request(handler,generator,post=False):
   elif path.startswith(('/videogen/output/','/videogen/preview/')):
    job=path.rsplit('/',1)[-1]
    if not re.fullmatch('[0-9a-f]{32}',job):raise ValueError('Invalid video reference.')
+   from security_paths import job_id
+   job=job_id(job)
    preview=path.startswith('/videogen/preview/');p=generator.preview_path(job) if preview else generator.output_path(job)
    if not p.is_file():return handler.json(404,{'error':'Video not found.'}) or True
    size=p.stat().st_size;start=0;end=size-1;partial=False;requested=handler.headers.get('Range')

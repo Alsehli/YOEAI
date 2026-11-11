@@ -1201,8 +1201,8 @@
   },
   {
     "path": "language_understanding.py",
-    "bytes": 6719,
-    "sha256": "1ea770b653422e45e63eb7d0f731c25590bc2606f7e780f4726838a44975ce9a"
+    "bytes": 6730,
+    "sha256": "2715ef8402c7cc68ff8ce39a6b547b88962e6859ebd1c0487df62e1151c302c4"
   },
   {
     "path": "lite_agents_bridge.py",
@@ -1496,8 +1496,8 @@
   },
   {
     "path": "tests_models/test_library.py",
-    "bytes": 8709,
-    "sha256": "1b99d130ba1ba73320286b25f0e65f582e6a60011ee9d020e7bc4c9b7ad16730"
+    "bytes": 8739,
+    "sha256": "362ceb610109804f6f2975fa6c999f54a861a189201339ea0794bdc53dda2590"
   },
   {
     "path": "tests_models/write_installed_report.py",
@@ -1621,8 +1621,8 @@
   },
   {
     "path": "tests_system/syntax_assets.py",
-    "bytes": 1631,
-    "sha256": "ca60beaa8bafd805d229093eb12424131e2fd624d6ada0b38c6b02f7e64dd948"
+    "bytes": 2095,
+    "sha256": "a70837a3a1d99119e728b8e9f78cf022bdb621b1c103d04d2b498d24dc933f3d"
   },
   {
     "path": "tests_system/test_audit.py",

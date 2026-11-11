@@ -2,6 +2,12 @@
 from __future__ import annotations
 
 from pathlib import Path
+from security_paths import user_local_path,relative_path
+def local_selection(value):
+    value=str(value)
+    if value.startswith(("/","~","\\")) or (len(value)>1 and value[1]==":"):
+        return user_local_path(value)
+    return relative_path(Path.cwd(),value)
 
 import diffusers
 import torch
@@ -13,7 +19,7 @@ DEFAULT_MODEL = "OpenMOSS-Team/MOSS-Image-Base"
 def model_source(model):
     """Resolve local bundles without turning Hub IDs into filesystem paths."""
     model = str(model).strip()
-    path = Path(model).expanduser()
+    path = local_selection(model)
     if path.is_dir():
         if not (path / "pipeline_moss_image.py").is_file():
             raise ValueError("The local bundle must include pipeline_moss_image.py from the HF repository.")
