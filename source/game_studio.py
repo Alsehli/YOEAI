@@ -4,6 +4,7 @@ Only our integrity-checked templates may run on the host. Existing games are rea
 import base64,hashlib,json,os,re,shutil,subprocess,threading,time,uuid,zipfile
 from pathlib import Path
 from configuration import APP_DIR,HOME
+from security_paths import user_local_path,relative_path
 
 ASSETS=APP_DIR/'assets/game-studio'
 LOCK=threading.Lock()
@@ -14,8 +15,9 @@ ACTIVE={'QUEUED','RUNNING'}
 MODULES=['physics2d','tilemap','animation','audio','imgui','jsonserialize','screencapture','imageconversion','particlesystem']
 
 def sha(p):
- with Path(p).open('rb') as f:return hashlib.file_digest(f,'sha256').hexdigest()
+ with user_local_path(str(p)).open('rb') as f:return hashlib.file_digest(f,'sha256').hexdigest()
 def atomic(p,value):
+ p=user_local_path(str(p))
  p.parent.mkdir(parents=True,exist_ok=True);q=p.with_suffix(p.suffix+'.stage');q.write_text(json.dumps(value,ensure_ascii=False,indent=2),encoding='utf8');os.replace(q,p)
 def safe_folder(value,existing=True):
  from security_paths import user_local_path
@@ -82,7 +84,7 @@ class Studio:
   doc['updated']=time.time();atomic(root/'yoe-game.json',doc);items=self.projects();item={k:doc[k] for k in ['id','title','updated','managed']};item['path']=str(root);items=[x for x in items if x['id']!=doc['id']]+[item];atomic(self.registry,items)
  def create(self,body):
   if body.get('approve') is not True:raise ValueError('Approve creation of the new project files.')
-  root=safe_folder(body['parent']);spec=specification(body.get('spec',{}));ident=uuid.uuid4().hex;folder=root/('YOE-'+re.sub(r'[^\w-]+','-',spec['title'],flags=re.UNICODE).strip('-')[:40]+'-'+ident[:8]);folder.mkdir(exist_ok=False)
+  root=safe_folder(body['parent']);spec=specification(body.get('spec',{}));ident=uuid.uuid4().hex;folder=relative_path(root,'YOE-'+re.sub(r'[^\w-]+','-',spec['title'],flags=re.UNICODE).strip('-')[:40]+'-'+ident[:8]);folder.mkdir(exist_ok=False)
   editors=detect()['editors']
   if not editors:folder.rmdir();raise ValueError('No compatible installed Unity 6 Editor found. Install/activate Unity yourself; no installation is performed automatically.')
   editor=editors[0];doc={'id':ident,'title':spec['title'],'managed':True,'created':time.time(),'spec':spec,'editor':editor,'history':[],'trusted':{},'assets':[],'status':'FILES_CREATED','lastVerification':None}
@@ -129,7 +131,7 @@ class Studio:
     for p in (root/folder).rglob('*'):
      if p.is_file() and not p.is_symlink() and p.stat().st_size<20_000_000:paths.add(p.relative_to(root).as_posix())
    for rel in sorted(paths):
-    p=root/rel
+    p=relative_path(root,rel)
     if p.is_file():z.write(p,rel)
   return target.relative_to(root).as_posix()
  def revise(self,body):
@@ -227,7 +229,7 @@ class Studio:
  def file(self,ident,relative):
   item=next((x for x in self.projects() if x['id']==ident),None)
   if not item or not isinstance(relative,str) or len(relative)>300:raise ValueError('Invalid file request.')
-  root=safe_folder(item['path']);p=root/relative
+  root=safe_folder(item['path']);p=relative_path(root,relative)
   if Path(relative).is_absolute() or '..' in Path(relative).parts or ':' in relative or not p.resolve().is_relative_to(root):raise ValueError('Out-of-scope path blocked.')
   for part in [p,*p.parents]:
    if part==root:break

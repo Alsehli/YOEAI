@@ -1196,13 +1196,13 @@
   },
   {
     "path": "source/game_routes.py",
-    "size": 6361,
-    "sha256": "8acfc052a8914ee3c6bd62a0bf89c842bd447d901fb620dac6dbb7f0c10d111d"
+    "size": 6476,
+    "sha256": "d9c6d8c2510aea6f26d403cd72d3202063212dfed9ce4f9adc46557dc56a591c"
   },
   {
     "path": "source/game_studio.py",
-    "size": 25042,
-    "sha256": "9e102ae8e8705d58aea1e82a127059cc4a5bf4bcf6515ad2b99d4fd4b644d82a"
+    "size": 25187,
+    "sha256": "c38c7b885ed8be289346c2cd78c65b6f661a2441a488d167a660dfb0cb9d1528"
   },
   {
     "path": "source/gguf_metadata.py",

@@ -17,7 +17,7 @@ def route(h,post=False):
   if not post and path=='/game/state':result={'capabilities':detect(),'projects':s.projects(),'jobs':s.read(s.jobsfile,[])[-30:],'prototypes':s.prototypes().items[-30:]}
   elif not post and path=='/game/project':result=s.inspect(parse_qs(urlsplit(h.path).query).get('id',[''])[0])
   elif not post and path=='/game/file':
-   query=parse_qs(urlsplit(h.path).query);p=s.file(query.get('id',[''])[0],query.get('path',[''])[0]);raw=p.read_bytes();h.send_response(200);h.send_header('Content-Type',mimetypes.guess_type(p.name)[0] or 'text/plain');h.send_header('X-Content-Type-Options','nosniff');h.send_header('Cache-Control','no-store');h.send_header('Content-Length',str(len(raw)));h.end_headers();h.wfile.write(raw);return True
+   query=parse_qs(urlsplit(h.path).query);p=s.file(query.get('id',[''])[0],query.get('path',[''])[0]);raw=p.read_bytes();h.send_response(200);h.send_header('Content-Type',{'.json':'application/json','.cs':'text/plain','.md':'text/plain','.log':'text/plain','.png':'image/png','.jpg':'image/jpeg','.wav':'audio/wav'}[p.suffix.lower()]);h.send_header('X-Content-Type-Options','nosniff');h.send_header('Cache-Control','no-store');h.send_header('Content-Length',str(len(raw)));h.end_headers();h.wfile.write(raw);return True
   elif post and path=='/game/pick':
    from windows_picker import pick
    result=pick('folder')
