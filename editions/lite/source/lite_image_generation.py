@@ -84,7 +84,10 @@ def route(handler,post,app,home,bundle,config):
    try:
     n=int(handler.headers.get('Content-Length','0'))
     if handler.headers.get('Transfer-Encoding') or not 0<n<=4096:raise ValueError('Invalid configuration request')
-    body=json.loads(handler.rfile.read(n));folder=Path(body.get('folder','')).expanduser().resolve()
+    body=json.loads(handler.rfile.read(n))
+    if not isinstance(body,dict):raise ValueError('Invalid image model folder request')
+    from security_paths import user_local_path
+    folder=user_local_path(body.get('folder','')).resolve()
     if not folder.is_dir():raise ValueError('Choose the folder containing the image models')
     if INSTANCE and (ROUTER.status() if ROUTER else INSTANCE.status()).get('status') in ('running','restoring'):raise ValueError('Stop image generation before changing its model folder')
     files={k:folder/name for k,name in {'diffusion':'z_image_turbo-Q4_K.gguf','encoder':'Qwen3-4B-Instruct-2507-Q4_K_M.gguf','vae':'ae.safetensors'}.items()}

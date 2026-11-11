@@ -28,5 +28,11 @@ for row in inventory:
  if not p.is_file():errors.append('Source inventory file missing: '+row['path']);continue
  data=p.read_bytes()
  if len(data)!=row['size'] or hashlib.sha256(data).hexdigest()!=row['sha256']:errors.append('Source inventory mismatch: '+row['path'])
+lite=json.loads((R/'editions/lite/SOURCE-INVENTORY.json').read_text(encoding='utf-8-sig'))
+for row in lite:
+ p=R/'editions/lite/source'/row['path']
+ if not p.is_file():errors.append('Lite inventory file missing: '+row['path']);continue
+ data=p.read_bytes()
+ if len(data)!=row['bytes'] or hashlib.sha256(data).hexdigest()!=row['sha256']:errors.append('Lite inventory mismatch: '+row['path'])
 result={'passed':not errors,'documents':documents,'relativeLinks':links,'inventoryFiles':len(inventory),'errors':errors}
 print(json.dumps(result,indent=2));sys.exit(bool(errors))

@@ -21,10 +21,11 @@ SYSTEM='You are {name}, a specialised Mini YOE agent inside YOEAI. Ground statem
 def stamp():return time.time()
 def digest(data):return hashlib.sha256(data).hexdigest()
 def reject_secrets(value):
- if re.search(r'(?:\bsk-[A-Za-z0-9_-]{16,}|\bgh[pousr]_[A-Za-z0-9]{20,}|\bAKIA[A-Z0-9]{16}|-----BEGIN[^\n]*PRIVATE KEY|(?:password|api[_ -]?key|client[_ -]?secret)\s*[:=]\s*[\"\x27]?\S{3,})',value,re.I):raise ValueError('Possible credential detected. Remove secrets before saving an agent task or document.')
+ if re.search(r'(?:\bsk-[A-Za-z0-9_-]{16,}|\bgh[pousr]_[A-Za-z0-9]{20,}|\bAKIA[A-Z0-9]{16}|-----BEGIN[A-Z0-9 -]{0,64}PRIVATE KEY|(?:password|api[_ -]?key|client[_ -]?secret)\s*[:=]\s*[\"\x27]?\S{3,})',value,re.I):raise ValueError('Possible credential detected. Remove secrets before saving an agent task or document.')
 def clean_root(value):
  if not isinstance(value,str) or not value.strip():raise ValueError('Enter the specific project folder you approve.')
- original=Path(value).expanduser().absolute()
+ from security_paths import user_local_path
+ original=user_local_path(value)
  for part in [original,*original.parents]:
   if part.is_symlink() or (os.name=='nt' and part.exists() and part.lstat().st_file_attributes & 0x400):raise ValueError('Linked project roots are not supported.')
  p=original.resolve(strict=True)
@@ -35,9 +36,10 @@ def clean_root(value):
 
 def scoped(root,relative):
  if not isinstance(relative,str) or not relative or len(relative)>300:raise ValueError('Invalid relative file path.')
- rel=Path(relative)
+ from security_paths import segments,relative_path
+ parts=segments(relative);rel=Path(*parts)
  if rel.is_absolute() or '..' in rel.parts or ':' in relative or any(x.lower() in DENIED or SECRET.search(x) for x in rel.parts):raise ValueError('Sensitive or out-of-scope file blocked.')
- p=root/rel
+ p=relative_path(root,relative)
  for part in [p,*list(p.parents)[:len(rel.parts)-1]]:
   if part.is_symlink() or (os.name=='nt' and part.exists() and part.lstat().st_file_attributes & 0x400):raise ValueError('Linked files are not allowed.')
  resolved=p.resolve(strict=True)
@@ -86,7 +88,7 @@ class Engine:
  def set_memory(self,agent,body):
   previous=self.memory(agent);prefs=body.get('preferences','');tokens=body.get('maxTokens',768)
   if not isinstance(prefs,str) or len(prefs)>2000 or tokens not in [512,768,1024]:raise ValueError('Use at most 2,000 characters and a supported output limit.')
-  if re.search(r'(?:sk-|api[_ -]?key\s*[:=]|password\s*[:=]|-----BEGIN.*PRIVATE)',prefs,re.I):raise ValueError('Do not store passwords or API keys in agent memory.')
+  if re.search(r'(?:sk-|api[_ -]?key\s*[:=]|password\s*[:=]|-----BEGIN[A-Z0-9 -]{0,64}PRIVATE)',prefs,re.I):raise ValueError('Do not store passwords or API keys in agent memory.')
   with self.connect() as db:db.execute('INSERT OR REPLACE INTO memory VALUES(?,?)',(agent,json.dumps({'preferences':prefs,'maxTokens':tokens,'recallEnabled':previous.get('recallEnabled',True)})))
  def event(self,t,message,**extra):
   t['events'].append({'time':stamp(),'message':message,**extra});t['events']=t['events'][-80:];self.save(t)
@@ -301,7 +303,8 @@ class Engine:
   try:
    self.check(t);p=t['patch'];self.check_patch(t,p);target=scoped(clean_root(t['project']),p['path']);data=target.read_bytes()
    if digest(data)!=t['snapshots'][p['path']]['sha256']:raise ValueError('The file changed after the preview. Start a new task; nothing was written.')
-   backup=self.home/'Backups'/tid;backup.mkdir(parents=True,exist_ok=True);(backup/'original.bin').write_bytes(data)
+   from security_paths import job_id
+   backup=self.home/'Backups'/job_id(tid);backup.mkdir(parents=True,exist_ok=True);(backup/'original.bin').write_bytes(data)
    new=data.decode('utf-8-sig').replace(p['find'],p['replace'],1);encoded=(b'\xef\xbb\xbf' if data.startswith(b'\xef\xbb\xbf') else b'')+new.encode('utf8')
    # Do not follow links or overwrite a file that changed while the backup was written.
    if digest(target.read_bytes())!=digest(data):raise ValueError('The source changed; patch cancelled.')

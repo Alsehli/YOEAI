@@ -13,7 +13,9 @@ class Storage:
  def start(self,text):
   request=storage_request(text)
   if not request or request.get('question'):raise ValueError((request or {}).get('question','Name the drive and the number of largest files to show.'))
-  root=Path(request['drive'])
+  roots={letter+':\\':Path(letter+':/') for letter in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'}
+  root=roots.get(request['drive'])
+  if root is None:raise ValueError('Invalid local drive selection')
   if os.name!='nt':raise ValueError('Drive scanning requires Windows.')
   import ctypes
   if ctypes.windll.kernel32.GetDriveTypeW(str(root)) not in [2,3]:raise ValueError('Choose a connected local or removable drive; network/device paths are not scanned.')

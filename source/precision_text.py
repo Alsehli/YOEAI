@@ -18,7 +18,7 @@ def exact_recipe(prompt,mode='auto'):
  if INTENT.search(prompt):
   for m in QUOTES.finditer(prompt):
    group=next(i for i in range(1,5) if m.group(i) is not None)
-   if re.search(r'(?:font|typeface|family|color|colour)\s*[:=]?\s*$',prompt[max(0,m.start()-24):m.start()],re.I):continue
+   if re.search(r'(?:font|typeface|family|color|colour)$',prompt[max(0,m.start()-24):m.start()].rstrip().rstrip(':=').rstrip(),re.I):continue
    spans.append((m.start(group),m.end(group)))
  if not spans:
   cue=CUE.search(prompt)

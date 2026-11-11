@@ -33,8 +33,8 @@
   const stop=()=>{api('cancel',{requestId}).catch(()=>{});};signal?.addEventListener('abort',stop,{once:true});
   try{
    $('speed').textContent='Understanding request…';timer=setInterval(async()=>{try{const p=await api('progress/'+requestId);if(!signal?.aborted)$('speed').textContent=p.message;}catch{}},800);
-   const history=messages.filter(x=>['user','assistant'].includes(x.role)).slice(-6).map(x=>({role:x.role,content:(typeof x.content==='string'?x.content:x.content?.filter(p=>p.type==='text').map(p=>p.text).join('\n')||'').slice(0,1600)}));
-   const result=await api('prepare',{session,requestId,query:query.slice(0,4000),history,documents},signal);message.assistantSources=result.sources||[];message.assistantResearchAttempted=(result.evidence||[]).some(x=>x.tool==='web.research');message.assistantApprovals=result.approvals||[];message.assistantNotices=result.notices||[];
+   const history=messages.filter(x=>['user','assistant'].includes(x.role)).slice(-6).map(x=>({role:x.role,content:(window.YoeDataConversation?.publicHistory(x)||(typeof x.content==='string'?x.content:x.content?.filter(p=>p.type==='text').map(p=>p.text).join('\n')||'')).slice(0,1600)}));
+   const result=await api('prepare',{session,requestId,query:query.slice(0,4000),history,documents},signal);message.assistantSources=result.sources||[];message.assistantDataEvidence=(result.evidence||[]).filter(x=>x.tool==='web.research').flatMap(x=>x.result?.pages||[]).map(p=>({url:p.url,text:String(p.text||p.content||'').slice(0,20000)})).slice(0,12);message.assistantResearchAttempted=(result.evidence||[]).some(x=>x.tool==='web.research');message.assistantApprovals=result.approvals||[];message.assistantNotices=result.notices||[];
    message.webPhotos=(result.evidence||[]).flatMap(x=>x.result?.photos||[]).slice(0,2);message.assistantFiles=(result.evidence||[]).flatMap(x=>x.result?.files||[]).slice(0,20);
    const hasEvidence=Array.isArray(result.evidence)&&result.evidence.length;
    if(hasEvidence||message.assistantApprovals.length||message.assistantNotices.length){

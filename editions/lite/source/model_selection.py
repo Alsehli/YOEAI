@@ -3,7 +3,8 @@ from pathlib import Path
 from context_limits import model_info as inspect_model
 
 def selected_model(value, projector=''):
-    path=Path(value).expanduser().resolve()
+    from security_paths import user_local_path
+    path=user_local_path(value).resolve()
     if path.is_dir():
         candidates=[]
         for item in path.glob('*.gguf'):
@@ -23,7 +24,7 @@ def selected_model(value, projector=''):
         raise ValueError('Split GGUF sets are not supported by this setup yet. Select a complete single-file model.')
     vision=''
     if projector:
-        vision_path=Path(projector).expanduser().resolve()
+        vision_path=user_local_path(projector).resolve()
         if not vision_path.is_file() or vision_path==path:raise ValueError('Select a separate compatible vision projector, or leave it blank for text only.')
         try:inspect_model(vision_path)
         except Exception as error:raise ValueError('Invalid vision projector: '+str(error)) from error

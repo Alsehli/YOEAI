@@ -65,7 +65,7 @@ def change(e,b):
   if action=='remember':
    value=b.get('text')
    if not isinstance(value,str) or not 1<=len(value.strip())<=500:raise ValueError('Use a preference of 1–500 characters.')
-   if re.search(r'(?:sk-|api[_ -]?key\s*[:=]|password\s*[:=]|-----BEGIN.*PRIVATE|bearer\s+\S+)',value,re.I):raise ValueError('Do not save secrets in memory.')
+   if re.search(r'(?:sk-|api[_ -]?key\s*[:=]|password\s*[:=]|-----BEGIN[A-Z0-9 -]{0,64}PRIVATE|bearer\s+\S+)',value,re.I):raise ValueError('Do not save secrets in memory.')
    count=db.execute('SELECT count(*) FROM agent_notes WHERE agent=?',(agent,)).fetchone()[0]
    if count>=20:raise ValueError('Forget an old preference before adding another (20 maximum).')
    db.execute('INSERT INTO agent_notes VALUES(?,?,?,?)',(uuid.uuid4().hex,agent,value.strip(),time.time()))

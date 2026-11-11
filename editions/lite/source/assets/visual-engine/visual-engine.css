@@ -3,3 +3,5 @@
 .vie-table-scroll{overflow:auto;height:420px;max-height:55vh;overscroll-behavior:contain;border:1px solid var(--vie-border);border-radius:8px}.vie-spacer td{padding:0!important;border:0!important;max-height:none!important}.vie-column-settings{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 0}.vie-column-settings>label{min-width:100px}.vie-column-settings input[type=search]{max-width:180px}
 
 .vie-chart svg{width:100%;height:100%;fill:initial;stroke:none;stroke-width:0;flex-shrink:1}.vie-chart svg *{stroke-linecap:initial;stroke-linejoin:initial}.vie-response [hidden],.composer-bottom [hidden]{display:none!important}
+
+.vie-response a{color:color-mix(in srgb,var(--vie-ink) 40%,#3478e9)}.vie-cell-source{font-size:11px;margin-inline-start:3px}.vie-table td[dir=auto]{unicode-bidi:plaintext;text-align:start}.vie-table input[type=number],.vie-table input[type=date]{width:150px}

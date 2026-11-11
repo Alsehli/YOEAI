@@ -1,5 +1,15 @@
 [
   {
+    "path": "source/LICENSE",
+    "size": 35149,
+    "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986"
+  },
+  {
+    "path": "source/YOEAI-Product-Policies-DRAFT.pdf",
+    "size": 51521,
+    "sha256": "586c616700ccd4813fe3233167b7bc58f636ea049a58a89d2416e60f032e1f7c"
+  },
+  {
     "path": "source/agent_memory.py",
     "size": 2185,
     "sha256": "b8a7c2a3e9c4aeda38089f496eea909acf4a7e29597d37e791093fa483fd6683"
@@ -125,6 +135,11 @@
     "sha256": "b3d06002778f0fe2010aa230c77aa4744e947a6e7a17a17e9cb478e0704020ff"
   },
   {
+    "path": "source/assets/code-yoe/README.md",
+    "size": 2438,
+    "sha256": "ae3207485ccb2c669fb7773fc3dd22d9432514039f6e320abf96e43367eed3c5"
+  },
+  {
     "path": "source/assets/code-yoe/code-fox.js",
     "size": 6183,
     "sha256": "badcea93d871ba51bcce75305c09f8115dbc06c42f5df9e494f73ffa3cab6ab5"
@@ -173,11 +188,6 @@
     "path": "source/assets/code-yoe/poses.png",
     "size": 735972,
     "sha256": "00679da9ffb538d2af9e38473932193d1bdaad0c324cc417b3283d9239089533"
-  },
-  {
-    "path": "source/assets/code-yoe/README.md",
-    "size": 2438,
-    "sha256": "ae3207485ccb2c669fb7773fc3dd22d9432514039f6e320abf96e43367eed3c5"
   },
   {
     "path": "source/assets/code-yoe/sleeping-sprites.png",
@@ -255,6 +265,11 @@
     "sha256": "9eaa84788ec4d3e6fe65571863aa3ee44c9fe97965d1d4557e7429903814efbc"
   },
   {
+    "path": "source/assets/design-engine.css",
+    "size": 952,
+    "sha256": "7b1f9e55941d122e6af709e31d579eefbdb2c74e363c76c79270ca06fddaffed"
+  },
+  {
     "path": "source/assets/design-engine/code-approval.json",
     "size": 2558,
     "sha256": "2b100d4fa76f154e780825fcd19a8671a1f2b863c5273c2c5488ce3d0ee5c2b9"
@@ -268,6 +283,16 @@
     "path": "source/assets/design-engine/model-manifest.json",
     "size": 10506,
     "sha256": "13902554e6690967ee23530200c0c48fb23d29c8edc7195e3636c793aeeafd5e"
+  },
+  {
+    "path": "source/assets/design-engine/official/LICENSE",
+    "size": 11358,
+    "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+  },
+  {
+    "path": "source/assets/design-engine/official/README.md",
+    "size": 15537,
+    "sha256": "0189c0c327866821c34adbb392253abcc6788c2199c4fcad7c329db833bad817"
   },
   {
     "path": "source/assets/design-engine/official/assets/__init__.py",
@@ -290,19 +315,9 @@
     "sha256": "4aaf10962566c47da26afd05793f223fce9078ddecf10a49631fa8d99ebb90f9"
   },
   {
-    "path": "source/assets/design-engine/official/LICENSE",
-    "size": 11358,
-    "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
-  },
-  {
     "path": "source/assets/design-engine/official/pyproject.toml",
     "size": 1092,
     "sha256": "56e1dc4d325e25803fd4e1f5b2726fc991b459e9a6c36b244482e41d035c5486"
-  },
-  {
-    "path": "source/assets/design-engine/official/README.md",
-    "size": 15537,
-    "sha256": "0189c0c327866821c34adbb392253abcc6788c2199c4fcad7c329db833bad817"
   },
   {
     "path": "source/assets/design-engine/official/yoeai-source-revision.json",
@@ -313,11 +328,6 @@
     "path": "source/assets/design-engine/worker.py",
     "size": 7638,
     "sha256": "9cf70b166549783aeb1f12d0c9ece77ada25098780450430dc13a9423cabe117"
-  },
-  {
-    "path": "source/assets/design-engine.css",
-    "size": 952,
-    "sha256": "7b1f9e55941d122e6af709e31d579eefbdb2c74e363c76c79270ca06fddaffed"
   },
   {
     "path": "source/assets/eazyai.ico",
@@ -340,14 +350,14 @@
     "sha256": "c111ca41b18e82e493b877aa38de1c241d179664b8e016b76127453530c0d915"
   },
   {
-    "path": "source/assets/fonts/inter-italic.ttf",
-    "size": 906596,
-    "sha256": "acd98e64795781b2058f07b18475e0ecee2a0fe2b42a49e2f9e37d0d6bf66ce6"
-  },
-  {
     "path": "source/assets/fonts/inter-OFL.txt",
     "size": 4377,
     "sha256": "5b9321a4298cfeb6b34354164a1c3afc3db114569984c502b9b35d988fd58c57"
+  },
+  {
+    "path": "source/assets/fonts/inter-italic.ttf",
+    "size": 906596,
+    "sha256": "acd98e64795781b2058f07b18475e0ecee2a0fe2b42a49e2f9e37d0d6bf66ce6"
   },
   {
     "path": "source/assets/fonts/inter.ttf",
@@ -390,31 +400,6 @@
     "sha256": "a7b5cd33226d782bb27fb9266a9b0ec1b4d7c93d3f4f0a3c58dd7dc13167a55e"
   },
   {
-    "path": "source/assets/game-studio/game-fox-cutout.png",
-    "size": 1463688,
-    "sha256": "52cce0fc30610f7d2e7290e8a271395a93f60ffc640d0976eab4ce8d5726b174"
-  },
-  {
-    "path": "source/assets/game-studio/game-studio.css",
-    "size": 7285,
-    "sha256": "8b0213abd2533d5d19bfa059f963c8f74f5e140fae406ae714b15ad91bd6a886"
-  },
-  {
-    "path": "source/assets/game-studio/game-studio.js",
-    "size": 30102,
-    "sha256": "656ff2a29f9beae7951ae23d7e00f11194499b0f9e2c145d5d5e766699796e5f"
-  },
-  {
-    "path": "source/assets/game-studio/reference.png",
-    "size": 2136516,
-    "sha256": "77a68df64adeb2352a917bc49871d29bd0c93948ef2fb91d51d0030980af0783"
-  },
-  {
-    "path": "source/assets/game-studio/template-history.json",
-    "size": 566,
-    "sha256": "b4e1c411148624456b6f8b734c738fc6b2b60e1a53b875d6997546767d6b153b"
-  },
-  {
     "path": "source/assets/game-studio/Unity/YoeCamera.cs",
     "size": 293,
     "sha256": "6c0627ddf06a27232e4fd0def827094191cd528cf08b3b83536d401b755159e8"
@@ -443,6 +428,31 @@
     "path": "source/assets/game-studio/Unity/YoeStudioBridge.cs",
     "size": 12519,
     "sha256": "7e1e456c9eeece2859b3926da6307d703eefe72dba76d5d578279bc322a5bff9"
+  },
+  {
+    "path": "source/assets/game-studio/game-fox-cutout.png",
+    "size": 1463688,
+    "sha256": "52cce0fc30610f7d2e7290e8a271395a93f60ffc640d0976eab4ce8d5726b174"
+  },
+  {
+    "path": "source/assets/game-studio/game-studio.css",
+    "size": 7285,
+    "sha256": "8b0213abd2533d5d19bfa059f963c8f74f5e140fae406ae714b15ad91bd6a886"
+  },
+  {
+    "path": "source/assets/game-studio/game-studio.js",
+    "size": 30102,
+    "sha256": "656ff2a29f9beae7951ae23d7e00f11194499b0f9e2c145d5d5e766699796e5f"
+  },
+  {
+    "path": "source/assets/game-studio/reference.png",
+    "size": 2136516,
+    "sha256": "77a68df64adeb2352a917bc49871d29bd0c93948ef2fb91d51d0030980af0783"
+  },
+  {
+    "path": "source/assets/game-studio/template-history.json",
+    "size": 566,
+    "sha256": "b4e1c411148624456b6f8b734c738fc6b2b60e1a53b875d6997546767d6b153b"
   },
   {
     "path": "source/assets/image-generation.js",
@@ -485,6 +495,16 @@
     "sha256": "adf4a97ef3510de929e2584a6b0de4433bb9d24e6faf166e155dcf105b78364c"
   },
   {
+    "path": "source/assets/mascot.js",
+    "size": 4395,
+    "sha256": "636565e90356b4cb58d6ba24f24e674922a45b087691ef94d08c87d075481553"
+  },
+  {
+    "path": "source/assets/mascot/README.md",
+    "size": 833,
+    "sha256": "ac4ed619cb66286c775ba60e47f40414a452541609321435c7d2027b44855f42"
+  },
+  {
     "path": "source/assets/mascot/fox-atlas.png",
     "size": 1910683,
     "sha256": "52cb7b6e617dca075ecef36fab5e12e31514555b18e49f8ce659d836cff5a19b"
@@ -498,16 +518,6 @@
     "path": "source/assets/mascot/frames.json",
     "size": 2663,
     "sha256": "3e254cccda3ab425766e8c5b395aeb1fc8ffdca6b41eb0bea40c85884a69e34f"
-  },
-  {
-    "path": "source/assets/mascot/README.md",
-    "size": 833,
-    "sha256": "ac4ed619cb66286c775ba60e47f40414a452541609321435c7d2027b44855f42"
-  },
-  {
-    "path": "source/assets/mascot.js",
-    "size": 4395,
-    "sha256": "636565e90356b4cb58d6ba24f24e674922a45b087691ef94d08c87d075481553"
   },
   {
     "path": "source/assets/mini-fox-variants.js",
@@ -590,6 +600,16 @@
     "sha256": "117da2af0d4ce0fe1c8e19b5cff9dcd806adf973d328d27b11d4448c4ff24f76"
   },
   {
+    "path": "source/assets/preview-vendor/React-LICENSE.txt",
+    "size": 1086,
+    "sha256": "52412d7bc7ce4157ea628bbaacb8829e0a9cb3c58f57f99176126bc8cf2bfc85"
+  },
+  {
+    "path": "source/assets/preview-vendor/Three-LICENSE.txt",
+    "size": 1081,
+    "sha256": "852e0e8699169bf9f6fdc6bda3e682d078dcbc738b5d33e74df594721bff271d"
+  },
+  {
     "path": "source/assets/preview-vendor/babel.js",
     "size": 3126120,
     "sha256": "f72cb977ba7831ffb8160a4f5b74dda91567e11ec09665d6c8fc8b7dc1ab5eaf"
@@ -605,19 +625,9 @@
     "sha256": "35f4f974f4b2bcd44da73963347f8952e341f83909e4498227d4e26b98f66f0d"
   },
   {
-    "path": "source/assets/preview-vendor/React-LICENSE.txt",
-    "size": 1086,
-    "sha256": "52412d7bc7ce4157ea628bbaacb8829e0a9cb3c58f57f99176126bc8cf2bfc85"
-  },
-  {
     "path": "source/assets/preview-vendor/react.js",
     "size": 10751,
     "sha256": "d949f1c3687aedadcedac85261865f29b17cd273997e7f6b2bfc53b2f9d4c4dd"
-  },
-  {
-    "path": "source/assets/preview-vendor/Three-LICENSE.txt",
-    "size": 1081,
-    "sha256": "852e0e8699169bf9f6fdc6bda3e682d078dcbc738b5d33e74df594721bff271d"
   },
   {
     "path": "source/assets/preview-vendor/three.js",
@@ -720,6 +730,11 @@
     "sha256": "5f9c66528efb3c9ec9342810a4e14eebef79a9d2c8d83982f75046682d744d95"
   },
   {
+    "path": "source/assets/speech-input.js",
+    "size": 5432,
+    "sha256": "d5a5bfb086b11d4a25c849b70a4214af19fa21cc2b5853bfe6958025ca546226"
+  },
+  {
     "path": "source/assets/speech-input/interactive_worker.py",
     "size": 9869,
     "sha256": "e817c122516a725df125be2a305dbfbc1e05c4713e7f8cde0044379533217e77"
@@ -733,11 +748,6 @@
     "path": "source/assets/speech-input/worker.py",
     "size": 3670,
     "sha256": "6bde53969771ebfddd4b275a9e3c5ef24c37613815dbef75ad297fa0c2a56ae7"
-  },
-  {
-    "path": "source/assets/speech-input.js",
-    "size": 5432,
-    "sha256": "d5a5bfb086b11d4a25c849b70a4214af19fa21cc2b5853bfe6958025ca546226"
   },
   {
     "path": "source/assets/speed.png",
@@ -770,19 +780,14 @@
     "sha256": "7a0bba558189a7c16c77b15aa6be9ad6008826dce324eca89a2ed8f095ac0163"
   },
   {
-    "path": "source/assets/update-yoe/design-neutral-alternative.png",
-    "size": 218084,
-    "sha256": "b8e5de1eea70dbea04519019f4f729317dc2233aa0d6923e1d691d8e91afaee7"
+    "path": "source/assets/update-yoe.js",
+    "size": 4129,
+    "sha256": "0a14d467b4723efd9a763208c8995727cda15c743ba9c0ff5c05a4be79dd9526"
   },
   {
-    "path": "source/assets/update-yoe/fox-cutout.png",
-    "size": 1322387,
-    "sha256": "2b0b4e086c5beeae0a0e93965111bab543aa98ccb3df5f0df3387647f1f3dda3"
-  },
-  {
-    "path": "source/assets/update-yoe/neutral-concept.png",
-    "size": 640986,
-    "sha256": "ababf1a496c4926712e48b2ee6247a368e1640c6f8f4ca01a2630df573812e7b"
+    "path": "source/assets/update-yoe/Sprites/README.txt",
+    "size": 587,
+    "sha256": "88666c5787661a07145090c2a595456757f22794ca4618528da2e47819e6ea81"
   },
   {
     "path": "source/assets/update-yoe/Sprites/coding.png",
@@ -805,11 +810,6 @@
     "sha256": "14a26c46c503358b66c089683d2b685f28cb60668d0d2c5f8649e8edd65ec56c"
   },
   {
-    "path": "source/assets/update-yoe/Sprites/README.txt",
-    "size": 587,
-    "sha256": "88666c5787661a07145090c2a595456757f22794ca4618528da2e47819e6ea81"
-  },
-  {
     "path": "source/assets/update-yoe/Sprites/scanning.png",
     "size": 448413,
     "sha256": "f780f17acce5096d9716dea6a6c7092e0006507e46da682044ddf7e08a2acab2"
@@ -830,14 +830,29 @@
     "sha256": "5aa37dd09f486d82380ff4d5dbabc6e6390a09629f623fccd95e011e6da240c6"
   },
   {
+    "path": "source/assets/update-yoe/design-neutral-alternative.png",
+    "size": 218084,
+    "sha256": "b8e5de1eea70dbea04519019f4f729317dc2233aa0d6923e1d691d8e91afaee7"
+  },
+  {
+    "path": "source/assets/update-yoe/fox-cutout.png",
+    "size": 1322387,
+    "sha256": "2b0b4e086c5beeae0a0e93965111bab543aa98ccb3df5f0df3387647f1f3dda3"
+  },
+  {
+    "path": "source/assets/update-yoe/neutral-concept.png",
+    "size": 640986,
+    "sha256": "ababf1a496c4926712e48b2ee6247a368e1640c6f8f4ca01a2630df573812e7b"
+  },
+  {
     "path": "source/assets/update-yoe/update-fox.js",
     "size": 4689,
     "sha256": "b207297c829e96f6aa2416d05a7c4bd059ea416297a5f19c6a71762a92c35ff7"
   },
   {
-    "path": "source/assets/update-yoe.js",
-    "size": 4129,
-    "sha256": "0a14d467b4723efd9a763208c8995727cda15c743ba9c0ff5c05a4be79dd9526"
+    "path": "source/assets/vendor/Roboto-LICENSE.txt",
+    "size": 11357,
+    "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
   },
   {
     "path": "source/assets/vendor/argparse-LICENSE.txt",
@@ -923,11 +938,6 @@
     "path": "source/assets/vendor/punycode.js-LICENSE.txt",
     "size": 1077,
     "sha256": "483acb265f182907d1caf6cff9c16c96f31325ed23792832cc5d8b12d5f88c8a"
-  },
-  {
-    "path": "source/assets/vendor/Roboto-LICENSE.txt",
-    "size": 11357,
-    "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
   },
   {
     "path": "source/assets/vendor/uc.micro-LICENSE.txt",
@@ -1020,6 +1030,16 @@
     "sha256": "aff70e0326b033c58bab25fef780d9bdef129edd47999fd008e56736df0581ab"
   },
   {
+    "path": "source/assets/windows-yoe.css",
+    "size": 2674,
+    "sha256": "3e995c592fa7ffb4a8e9728a264629c2f3f0208830050fe343e587199e0e8cd7"
+  },
+  {
+    "path": "source/assets/windows-yoe.js",
+    "size": 20367,
+    "sha256": "04659c2bfe8cd07877e574e7eaddfb121ef09e368f70208f94c3c4aa48e22cfd"
+  },
+  {
     "path": "source/assets/windows-yoe/idle.png",
     "size": 307120,
     "sha256": "5bc5bd0bba6edeec8f4d8964fbd70c46089c4283295a5117e8c39d5fc8ac117e"
@@ -1053,16 +1073,6 @@
     "path": "source/assets/windows-yoe/working.png",
     "size": 310984,
     "sha256": "7d7d9bd14b9f729eb2a94fb6e4f889ce0aa1716605feae2c892d15379c10568b"
-  },
-  {
-    "path": "source/assets/windows-yoe.css",
-    "size": 2674,
-    "sha256": "3e995c592fa7ffb4a8e9728a264629c2f3f0208830050fe343e587199e0e8cd7"
-  },
-  {
-    "path": "source/assets/windows-yoe.js",
-    "size": 20367,
-    "sha256": "04659c2bfe8cd07877e574e7eaddfb121ef09e368f70208f94c3c4aa48e22cfd"
   },
   {
     "path": "source/assets/windows.png",
@@ -1141,18 +1151,18 @@
   },
   {
     "path": "source/control_router.py",
-    "size": 5884,
-    "sha256": "248a7f10b3705b07154e8453b256553c98246c72fad8bf4733fc28b0644f4ba2"
+    "size": 5935,
+    "sha256": "cc3254fb45678a0fbdf981500812f2c73eed3853062bdf64d83f346bce429cb2"
   },
   {
     "path": "source/control_storage.py",
-    "size": 4363,
-    "sha256": "fe4c1f538f2ff9dc9377622abf8729873b38c6dfa734053a7bef3498a079caa4"
+    "size": 4595,
+    "sha256": "5ff55c8a940cb090ea91ad9ed28267b23affbb1fbfef00c50609585267978278"
   },
   {
     "path": "source/control_web_evidence.py",
-    "size": 3974,
-    "sha256": "1a0cf8e2d8c518542c4f2f6fa1bbd4c727decba924c154e2458bda7a253d74fd"
+    "size": 3734,
+    "sha256": "ae5f5426cdc7a937e83f04e38e4c0156aec3a752ee4a63dd5f864b617ae64c91"
   },
   {
     "path": "source/customer.py",
@@ -1196,8 +1206,8 @@
   },
   {
     "path": "source/image_generation.py",
-    "size": 8520,
-    "sha256": "a414030712d2375d5fefd7f52de4329a21695ad327102082966f951ea79188bc"
+    "size": 8565,
+    "sha256": "411697ef80616d64f2794423bb50763354f53d5918bd41aa91efdaa16e9aae47"
   },
   {
     "path": "source/image_generation_adapter.py",
@@ -1225,11 +1235,6 @@
     "sha256": "347e0f28d55a179e686a177239f817ce6c6089a945359f88edef4612f26205a8"
   },
   {
-    "path": "source/LICENSE",
-    "size": 35149,
-    "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986"
-  },
-  {
     "path": "source/loading_screen.py",
     "size": 6685,
     "sha256": "2023c060c9c8aaad4717da60df5dabdb717df1fe1f5c686788d90f0f61a985e8"
@@ -1246,8 +1251,8 @@
   },
   {
     "path": "source/memory_controls.py",
-    "size": 5509,
-    "sha256": "2e897ec67c676b014b8e479afb358b9a694717ff2188104b241a7346bdc7aa9e"
+    "size": 5523,
+    "sha256": "3b8fd15a10d4efcccd5156e4dcfba2aaf5a15f622df42353163a3b0794a5b793"
   },
   {
     "path": "source/memory_index.py",
@@ -1256,8 +1261,8 @@
   },
   {
     "path": "source/mini_agents.py",
-    "size": 44965,
-    "sha256": "e6ae409953df96481ebdd6a9bb0773634d96939f2a18d438f737c90806914261"
+    "size": 45162,
+    "sha256": "ac69b1727c8c24483452935d6b871661573126e3e4286a9851c6345ec30e9174"
   },
   {
     "path": "source/model_modes.py",
@@ -1266,8 +1271,8 @@
   },
   {
     "path": "source/model_selection.py",
-    "size": 2056,
-    "sha256": "b00c1c5409966b49f2a596b17bfb9fc355b6817c005c2a68c0bebc1c2ab4f72a"
+    "size": 2133,
+    "sha256": "f35dfc92c547300f26e140e9d4768c03938e306785acc5c2f0a531256c949ad9"
   },
   {
     "path": "source/model_settings.py",
@@ -1346,13 +1351,18 @@
   },
   {
     "path": "source/precision_text.py",
-    "size": 22076,
-    "sha256": "213c22e0210d814716597f1a4fbce8a675cb5eaac2320aa73f3ac6d02dd8844b"
+    "size": 22096,
+    "sha256": "f9efcad74259f70f4401d12f4caec734441ae2d94fe9ee2b298608b6aa3fa586"
   },
   {
     "path": "source/presentation.py",
     "size": 7581,
     "sha256": "6a188c6a03164ddb739689a644fe067833d67eb35750951364fbf5db1c578a77"
+  },
+  {
+    "path": "source/public_transport.py",
+    "size": 618,
+    "sha256": "29b0d14efd84d8c2aa7193a912051dcec392a73ff315db2a71ec368f205b9de8"
   },
   {
     "path": "source/read_aloud.py",
@@ -1400,6 +1410,11 @@
     "sha256": "e467710d03f61accf867d6ca6cd32a1c4dfdc827e7cad8b54d92ae3246e15fd6"
   },
   {
+    "path": "source/security_paths.py",
+    "size": 2139,
+    "sha256": "3493589dfd444055ea427fbd2062fb82a548b3fa7ab123e26e79d689b1ef40d5"
+  },
+  {
     "path": "source/setup_agreement.py",
     "size": 3276,
     "sha256": "37c4cb690aad2daa15a2f5150f61e6a27cb4b4a004c64be9142ebab2086e2120"
@@ -1441,8 +1456,8 @@
   },
   {
     "path": "source/update_acquire.py",
-    "size": 6253,
-    "sha256": "e906758322e677a7c5ea04fb9abcf62f96d08b492f98799ee5e917fcaea1d9bd"
+    "size": 6346,
+    "sha256": "19300e6e3916444f1ae976f05abdd3d415756857b9e0f9a109581ec31e86e742"
   },
   {
     "path": "source/update_audit.py",
@@ -1456,8 +1471,8 @@
   },
   {
     "path": "source/update_manager.py",
-    "size": 24063,
-    "sha256": "e2f08a99473c477d2250a11326103cc80cf664e339c327820f997d97e422a7b1"
+    "size": 24399,
+    "sha256": "4cb937ca5efaacf801e8944ab8ab328b8d90e2627baf0bce0395aa165b544d4f"
   },
   {
     "path": "source/update_native.py",
@@ -1586,8 +1601,8 @@
   },
   {
     "path": "source/windows_policy.py",
-    "size": 18649,
-    "sha256": "d1e4f9a6f6d420287bc3cef70133b6eaa39d9ece8125593197d750a9509ba0d9"
+    "size": 18729,
+    "sha256": "3a1972c15123c5cdbc6eff6f8c98ca1eb5dbd042f701ddb9ab6ecedaa1b89704"
   },
   {
     "path": "source/windows_productivity.py",
@@ -1623,10 +1638,5 @@
     "path": "source/writing_check.py",
     "size": 6656,
     "sha256": "ac70401b9295878d25fd3218bf87ea0bcece8f3d2e5d186c4a2226b9c2569832"
-  },
-  {
-    "path": "source/YOEAI-Product-Policies-DRAFT.pdf",
-    "size": 51521,
-    "sha256": "586c616700ccd4813fe3233167b7bc58f636ea049a58a89d2416e60f032e1f7c"
   }
 ]

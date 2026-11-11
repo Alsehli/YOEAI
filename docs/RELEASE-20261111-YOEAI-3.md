@@ -31,3 +31,7 @@ The planned production endpoint is `https://downloads.yoeai.online/3.0/stable/ma
 ## Security review follow-up
 
 Hosted CodeQL review prompted a packaged-file asset index with fixed MIME values, a TLS 1.2 minimum in local installer fixtures, and canonical hex-only generated job IDs. Local model-folder selection deliberately accepts the user's absolute local folder through same-origin settings; that single intentional path is documented inline rather than disabling the security query. The legacy scan uses the same local-folder validation. All 31 request/shutdown audit regressions and 35 folder regressions passed after these changes.
+
+## Interactive graphs and tables
+
+The current Lite source now includes versioned, shared data views, normal-chat Qwen integration, transactional follow-ups, deterministic calculations and sourced exports. It retains the bundled ECharts 6.1.0 and bounded/virtualized table engine. [Detailed implementation and local evidence](../editions/lite/source/docs/YOEAI_GRAPHS_TABLES_REPORT.md) records 223 graph/table scenarios and 250 syntax/asset checks, with live-model checks distinguished from research fixtures. No application or installer binary is released by this source publication.
