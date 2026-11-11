@@ -301,8 +301,8 @@
   },
   {
     "path": "source/assets/design-engine/official/gradio_app.py",
-    "size": 38576,
-    "sha256": "156cf1da82ab44ce2d42e4686c945686bc93efa9950b68e5bb94dada15efcf93"
+    "size": 38716,
+    "sha256": "3c546c1b9c5b8c9d96d0eb17248161615b3e78142553fed0641b08e3c723384b"
   },
   {
     "path": "source/assets/design-engine/official/gradio_presets.py",
@@ -311,13 +311,18 @@
   },
   {
     "path": "source/assets/design-engine/official/inference_runtime.py",
-    "size": 2975,
-    "sha256": "4aaf10962566c47da26afd05793f223fce9078ddecf10a49631fa8d99ebb90f9"
+    "size": 3237,
+    "sha256": "650e852d003a629098de438d140e75ffbbe186b981f3bdd5608dab5a71906c14"
   },
   {
     "path": "source/assets/design-engine/official/pyproject.toml",
     "size": 1092,
     "sha256": "56e1dc4d325e25803fd4e1f5b2726fc991b459e9a6c36b244482e41d035c5486"
+  },
+  {
+    "path": "source/assets/design-engine/official/security_paths.py",
+    "size": 2139,
+    "sha256": "3493589dfd444055ea427fbd2062fb82a548b3fa7ab123e26e79d689b1ef40d5"
   },
   {
     "path": "source/assets/design-engine/official/yoeai-source-revision.json",
@@ -1196,8 +1201,8 @@
   },
   {
     "path": "source/game_studio.py",
-    "size": 25010,
-    "sha256": "391cd4cf070a11773d58aa47248a9ec1dcbf10d12bc3bf0afc6347fe788e0463"
+    "size": 25042,
+    "sha256": "9e102ae8e8705d58aea1e82a127059cc4a5bf4bcf6515ad2b99d4fd4b644d82a"
   },
   {
     "path": "source/gguf_metadata.py",
@@ -1231,8 +1236,8 @@
   },
   {
     "path": "source/language_understanding.py",
-    "size": 6662,
-    "sha256": "347e0f28d55a179e686a177239f817ce6c6089a945359f88edef4612f26205a8"
+    "size": 6672,
+    "sha256": "dcb45995c402ae1fdb9198ef79d515ad9e7b9a46ae52ae083cddf045c3be9146"
   },
   {
     "path": "source/loading_screen.py",
@@ -1356,8 +1361,8 @@
   },
   {
     "path": "source/presentation.py",
-    "size": 7581,
-    "sha256": "6a188c6a03164ddb739689a644fe067833d67eb35750951364fbf5db1c578a77"
+    "size": 7824,
+    "sha256": "423d8ee69c849860206bba033cf4624cc2124e87cc500f95530df7fe87871f7c"
   },
   {
     "path": "source/public_transport.py",
@@ -1366,8 +1371,8 @@
   },
   {
     "path": "source/read_aloud.py",
-    "size": 5164,
-    "sha256": "dcbf1ea3634f68ab3448fe1696e051d71241fc4dd7116c9f8bd8f497c90b1113"
+    "size": 5297,
+    "sha256": "8ba4f3a0c10bc99e0eaf2e433d2d77722f7155d8d5871c7f2c17870ea8f8e8ea"
   },
   {
     "path": "source/research_pdf.py",
@@ -1511,8 +1516,8 @@
   },
   {
     "path": "source/video_generation.py",
-    "size": 17633,
-    "sha256": "381b73f9f1960addf75ce88aa4eacf0eb4856a1bf8af5055ebb04069deeaa6fc"
+    "size": 17864,
+    "sha256": "f5905220fa71043d4fcc3486e8e6fffb713866471672eb01e00544e877b89c4f"
   },
   {
     "path": "source/video_generation_adapter.py",

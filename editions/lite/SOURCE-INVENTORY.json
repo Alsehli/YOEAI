@@ -1201,8 +1201,8 @@
   },
   {
     "path": "language_understanding.py",
-    "bytes": 6719,
-    "sha256": "1ea770b653422e45e63eb7d0f731c25590bc2606f7e780f4726838a44975ce9a"
+    "bytes": 6729,
+    "sha256": "3b0ace69ab524d0cbc7d429007d2c68acff029d7afbd27312601d8526453428c"
   },
   {
     "path": "lite_agents_bridge.py",
@@ -1621,8 +1621,8 @@
   },
   {
     "path": "tests_system/syntax_assets.py",
-    "bytes": 1631,
-    "sha256": "ca60beaa8bafd805d229093eb12424131e2fd624d6ada0b38c6b02f7e64dd948"
+    "bytes": 2095,
+    "sha256": "a70837a3a1d99119e728b8e9f78cf022bdb621b1c103d04d2b498d24dc933f3d"
   },
   {
     "path": "tests_system/test_audit.py",

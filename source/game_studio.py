@@ -18,7 +18,8 @@ def sha(p):
 def atomic(p,value):
  p.parent.mkdir(parents=True,exist_ok=True);q=p.with_suffix(p.suffix+'.stage');q.write_text(json.dumps(value,ensure_ascii=False,indent=2),encoding='utf8');os.replace(q,p)
 def safe_folder(value,existing=True):
- p=Path(value).expanduser().absolute()
+ from security_paths import user_local_path
+ p=user_local_path(value)
  for part in [p,*p.parents]:
   if part.exists() and (part.is_symlink() or getattr(part.lstat(),'st_file_attributes',0)&0x400):raise ValueError('Linked folders are not supported.')
  p=p.resolve()

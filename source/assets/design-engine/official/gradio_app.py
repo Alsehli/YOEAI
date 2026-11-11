@@ -16,6 +16,8 @@ from dataclasses import asdict, dataclass, replace
 from functools import partial
 from importlib.resources import files
 from pathlib import Path
+from security_paths import relative_path
+from inference_runtime import local_selection
 from secrets import randbits
 from uuid import uuid4
 
@@ -61,7 +63,7 @@ def is_model_bundle(path):
             if indices:
                 for file in indices:
                     shards = json.loads(file.read_text())["weight_map"].values()
-                    if not shards or not all((component / shard).is_file() for shard in shards):
+                    if not shards or not all(relative_path(component,shard).is_file() for shard in shards):
                         return False
             elif not any(component.glob("*.safetensors")):
                 return False
@@ -79,7 +81,7 @@ def is_model_bundle(path):
 
 
 def discover_models(root):
-    root = Path(root).expanduser().resolve()
+    root = local_selection(root).resolve()
     if not root.is_dir():
         return []
     candidates = [root] if is_model_bundle(root) else sorted(p for p in root.iterdir() if p.is_dir())
@@ -245,7 +247,7 @@ class ModelRunner:
     def generate(self, model, config, progress=None):
         config.validate()
         model = model_source(model)
-        if Path(model).is_dir() and not is_model_bundle(Path(model)):
+        if local_selection(model).is_dir() and not is_model_bundle(local_selection(model)):
             raise ValueError("Choose a complete local model bundle with all five components.")
         with self.lock:
             config = replace(config, seed=secrets.randbelow(2**32)) if config.seed == -1 else config
@@ -308,7 +310,7 @@ class ModelRunner:
                 path = folder / f"{i + 1:02d}.png"
                 image.save(path)
                 paths.append(str(path))
-            root = Path(model)
+            root = local_selection(model)
             configs = []
             if root.is_dir():
                 configs = (
@@ -653,7 +655,7 @@ def build_app(
                 raise gr.Error(str(exc)) from exc
 
         def load_example(path):
-            path = Path(path)
+            path = local_selection(path)
             record = json.loads(path.read_text())
             # Examples supply image settings; keep the user's runtime configuration.
             parameters = {
