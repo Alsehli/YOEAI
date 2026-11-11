@@ -32,3 +32,17 @@ def chat_payload(raw):
 
 def page_headers():
  return {'Content-Security-Policy':"default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; object-src 'none'; base-uri 'none'; form-action 'self'",'X-Frame-Options':'DENY','X-Content-Type-Options':'nosniff','Cache-Control':'no-store'}
+
+
+def packaged_assets(root):
+    """Build URL lookup values exclusively from trusted packaged files."""
+    return _asset_index(str(root.resolve()))
+
+
+from functools import lru_cache
+@lru_cache(maxsize=4)
+def _asset_index(root):
+    from pathlib import Path
+    folder=Path(root)
+    types={'.css':'text/css','.js':'application/javascript','.ttf':'font/ttf','.svg':'image/svg+xml','.png':'image/png','.ico':'image/x-icon','.json':'application/json'}
+    return {p.relative_to(folder).as_posix():(p,types[p.suffix.lower()]) for p in folder.rglob('*') if p.is_file() and p.resolve().is_relative_to(folder) and p.suffix.lower() in types}

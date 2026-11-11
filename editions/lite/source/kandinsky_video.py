@@ -80,6 +80,7 @@ class VideoGenerator:
         if source is not None:
             if not isinstance(source, str) or not re.fullmatch('[0-9a-f]{32}', source) or body.get('image') is not None:
                 raise ValueError('Invalid image source.')
+            source=bytes.fromhex(source).hex()  # Canonical hex IDs cannot introduce path separators.
             photo = self.home / (source + '.input.png')
             if not photo.is_file():
                 raise ValueError('Attach the original image again to regenerate this video.')

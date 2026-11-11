@@ -30,6 +30,7 @@ jobs:
         run: |
           python tests_system/test_presets.py
           python tests_system/test_loading.py
+          python tests_system/test_audit.py
           python tests_models/test_library.py
           node tests_search/citations.cjs
           node tests_search/link_navigation.cjs

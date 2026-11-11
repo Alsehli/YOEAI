@@ -79,7 +79,12 @@ class Cases(unittest.TestCase):
   from native_ai.client import Connection
   connection=Connection();connection.response=Mock(done=False);connection.close();connection.response.close.assert_called_once()
  def test_26_ui_js_has_browser_mime(self):
-  text=Path('app.py').read_text(encoding='utf8');self.assertIn("'application/javascript' if file.suffix=='.js'",text)
+  from request_policy import packaged_assets
+  with tempfile.TemporaryDirectory() as folder:
+   root=Path(folder);(root/'test.js').write_text('');(root/'private.txt').write_text('not an asset')
+   index=packaged_assets(root)
+   self.assertEqual(index['test.js'][1],'application/javascript')
+   self.assertNotIn('../test.js',index);self.assertNotIn('private.txt',index)
  def test_27_delayed_stop_cannot_cancel_replacement_worker(self):
   from native_ai.manager import Manager
   manager=Manager();old=Mock();old.poll.return_value=0;manager.worker=old;manager.log=Mock();manager.job=Mock()

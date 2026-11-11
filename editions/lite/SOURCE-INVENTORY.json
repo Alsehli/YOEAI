@@ -11,8 +11,8 @@
   },
   {
     "path": "app.py",
-    "bytes": 17622,
-    "sha256": "4553a83876f3bf16f909f5020b4e077e18bdb73cb11cc52534dc59f404a879ff"
+    "bytes": 17462,
+    "sha256": "1c0e659f3a6c9c2df25358df2fee1e6afb198a802ad57684e8fd2e8627582d0d"
   },
   {
     "path": "assets/activity.png",
@@ -986,8 +986,8 @@
   },
   {
     "path": "installer/test_releases.py",
-    "bytes": 16503,
-    "sha256": "49183d66b3b015212b135576e0d97e66ab6b0dc594fa439de2dcf5d3e9b7514d"
+    "bytes": 16839,
+    "sha256": "42b972a1cd6d20dd14236a49f3e6b90f727ecaf10ff0c6155c21599c8882f6c8"
   },
   {
     "path": "Installer-Image-20261108/gguf_metadata.py",
@@ -1146,8 +1146,8 @@
   },
   {
     "path": "kandinsky_video.py",
-    "bytes": 12451,
-    "sha256": "baea8ea9bd643b389a9f45b212416aaec89340b15849ad0a2ee9f5e6495e244f"
+    "bytes": 12554,
+    "sha256": "3c6016015e2a54f1e7ccfb86c2e082ebb37e437b51c05acdce31516a749e3de3"
   },
   {
     "path": "kandinsky_worker.py",
@@ -1216,8 +1216,8 @@
   },
   {
     "path": "model_library.py",
-    "bytes": 5825,
-    "sha256": "50e2d85b5cd5efc2820523493fc36d671fc70079bab4bf262db7a2d35ad8d27a"
+    "bytes": 6072,
+    "sha256": "50fd49261b4f2993234a21bf1ec9c29166e5f423061de6cba0f521f1647d3c53"
   },
   {
     "path": "model_selection.py",
@@ -1226,8 +1226,8 @@
   },
   {
     "path": "model_settings.py",
-    "bytes": 19771,
-    "sha256": "4b494ed069fca005fdd33dcbcb2327605b29ee7585bbf4cea96c9277e7de9542"
+    "bytes": 19814,
+    "sha256": "20aa42b9377c17fa7a3e84f575d7fd8641a9a7d55c6e97ff6d76f204038169ae"
   },
   {
     "path": "native_ai/__init__.py",
@@ -1311,8 +1311,8 @@
   },
   {
     "path": "object_generation.py",
-    "bytes": 8343,
-    "sha256": "d4610f179a17de0d6c266e19fc9b7eabc98c16eff7e4d6f38e92c9cbf001cf02"
+    "bytes": 8437,
+    "sha256": "43901410c382bae47c110ee7a7ddf38021d9d386076a432bd93bafc971526272"
   },
   {
     "path": "object_worker.py",
@@ -1351,8 +1351,8 @@
   },
   {
     "path": "request_policy.py",
-    "bytes": 2830,
-    "sha256": "7d60426818f018df2615a941fce17deca8eddeb25ae5fea82bba7750297b4826"
+    "bytes": 3479,
+    "sha256": "1a0e716f9cc97e4a51082ea4bb240974955e1ab641f2afce2b4df284995c4969"
   },
   {
     "path": "runtime.py",
@@ -1586,8 +1586,8 @@
   },
   {
     "path": "tests_system/test_audit.py",
-    "bytes": 8362,
-    "sha256": "31c4102e0293e9c2ee4cbe5cd46647be2843c76602dd004e2c93c225c4a27f73"
+    "bytes": 8618,
+    "sha256": "1c96a46e8bee61f4e2f40d65f7e19968e752fcb42142bedf9852218494c6c9d8"
   },
   {
     "path": "tests_system/test_loading.py",

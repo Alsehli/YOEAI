@@ -92,9 +92,11 @@ class Handler(BaseHTTPRequestHandler):
   if not self.allowed():return self.reply(403,{'error':'Only the local Lite interface is allowed.'})
   path=unquote(urlsplit(self.path).path)
   if path.startswith('/assets/'):
-   root=(BUNDLE/'assets').resolve();file=(BUNDLE/path.lstrip('/')).resolve()
-   if not file.is_relative_to(root) or file.suffix.lower() not in {'.css','.js','.ttf','.svg','.png','.ico','.json'} or not file.is_file():return self.reply(404,{'error':'Asset not found'})
-   b=file.read_bytes();self.send_response(200);self.send_header('Content-Type',('application/javascript' if file.suffix=='.js' else mimetypes.guess_type(str(file))[0]) or 'application/octet-stream');self.send_header('Content-Length',str(len(b)));self.send_header('X-Content-Type-Options','nosniff');self.send_header('Cache-Control','no-store');self.end_headers();self.wfile.write(b);return
+   from request_policy import packaged_assets
+   item=packaged_assets(BUNDLE/'assets').get(path[len('/assets/'):])
+   if item is None:return self.reply(404,{'error':'Asset not found'})
+   file,content_type=item
+   b=file.read_bytes();self.send_response(200);self.send_header('Content-Type',content_type);self.send_header('Content-Length',str(len(b)));self.send_header('X-Content-Type-Options','nosniff');self.send_header('Cache-Control','no-store');self.end_headers();self.wfile.write(b);return
   if self.path=='/':
    from request_policy import page_headers
    source=BUNDLE/'ui.html';b=source.read_bytes();self.send_response(200);self.send_header('Content-Type','text/html; charset=utf-8');self.send_header('Content-Length',str(len(b)))

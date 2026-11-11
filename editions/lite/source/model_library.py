@@ -8,7 +8,8 @@ def local_folder(value):
  if not isinstance(value,str) or not value.strip() or len(value)>2000:raise ValueError('Choose a local model folder.')
  value=value.strip()
  if value.startswith(('\\\\','//')):raise ValueError('Choose a folder on a local drive.')
- path=Path(value).expanduser()
+ # Intentional user-selected local root from same-origin model settings; no remote caller chooses a server-owned relative path.
+ path=Path(value).expanduser()  # lgtm[py/path-injection] Explicit local folder selection is the feature; network/relative paths are rejected below.
  if not path.is_absolute():raise ValueError('Use the full local folder path.')
  path=path.resolve()
  if str(path).startswith(('\\\\','//')):raise ValueError('Network model folders are not supported.')

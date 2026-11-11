@@ -27,3 +27,7 @@ The staged public source passed 58 repository portable tests, 43 Lite Python tes
 ## Distribution status
 
 The planned production endpoint is `https://downloads.yoeai.online/3.0/stable/manifest.json`; it is not live/verified. No model weights, application binaries or new release assets are uploaded by this source update. External bundled services and runtimes still require explicit package staging and license review.
+
+## Security review follow-up
+
+Hosted CodeQL review prompted a packaged-file asset index with fixed MIME values, a TLS 1.2 minimum in local installer fixtures, and canonical hex-only generated job IDs. Local model-folder selection deliberately accepts the user's absolute local folder through same-origin settings; that single intentional path is documented inline rather than disabling the security query. The legacy scan uses the same local-folder validation. All 31 request/shutdown audit regressions and 35 folder regressions passed after these changes.

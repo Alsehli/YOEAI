@@ -23,6 +23,7 @@ class ObjectGenerator(PH3Generator):
   cfg=self.config();source=body.get('sourceJob')
   if source:
    if not isinstance(source,str) or not re.fullmatch('[0-9a-f]{32}',source) or body.get('image'):raise ValueError('Invalid source image reference.')
+   source=bytes.fromhex(source).hex()  # Canonical hex IDs cannot introduce path separators.
    file=self.home.parent/'GeneratedImages'/(source+'.png')
    if not file.is_file():raise ValueError('The source image is unavailable. Attach it again.')
    image=normalise_image('data:image/png;base64,'+base64.b64encode(file.read_bytes()).decode())

@@ -94,7 +94,8 @@ class Service:
             if body.get('folder','').strip():self.linked_library.set_folder(body['folder'])
             self.linked_library.request_scan();state=self.linked_library.snapshot();return {'models':state['models'],'count':state['count'],'automatic':True}
         import os
-        roots=[Path(body['folder']).expanduser()] if body.get('folder','').strip() else [Path.home()/'.llama/models',Path.home()/'Downloads',self.home/'App/0.1.0/Models',*[Path(d+':/AI/Models') for d in 'DE'],*[Path(d+':/YOEAI-Packages') for d in 'DE']]
+        from model_library import local_folder
+        roots=[local_folder(body['folder'])] if body.get('folder','').strip() else [Path.home()/'.llama/models',Path.home()/'Downloads',self.home/'App/0.1.0/Models',*[Path(d+':/AI/Models') for d in 'DE'],*[Path(d+':/YOEAI-Packages') for d in 'DE']]
         found={};visited=0
         for root in roots:
             if str(root).startswith(('\\\\','//')):raise ValueError('Choose a local drive folder.')

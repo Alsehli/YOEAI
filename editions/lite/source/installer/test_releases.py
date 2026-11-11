@@ -73,7 +73,7 @@ class ReleaseFixtures(unittest.TestCase):
                     except (BrokenPipeError, ConnectionResetError, ssl.SSLEOFError):
                         pass  # Expected when a rejected range/redirect closes early.
         self.server = ThreadingHTTPServer(('127.0.0.1', 0), Handler)
-        tls = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER); tls.load_cert_chain(cert, key)
+        tls = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER); tls.minimum_version = ssl.TLSVersion.TLSv1_2; tls.load_cert_chain(cert, key)
         self.server.socket = tls.wrap_socket(self.server.socket, server_side=True)
         threading.Thread(target=self.server.serve_forever, daemon=True).start()
         self.addCleanup(self.server.server_close)
