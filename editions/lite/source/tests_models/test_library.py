@@ -81,6 +81,7 @@ class Cases(unittest.TestCase):
   with patch('os.startfile') as opened:
    code,value=self.route('/local-models/open-folder',{});self.assertEqual(code,200);opened.assert_called_once_with(str(self.folder))
  def test_35_picker_is_explicit_user_worker(self):
+  import intelligence.process
   with patch('intelligence.process.run',return_value={'path':None}) as worker:
    code,value=self.route('/local-models/pick-folder',{});self.assertEqual(code,200);self.assertIsNone(value['path']);self.assertEqual(worker.call_args.args[1]['kind'],'model-folder');self.assertEqual(self.lib.folder,self.folder)
 if __name__=='__main__':
