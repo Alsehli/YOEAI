@@ -1,4 +1,4 @@
-import sys,io,base64,json,unittest
+import sys,io,base64,json,unittest,tempfile,atexit
 from pathlib import Path
 sys.path.insert(0,'F:/YOEAI-Autonomy/Source')
 from PIL import Image
@@ -6,7 +6,7 @@ from pypdf import PdfReader
 from PySide6.QtGui import QGuiApplication
 from image_pdf import convert,run,JOBS
 app=QGuiApplication.instance() or QGuiApplication([])
-OUT=Path('F:/YOEAI-Autonomy/Reports/Image-PDF');OUT.mkdir(exist_ok=True)
+ROOT=Path(__file__).resolve().parents[1];TMP=tempfile.TemporaryDirectory(dir=ROOT/'tests');OUT=Path(TMP.name);assert OUT.resolve().is_relative_to((ROOT/'tests').resolve());atexit.register(TMP.cleanup)
 def item(fmt='PNG',size=(640,400),orientation=None,multi=False):
  im=Image.new('RGB',size,'#1967df');im.paste('#ff6222',(0,0,size[0]//4,size[1]//4));b=io.BytesIO();opts={}
  if orientation:

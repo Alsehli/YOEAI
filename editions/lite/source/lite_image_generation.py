@@ -3,6 +3,32 @@ import json,os,threading,subprocess
 from pathlib import Path
 from image_generation import ImageGenerator,handle_request
 INSTANCE=None;INIT=threading.Lock()
+ROUTER=None
+
+class ImageRouter:
+ def __init__(self,turbo,runtime):
+  from ph3_image import PH3Generator
+  self.turbo=turbo;self.ph3=PH3Generator(runtime/"ImageGeneration/ph3-config.json",turbo.home,turbo.pause,turbo.resume);self.ph3.gpu_lock=turbo.config_path.parent/'generation.lock';self.active=turbo;self.lock=threading.RLock()
+ def start(self,body):
+  if not isinstance(body,dict):raise ValueError('Image request must be an object.')
+  with self.lock:
+   if self.active.status()["status"] in ("running","restoring"):raise ValueError("An image is already being created.")
+   engine=body.get("engine","turbo")
+   if engine not in ("turbo","ph3"):raise ValueError("Unknown image model; no alternate model was used.")
+   selected=self.ph3 if engine=="ph3" else self.turbo
+   result=selected.start(body);self.active=selected;return result
+ def status(self):return self.active.status()
+ def cancel(self):return self.active.cancel()
+ def output(self,name):return self.turbo.output(name)
+
+def router(app,home,bundle,config):
+ global ROUTER
+ if ROUTER is None:
+  runtime=Path(os.environ.get("YOEAI_ASSISTANT_RUNTIME",str(app)))
+  if not getattr(__import__("sys"),"frozen",False) and not (runtime/"ImageGeneration").is_dir():runtime=Path(__file__).resolve().parents[2]
+  ROUTER=ImageRouter(instance(app,home,bundle,config),runtime)
+ return ROUTER
+
 class LiteGenerator(ImageGenerator):
  def config(self):
   c=super().config();c=dict(c);args=list(c.get('arguments',[]))
@@ -36,9 +62,9 @@ def instance(app,home,bundle,config):
     return True
    except Exception:
     GATE.release();state['held']=False;raise
-  def resume():
+  def resume(restore=True):
    try:
-    if state['restore']:lite_native.start(app,home,config)
+    if restore and state['restore']:lite_native.start(app,home,config)
    finally:
     state['restore']=False
     if state['held']:GATE.release();state['held']=False
@@ -51,16 +77,19 @@ def instance(app,home,bundle,config):
 
 def route(handler,post,app,home,bundle,config):
  if handler.path.startswith('/imagegen/'):
-  global INSTANCE
+  global INSTANCE,ROUTER
   if handler.path=='/imagegen/configure' and post:
    if not handler.allowed() or handler.headers.get('Origin')!='http://'+handler.headers.get('Host',''):
     handler.reply(403,{'error':'Use the local Lite settings'});return True
    try:
     n=int(handler.headers.get('Content-Length','0'))
     if handler.headers.get('Transfer-Encoding') or not 0<n<=4096:raise ValueError('Invalid configuration request')
-    body=json.loads(handler.rfile.read(n));folder=Path(body.get('folder','')).expanduser().resolve()
+    body=json.loads(handler.rfile.read(n))
+    if not isinstance(body,dict):raise ValueError('Invalid image model folder request')
+    from security_paths import user_local_path
+    folder=user_local_path(body.get('folder','')).resolve()
     if not folder.is_dir():raise ValueError('Choose the folder containing the image models')
-    if INSTANCE and INSTANCE.status().get('status') in ('running','restoring'):raise ValueError('Stop image generation before changing its model folder')
+    if INSTANCE and (ROUTER.status() if ROUTER else INSTANCE.status()).get('status') in ('running','restoring'):raise ValueError('Stop image generation before changing its model folder')
     files={k:folder/name for k,name in {'diffusion':'z_image_turbo-Q4_K.gguf','encoder':'Qwen3-4B-Instruct-2507-Q4_K_M.gguf','vae':'ae.safetensors'}.items()}
     for key,file in files.items():
      if not file.is_file():raise ValueError('Missing image component: '+file.name)
@@ -73,19 +102,25 @@ def route(handler,post,app,home,bundle,config):
     target=Path(home)/'ImageGeneration/config.json';target.parent.mkdir(parents=True,exist_ok=True)
     value={k:str(file) for k,file in files.items()};value.update(executable=str(exe),arguments=['--backend','cuda0','--max-vram','cuda0=5','--flash-attn','off,diffusion=on','-t','6'])
     temp=target.with_suffix('.tmp');temp.write_text(json.dumps(value,indent=2),encoding='utf8');temp.replace(target)
+    if ROUTER:ROUTER.ph3.shutdown()
     if INSTANCE:INSTANCE.shutdown()
-    INSTANCE=None;handler.reply(200,{'saved':True});return True
+    INSTANCE=None;ROUTER=None;handler.reply(200,{'saved':True});return True
    except (ValueError,TypeError,AttributeError,OSError) as e:handler.reply(400,{'error':str(e)});return True
   gen=instance(app,home,bundle,config)
   if handler.path=='/imagegen/models' and not post:
    if not handler.allowed():handler.reply(403,{'error':'Use the local Lite interface'});return True
    try:gen.config();status={'state':'Ready','canGenerate':True}
    except (ValueError,OSError) as e:status={'state':'Setup needed','canGenerate':False,'error':str(e)}
-   handler.reply(200,{'turbo':status});return True
-  return handle_request(handler,gen,post)
- if post and INSTANCE and handler.path in ('/context','/v1/chat/completions','/local-models/apply') and INSTANCE.status().get('status') in ('running','restoring'):
+   ph3={'state':'Setup needed','canGenerate':False}
+   try:router(app,home,bundle,config).ph3.config();ph3={'state':'Ready','canGenerate':True}
+   except (ValueError,OSError,KeyError) as e:ph3['error']=str(e)
+   ph3.update(model='P-H3-Image',sizes=[2048,2912],attribution='Powered by MiniMax H3',licenseUrl='https://huggingface.co/PrunaAI/P-H3-Image-Comfy/blob/main/LICENSE')
+   handler.reply(200,{'turbo':status,'ph3':ph3});return True
+  return handle_request(handler,router(app,home,bundle,config),post)
+ if post and INSTANCE and handler.path in ('/context','/v1/chat/completions','/local-models/apply') and (ROUTER.status() if ROUTER else INSTANCE.status()).get('status') in ('running','restoring'):
   handler.reply(409,{'error':'Image Turbo is using the GPU. Wait or press Stop.'});return True
  return False
 
 def shutdown():
+ if ROUTER:ROUTER.ph3.shutdown()
  if INSTANCE:INSTANCE.shutdown()

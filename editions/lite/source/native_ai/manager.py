@@ -43,10 +43,11 @@ class Manager:
  def request(self,op,cancel_event=None,timeout=600,**values):
   with self.lock:
    if cancel_event and cancel_event.is_set():raise InterruptedError('Native request cancelled before starting.')
+   if op=='load':self.state.update(loadStartedAt=time.monotonic(),loadStage='initializing',progress=0,phase='loading')
    self.start()
    if op in ('generate','tokenize') and not self.state['loaded'] and self.last_load:
     list(self.request('load',**self.last_load))
-   if op=='load':self.state.update(loaded=False,phase='loading',progress=0,error=None)
+   if op=='load':self.state.update(loaded=False,phase='loading',progress=0,loadStage='weights',error=None,manualUnloaded=False,loadMemory=None,allocationMeasured=False)
    ident=uuid.uuid4().hex;self.state['busy']=True;deadline=time.monotonic()+timeout;cancel_sent=False
    try:
     self.send({'id':ident,'op':op,**values})
@@ -59,31 +60,47 @@ class Manager:
      if event.get('event')=='exit':self.state.update(loaded=False,phase='error');raise RuntimeError(event['error'])
      if event.get('id')not in (ident,None):continue
      kind=event.get('event')
-     if kind=='progress':self.state.update(progress=event['value'],phase='loading')
+     if kind=='progress':self.state.update(progress=event['value'],phase='loading',loadStage='context' if event['value']>=1 else 'weights')
      elif kind=='chunk':yield event['value']
      elif kind=='error':raise InterruptedError(event['error'])if event.get('cancelled')else RuntimeError(event['error'])
      elif kind=='done':
-      if op=='load':self.last_load=dict(values);self.state.update(event['value']);self.state.update(loaded=True,phase='ready',error=None,progress=1)
-      if op=='unload':self.last_load=None;self.state.update(loaded=False,phase='idle')
+      if op=='load':self.last_load=dict(values);self.state.update(event['value']);self.state.update(loaded=True,phase='ready',loadStage='ready',error=None,progress=1)
+      if op=='unload':self.last_load=None;self.state.update(loaded=False,phase='idle',loadMemory=None,allocationMeasured=False)
+      if op=='generate':self.state.update(error=None,phase='ready')
       yield {'native_result':event.get('value')};break
    except Exception as ex:self.state.update(error=str(ex));raise
    finally:self.state['busy']=False
  def cancel(self):
   if self.worker and self.worker.poll()is None:self.send({'op':'cancel'})
  def close(self):
-  if not self.worker:return
-  try:self.cancel()
-  except (OSError,ValueError):pass  # A dead pipe must not prevent process cleanup.
-  with self.lock:
+  process=self.worker
+  if process is None:return
+  # A load/generation owns the request lock. Do not wait indefinitely behind it.
+  def signal_cancel():
    try:
-    if self.worker.poll()is None:self.send({'op':'shutdown'});self.worker.wait(timeout=8)
-   except Exception:
-    if self.worker.poll()is None:self.worker.terminate();self.worker.wait(timeout=5)
-   finally:
-    for f in (self.worker.stdin,self.worker.stdout):
-     if f:f.close()
-    self.log.close();self.worker=None;self.state.update(loaded=False,busy=False,phase='idle')
-    if getattr(self,'job',None):self.job.close();self.job=None
+    with self.write_lock:
+     if process.poll() is None:process.stdin.write('{"op":"cancel"}\n');process.stdin.flush()
+   except (OSError,ValueError,AttributeError):pass
+  threading.Thread(target=signal_cancel,daemon=True,name='YOEAI-native-stop').start()
+  acquired=self.lock.acquire(timeout=2)
+  if not acquired:
+   if process.poll() is None:process.terminate();process.wait(timeout=5)
+   acquired=self.lock.acquire(timeout=2)
+  try:
+   if process.poll() is None:
+    try:self.send({'op':'shutdown'});process.wait(timeout=8)
+    except Exception:
+     if process.poll() is None:process.terminate();process.wait(timeout=5)
+   # Closing the owned job releases inherited pipe handles before file close.
+   if getattr(self,'job',None):self.job.close();self.job=None
+   for stream in (process.stdin,process.stdout):
+    if stream:
+     try:stream.close()
+     except (OSError,ValueError):pass
+   if getattr(self,'log',None):self.log.close()
+   if self.worker is process:self.worker=None;self.state.update(loaded=False,busy=not acquired,phase='idle' if acquired else 'closing')
+  finally:
+   if acquired:self.lock.release()
  def shutdown(self):
   self.shutting_down=True;self.close()
 INSTANCE=Manager();atexit.register(INSTANCE.shutdown)

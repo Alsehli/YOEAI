@@ -1,0 +1,799 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://yoeai.online/schemas/data-view-1.1.json",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "1.1"
+        },
+        "type": {
+          "const": "dataView"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 1000
+        },
+        "summary": {
+          "type": "string",
+          "maxLength": 4000
+        },
+        "provenance": {
+          "enum": [
+            "user",
+            "retrieved",
+            "unverified",
+            "example",
+            "calculated"
+          ]
+        },
+        "dataset": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+            },
+            "columns": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/column"
+              },
+              "maxItems": 32
+            },
+            "rows": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/row"
+              },
+              "maxItems": 10000
+            }
+          },
+          "required": [
+            "id",
+            "columns",
+            "rows"
+          ],
+          "additionalProperties": false
+        },
+        "charts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/chart"
+          },
+          "maxItems": 12
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/source"
+          },
+          "maxItems": 100
+        },
+        "view": {
+          "type": "object",
+          "properties": {
+            "search": {
+              "type": "string",
+              "maxLength": 1000
+            },
+            "filters": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/filter"
+              },
+              "maxItems": 32
+            },
+            "sorts": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/sort"
+              },
+              "maxItems": 32
+            },
+            "columns": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+              },
+              "maxItems": 32
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "type",
+        "id",
+        "revision",
+        "title",
+        "provenance",
+        "dataset"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "const": "1.1"
+        },
+        "type": {
+          "const": "dataUpdate"
+        },
+        "target": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+        },
+        "baseRevision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "operations": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "op": {
+                    "const": "sort"
+                  },
+                  "sorts": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/sort"
+                    },
+                    "maxItems": 32
+                  }
+                },
+                "required": [
+                  "op",
+                  "sorts"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "op": {
+                    "const": "filter"
+                  },
+                  "filters": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/filter"
+                    },
+                    "maxItems": 32
+                  }
+                },
+                "required": [
+                  "op",
+                  "filters"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "op": {
+                    "const": "search"
+                  },
+                  "text": {
+                    "type": "string",
+                    "maxLength": 1000
+                  }
+                },
+                "required": [
+                  "op",
+                  "text"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "op": {
+                    "const": "removeRows"
+                  },
+                  "ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+                    },
+                    "maxItems": 10000
+                  }
+                },
+                "required": [
+                  "op",
+                  "ids"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "op": {
+                    "const": "dropColumn"
+                  },
+                  "field": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+                  }
+                },
+                "required": [
+                  "op",
+                  "field"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "op": {
+                    "const": "addRows"
+                  },
+                  "rows": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/row"
+                    },
+                    "maxItems": 10000
+                  }
+                },
+                "required": [
+                  "op",
+                  "rows"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "op": {
+                    "const": "addSources"
+                  },
+                  "sources": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/source"
+                    },
+                    "maxItems": 100
+                  }
+                },
+                "required": [
+                  "op",
+                  "sources"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "op": {
+                    "const": "addColumn"
+                  },
+                  "column": {
+                    "$ref": "#/$defs/column"
+                  },
+                  "values": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": [
+                        "string",
+                        "number",
+                        "null"
+                      ]
+                    }
+                  },
+                  "sources": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+                      },
+                      "maxItems": 100
+                    }
+                  }
+                },
+                "required": [
+                  "op",
+                  "column",
+                  "values"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "op": {
+                    "const": "chart"
+                  },
+                  "chart": {
+                    "$ref": "#/$defs/chart"
+                  }
+                },
+                "required": [
+                  "op",
+                  "chart"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "op": {
+                    "const": "aggregate"
+                  },
+                  "field": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+                  },
+                  "kind": {
+                    "enum": [
+                      "sum",
+                      "mean",
+                      "average",
+                      "min",
+                      "max",
+                      "median",
+                      "count",
+                      "percentageChange",
+                      "trend"
+                    ]
+                  }
+                },
+                "required": [
+                  "op",
+                  "field",
+                  "kind"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "op": {
+                    "const": "group"
+                  },
+                  "by": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+                  },
+                  "field": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+                  },
+                  "kind": {
+                    "enum": [
+                      "sum",
+                      "mean",
+                      "average",
+                      "min",
+                      "max",
+                      "median",
+                      "count"
+                    ]
+                  }
+                },
+                "required": [
+                  "op",
+                  "by",
+                  "field",
+                  "kind"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "op": {
+                    "const": "calculate"
+                  },
+                  "column": {
+                    "$ref": "#/$defs/column"
+                  },
+                  "kind": {
+                    "enum": [
+                      "percentage",
+                      "percentageChange",
+                      "difference",
+                      "ratio",
+                      "rank"
+                    ]
+                  },
+                  "field": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+                  },
+                  "other": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+                  },
+                  "direction": {
+                    "enum": [
+                      "asc",
+                      "desc"
+                    ]
+                  },
+                  "denominator": {
+                    "oneOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "aggregate": {
+                            "enum": [
+                              "sum",
+                              "mean",
+                              "median",
+                              "min",
+                              "max",
+                              "count"
+                            ]
+                          },
+                          "field": {
+                            "type": "string",
+                            "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+                          }
+                        },
+                        "required": [
+                          "aggregate",
+                          "field"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "op",
+                  "column",
+                  "kind",
+                  "field"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "op": {
+                    "const": "convert"
+                  },
+                  "field": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+                  },
+                  "column": {
+                    "$ref": "#/$defs/column"
+                  },
+                  "rate": {
+                    "type": "object",
+                    "properties": {
+                      "from": {
+                        "type": "string",
+                        "maxLength": 1000
+                      },
+                      "to": {
+                        "type": "string",
+                        "maxLength": 1000
+                      },
+                      "value": {
+                        "type": "number"
+                      },
+                      "source": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+                      }
+                    },
+                    "required": [
+                      "from",
+                      "to"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "op",
+                  "field",
+                  "column",
+                  "rate"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "maxItems": 20
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "type",
+        "target",
+        "baseRevision",
+        "operations"
+      ],
+      "additionalProperties": false
+    }
+  ],
+  "$defs": {
+    "column": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+        },
+        "label": {
+          "type": "string",
+          "maxLength": 1000
+        },
+        "type": {
+          "enum": [
+            "text",
+            "number",
+            "date",
+            "status"
+          ]
+        },
+        "unit": {
+          "type": "string",
+          "maxLength": 30
+        },
+        "format": {
+          "enum": [
+            "text",
+            "number",
+            "currency",
+            "percent",
+            "date",
+            "time",
+            "status"
+          ]
+        }
+      },
+      "required": [
+        "key",
+        "label",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "row": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+        },
+        "values": {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "null"
+            ]
+          }
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+          },
+          "maxItems": 100
+        },
+        "cellSources": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+            },
+            "maxItems": 100
+          }
+        }
+      },
+      "required": [
+        "id",
+        "values"
+      ],
+      "additionalProperties": false
+    },
+    "source": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+        },
+        "url": {
+          "type": "string",
+          "pattern": "^https://",
+          "maxLength": 2000
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 1000
+        },
+        "retrievedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "title"
+      ],
+      "additionalProperties": false
+    },
+    "chart": {
+      "type": "object",
+      "properties": {
+        "chartType": {
+          "enum": [
+            "bar",
+            "horizontalBar",
+            "line",
+            "area",
+            "scatter",
+            "pie",
+            "donut",
+            "histogram",
+            "heatmap",
+            "candlestick",
+            "combo"
+          ]
+        },
+        "x": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+        },
+        "y": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+        },
+        "value": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+        },
+        "bins": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 50
+        },
+        "series": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "field": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+              },
+              "label": {
+                "type": "string",
+                "maxLength": 1000
+              },
+              "chartType": {
+                "enum": [
+                  "bar",
+                  "line"
+                ]
+              }
+            },
+            "required": [
+              "field"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 6
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 1000
+        },
+        "open": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+        },
+        "close": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+        },
+        "high": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+        },
+        "low": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+        }
+      },
+      "required": [
+        "chartType"
+      ],
+      "additionalProperties": false
+    },
+    "filter": {
+      "type": "object",
+      "properties": {
+        "field": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+        },
+        "op": {
+          "enum": [
+            "eq",
+            "ne",
+            "contains",
+            "gt",
+            "gte",
+            "lt",
+            "lte",
+            "between",
+            "missing",
+            "present"
+          ]
+        },
+        "value": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "end": {
+          "type": [
+            "string",
+            "number"
+          ]
+        }
+      },
+      "required": [
+        "field",
+        "op"
+      ],
+      "additionalProperties": false
+    },
+    "sort": {
+      "type": "object",
+      "properties": {
+        "field": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,63}$"
+        },
+        "direction": {
+          "enum": [
+            "asc",
+            "desc"
+          ]
+        }
+      },
+      "required": [
+        "field",
+        "direction"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

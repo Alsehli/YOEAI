@@ -50,7 +50,11 @@ def start(app,home,config):
 
  from native_ai.resources import plans
 
- c=config();model=Path(c['model']).resolve();projector=Path(c['projector']).resolve() if c.get('projector') else None
+ c=dict(config())
+
+ if not c.pop('_builtinVisionRequest',False):c['projector']=''
+
+ model=Path(c['model']).resolve();projector=Path(c['projector']).resolve() if c.get('projector') else None
 
  if not model.is_file() or (projector and not projector.is_file()):raise ValueError('The existing Lite model or vision file is missing. Reconnect its drive; no download was started.')
 
@@ -58,7 +62,7 @@ def start(app,home,config):
 
   if INSTANCE.state['busy']:raise ValueError('Stop the current local task before changing its model context.')
 
-  if INSTANCE.worker and INSTANCE.worker.poll()is None and INSTANCE.state['loaded']and INSTANCE.state.get('context')==c['context']and INSTANCE.state.get('model')==str(model):return
+  if INSTANCE.worker and INSTANCE.worker.poll()is None and INSTANCE.state['loaded']and INSTANCE.state.get('context')==c['context']and INSTANCE.state.get('model')==str(model)and ((INSTANCE.last_load or {}).get('projector')or'')==(str(projector)if projector else ''):return
 
   if INSTANCE.worker:list(INSTANCE.request('unload'))
 

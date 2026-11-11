@@ -37,9 +37,11 @@ class ImageGenerator:
   self.config_path=Path(config_path);self.home=Path(home);self.pause=pause;self.resume=resume;self.max_size=max_size
   self.lock=threading.RLock();self.worker=None;atexit.register(self.shutdown);self.process=None;self.cancelled=threading.Event();self.state={'status':'idle','message':'Ready to create an image.'}
  def config(self):
-  if not self.config_path.is_file():raise ValueError('Image generation is not installed. Connect the image-generation drive and finish local setup.')
+  if not self.config_path.is_file():raise ValueError('The bundled image setup is missing. Repair the Lite installation or select your existing image model folder in Settings.')
   c=json.loads(self.config_path.read_text(encoding='utf-8-sig'))
   for key in ['executable','diffusion','encoder','vae']:
+   value=Path(c.get(key,''))
+   if c.get(key) and not value.is_absolute():c[key]=str((self.config_path.parent/value).resolve())
    if not Path(c.get(key,'')).is_file():raise ValueError('Image component missing: '+key+'. Reconnect the model drive or repair the image add-on.')
   return c
  def status(self):
@@ -100,7 +102,8 @@ class ImageGenerator:
    with self.lock:self.state=result
  def output(self,name):
   if not re.fullmatch('[0-9a-f]{32}',name):raise ValueError('Invalid image reference.')
-  p=self.home/(name+'.png')
+  from security_paths import job_id
+  p=self.home/(job_id(name)+'.png')
   if not p.is_file():raise ValueError('Image not found.')
   return p.read_bytes()
 

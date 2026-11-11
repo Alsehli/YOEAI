@@ -50,7 +50,8 @@ class SpeechJobs:
    with self.lock:self.process=None;self.state=result
  def audio(self,name):
   if not re.fullmatch('[0-9a-f]{32}',name):raise ValueError('Invalid audio reference.')
-  p=self.output/(name+'.wav')
+  from security_paths import job_id
+  p=self.output/(job_id(name)+'.wav')
   if not p.is_file() or p.stat().st_size>100_000_000:raise ValueError('Audio is unavailable.')
   return p.read_bytes()
 INSTANCE=None

@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.spec
+build/
+dist/
+
+docs/visual-results/
+
+docs/search-results/
+docs/system-audit/
+docs/model-folder-*.json

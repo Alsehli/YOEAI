@@ -25,7 +25,13 @@ def describe(config, service, native, exists=None):
     value=native.get('progress',0)
     progress=max(0,min(1,float(value))) if isinstance(value,(int,float)) and not isinstance(value,bool) and math.isfinite(value) else None
     if loading:
-        state,title,detail,action='loading','Loading your model','Preparing the selected model. You can keep this window open.',''
+        stage=service.get('loadStage') or native.get('loadStage','initializing')
+        label={'initializing':'Initializing local engine','weights':'Reading weights and transferring to memory / GPU','context':'Preparing context and checking compatibility'}.get(stage,'Preparing the selected model')
+        elapsed=service.get('loadElapsedSeconds')
+        clock=f' - {int(elapsed)}s elapsed' if isinstance(elapsed,(int,float)) and math.isfinite(elapsed) and elapsed>=0 else ''
+        state,title,detail,action='loading','Loading your model',label+clock+'.',''
+    elif loaded and native.get('error'):
+        state,title,detail,action='error','Generation needs attention','The model is loaded, but its last request failed. Review the error or choose another model.','Review model'
     elif loaded:
         state,title,detail,action='ready','Ready to chat','Your selected model is running locally.','Start chatting'
         if service.get('error'):detail='Your previous model is available. Review the failed switch in Settings.'

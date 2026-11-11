@@ -1,0 +1,960 @@
+{
+  "functionalScenarios": 223,
+  "groups": {
+    "unit": 166,
+    "browser": 42,
+    "research-fixtures": 8,
+    "qwen-live": 7
+  },
+  "allPassed": true,
+  "staticChecks": 250,
+  "records": {
+    "unit": [
+      {
+        "name": "chart bar",
+        "status": "passed"
+      },
+      {
+        "name": "chart horizontalBar",
+        "status": "passed"
+      },
+      {
+        "name": "chart line",
+        "status": "passed"
+      },
+      {
+        "name": "chart area",
+        "status": "passed"
+      },
+      {
+        "name": "chart pie",
+        "status": "passed"
+      },
+      {
+        "name": "chart donut",
+        "status": "passed"
+      },
+      {
+        "name": "chart scatter",
+        "status": "passed"
+      },
+      {
+        "name": "chart histogram",
+        "status": "passed"
+      },
+      {
+        "name": "time series axis",
+        "status": "passed"
+      },
+      {
+        "name": "multiple compatible series",
+        "status": "passed"
+      },
+      {
+        "name": "mixed units rejected",
+        "status": "passed"
+      },
+      {
+        "name": "numeric filter eq",
+        "status": "passed"
+      },
+      {
+        "name": "numeric filter ne",
+        "status": "passed"
+      },
+      {
+        "name": "numeric filter gte",
+        "status": "passed"
+      },
+      {
+        "name": "numeric filter gt",
+        "status": "passed"
+      },
+      {
+        "name": "numeric filter lte",
+        "status": "passed"
+      },
+      {
+        "name": "numeric filter lt",
+        "status": "passed"
+      },
+      {
+        "name": "numeric filter between",
+        "status": "passed"
+      },
+      {
+        "name": "numeric filter missing",
+        "status": "passed"
+      },
+      {
+        "name": "numeric filter present",
+        "status": "passed"
+      },
+      {
+        "name": "date filter eq",
+        "status": "passed"
+      },
+      {
+        "name": "date filter gte",
+        "status": "passed"
+      },
+      {
+        "name": "date filter lt",
+        "status": "passed"
+      },
+      {
+        "name": "date filter between",
+        "status": "passed"
+      },
+      {
+        "name": "date filter missing",
+        "status": "passed"
+      },
+      {
+        "name": "text contains rtx",
+        "status": "passed"
+      },
+      {
+        "name": "text contains ناقص",
+        "status": "passed"
+      },
+      {
+        "name": "text eq RTX 3090",
+        "status": "passed"
+      },
+      {
+        "name": "text ne RTX 3090",
+        "status": "passed"
+      },
+      {
+        "name": "sort name asc",
+        "status": "passed"
+      },
+      {
+        "name": "sort name desc",
+        "status": "passed"
+      },
+      {
+        "name": "sort price asc",
+        "status": "passed"
+      },
+      {
+        "name": "sort price desc",
+        "status": "passed"
+      },
+      {
+        "name": "sort vram asc",
+        "status": "passed"
+      },
+      {
+        "name": "sort vram desc",
+        "status": "passed"
+      },
+      {
+        "name": "sort date asc",
+        "status": "passed"
+      },
+      {
+        "name": "sort date desc",
+        "status": "passed"
+      },
+      {
+        "name": "stable multi-column sorting",
+        "status": "passed"
+      },
+      {
+        "name": "search all columns",
+        "status": "passed"
+      },
+      {
+        "name": "search no results",
+        "status": "passed"
+      },
+      {
+        "name": "reversed numeric range rejected",
+        "status": "passed"
+      },
+      {
+        "name": "invalid date range rejected",
+        "status": "passed"
+      },
+      {
+        "name": "unknown filter rejected",
+        "status": "passed"
+      },
+      {
+        "name": "deterministic sum",
+        "status": "passed"
+      },
+      {
+        "name": "deterministic mean",
+        "status": "passed"
+      },
+      {
+        "name": "deterministic average",
+        "status": "passed"
+      },
+      {
+        "name": "deterministic min",
+        "status": "passed"
+      },
+      {
+        "name": "deterministic max",
+        "status": "passed"
+      },
+      {
+        "name": "deterministic median",
+        "status": "passed"
+      },
+      {
+        "name": "deterministic count",
+        "status": "passed"
+      },
+      {
+        "name": "deterministic percentageChange",
+        "status": "passed"
+      },
+      {
+        "name": "deterministic trend",
+        "status": "passed"
+      },
+      {
+        "name": "even median",
+        "status": "passed"
+      },
+      {
+        "name": "negative median",
+        "status": "passed"
+      },
+      {
+        "name": "compensated decimal sum",
+        "status": "passed"
+      },
+      {
+        "name": "all missing sum",
+        "status": "passed"
+      },
+      {
+        "name": "all missing mean",
+        "status": "passed"
+      },
+      {
+        "name": "all missing min",
+        "status": "passed"
+      },
+      {
+        "name": "all missing max",
+        "status": "passed"
+      },
+      {
+        "name": "all missing median",
+        "status": "passed"
+      },
+      {
+        "name": "all missing percentageChange",
+        "status": "passed"
+      },
+      {
+        "name": "all missing trend",
+        "status": "passed"
+      },
+      {
+        "name": "zero baseline change is missing",
+        "status": "passed"
+      },
+      {
+        "name": "negative baseline change",
+        "status": "passed"
+      },
+      {
+        "name": "formula percentage",
+        "status": "passed"
+      },
+      {
+        "name": "formula percentageChange",
+        "status": "passed"
+      },
+      {
+        "name": "formula difference",
+        "status": "passed"
+      },
+      {
+        "name": "formula ratio",
+        "status": "passed"
+      },
+      {
+        "name": "formula rank",
+        "status": "passed"
+      },
+      {
+        "name": "divide by zero produces missing",
+        "status": "passed"
+      },
+      {
+        "name": "incompatible formula units rejected",
+        "status": "passed"
+      },
+      {
+        "name": "sort patch revision",
+        "status": "passed"
+      },
+      {
+        "name": "filter patch shared dataset",
+        "status": "passed"
+      },
+      {
+        "name": "remove row stable IDs",
+        "status": "passed"
+      },
+      {
+        "name": "empty dataset remains table",
+        "status": "passed"
+      },
+      {
+        "name": "drop column cleans chart",
+        "status": "passed"
+      },
+      {
+        "name": "add measured column uses IDs",
+        "status": "passed"
+      },
+      {
+        "name": "missing new cells stay null",
+        "status": "passed"
+      },
+      {
+        "name": "add real row",
+        "status": "passed"
+      },
+      {
+        "name": "aggregation response local",
+        "status": "passed"
+      },
+      {
+        "name": "group sum",
+        "status": "passed"
+      },
+      {
+        "name": "stale/unknown update {\"target\":\"other\"}",
+        "status": "passed"
+      },
+      {
+        "name": "stale/unknown update {\"baseRevision\":2}",
+        "status": "passed"
+      },
+      {
+        "name": "stale/unknown update {\"schemaVersion\":\"9\"}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid operation {\"op\":\"execute\",\"code\":\"alert(1)\"}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid operation {\"op\":\"removeRows\",\"ids\":[\"missing\"]}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid operation {\"op\":\"dropColumn\",\"field\":\"missing\"}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid operation {\"op\":\"sort\",\"sorts\":[{\"field\":\"price\",\"direction\":\"sideways\"}]}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid operation {\"op\":\"filter\",\"filters\":[{\"field\":\"price\",\"op\":\"eq\",\"value\":\"600\"}]}",
+        "status": "passed"
+      },
+      {
+        "name": "reject numeric NaN",
+        "status": "passed"
+      },
+      {
+        "name": "reject numeric Infinity",
+        "status": "passed"
+      },
+      {
+        "name": "reject numeric -Infinity",
+        "status": "passed"
+      },
+      {
+        "name": "reject numeric 10000000000000000",
+        "status": "passed"
+      },
+      {
+        "name": "reject numeric 1",
+        "status": "passed"
+      },
+      {
+        "name": "reject numeric [object Object]",
+        "status": "passed"
+      },
+      {
+        "name": "reject numeric ",
+        "status": "passed"
+      },
+      {
+        "name": "malformed structure 96",
+        "status": "passed"
+      },
+      {
+        "name": "malformed structure 97",
+        "status": "passed"
+      },
+      {
+        "name": "malformed structure 98",
+        "status": "passed"
+      },
+      {
+        "name": "malformed structure 99",
+        "status": "passed"
+      },
+      {
+        "name": "malformed structure 100",
+        "status": "passed"
+      },
+      {
+        "name": "malformed structure 101",
+        "status": "passed"
+      },
+      {
+        "name": "malformed structure 102",
+        "status": "passed"
+      },
+      {
+        "name": "malformed structure 103",
+        "status": "passed"
+      },
+      {
+        "name": "malformed structure 104",
+        "status": "passed"
+      },
+      {
+        "name": "Arabic and long column preserved",
+        "status": "passed"
+      },
+      {
+        "name": "HTML labels remain plain strings",
+        "status": "passed"
+      },
+      {
+        "name": "unsafe source javascript:alert(1)",
+        "status": "passed"
+      },
+      {
+        "name": "unsafe source http://example.com",
+        "status": "passed"
+      },
+      {
+        "name": "unsafe source https://user:pass@example.com",
+        "status": "passed"
+      },
+      {
+        "name": "retrieved rows require source references",
+        "status": "passed"
+      },
+      {
+        "name": "verified row refs survive sorting",
+        "status": "passed"
+      },
+      {
+        "name": "unretrieved URL rejected",
+        "status": "passed"
+      },
+      {
+        "name": "format null",
+        "status": "passed"
+      },
+      {
+        "name": "format 1e-9",
+        "status": "passed"
+      },
+      {
+        "name": "format 100000000000000",
+        "status": "passed"
+      },
+      {
+        "name": "format -12",
+        "status": "passed"
+      },
+      {
+        "name": "BHD three decimals",
+        "status": "passed"
+      },
+      {
+        "name": "JPY no fractional yen",
+        "status": "passed"
+      },
+      {
+        "name": "percentage format",
+        "status": "passed"
+      },
+      {
+        "name": "CSV escapes a,b",
+        "status": "passed"
+      },
+      {
+        "name": "CSV escapes a\"b",
+        "status": "passed"
+      },
+      {
+        "name": "CSV escapes =1+1",
+        "status": "passed"
+      },
+      {
+        "name": "CSV escapes عربي",
+        "status": "passed"
+      },
+      {
+        "name": "CSV escapes a\nb",
+        "status": "passed"
+      },
+      {
+        "name": "CSV missing is empty",
+        "status": "passed"
+      },
+      {
+        "name": "CSV roundtrip Arabic and numbers",
+        "status": "passed"
+      },
+      {
+        "name": "malformed CSV rejected",
+        "status": "passed"
+      },
+      {
+        "name": "XLSX valid ZIP signature",
+        "status": "passed"
+      },
+      {
+        "name": "XLSX literal formulas",
+        "status": "passed"
+      },
+      {
+        "name": "XLSX BHD format precision",
+        "status": "passed"
+      },
+      {
+        "name": "large table 10000 rows bounded data",
+        "status": "passed"
+      },
+      {
+        "name": "row limit rejects 10001",
+        "status": "passed"
+      },
+      {
+        "name": "conversation Sort by Price",
+        "status": "passed"
+      },
+      {
+        "name": "conversation Remove the last column",
+        "status": "passed"
+      },
+      {
+        "name": "conversation Remove RTX 3060",
+        "status": "passed"
+      },
+      {
+        "name": "conversation Show only VRAM at least 16 GB",
+        "status": "passed"
+      },
+      {
+        "name": "conversation Show that as a graph",
+        "status": "passed"
+      },
+      {
+        "name": "conversation Average Price",
+        "status": "passed"
+      },
+      {
+        "name": "follow-up updates original only",
+        "status": "passed"
+      },
+      {
+        "name": "private dataset redacted from public research history",
+        "status": "passed"
+      },
+      {
+        "name": "grounding missing researched number",
+        "status": "passed"
+      },
+      {
+        "name": "source URLs included in exported dataset",
+        "status": "passed"
+      },
+      {
+        "name": "export source-column collision is safe",
+        "status": "passed"
+      },
+      {
+        "name": "cell source URLs survive export",
+        "status": "passed"
+      },
+      {
+        "name": "group operation updates shared table data",
+        "status": "passed"
+      },
+      {
+        "name": "grouped chart reuses grouped dataset",
+        "status": "passed"
+      },
+      {
+        "name": "empty update rejected",
+        "status": "passed"
+      },
+      {
+        "name": "timestamp date filter uses selected calendar day",
+        "status": "passed"
+      },
+      {
+        "name": "time chart sorted without mutating source",
+        "status": "passed"
+      },
+      {
+        "name": "ordinary chat is not forced into JSON",
+        "status": "passed"
+      },
+      {
+        "name": "unvalidated streamed view is not approved",
+        "status": "passed"
+      },
+      {
+        "name": "validated saved view is approved",
+        "status": "passed"
+      },
+      {
+        "name": "invalid model result cannot leave a renderable visual",
+        "status": "passed"
+      },
+      {
+        "name": "unsupported user values are missing rather than invented",
+        "status": "passed"
+      },
+      {
+        "name": "attached statistics use full local dataset",
+        "status": "passed"
+      },
+      {
+        "name": "new measurement column keeps row-specific citations",
+        "status": "passed"
+      },
+      {
+        "name": "percentage denominator computed from dataset sum",
+        "status": "passed"
+      },
+      {
+        "name": "calculated private datasets stay out of research history",
+        "status": "passed"
+      },
+      {
+        "name": "missing dates cannot interrupt chronological ordering",
+        "status": "passed"
+      },
+      {
+        "name": "standard GB to GiB conversion",
+        "status": "passed"
+      },
+      {
+        "name": "explicit currency conversion is calculated locally",
+        "status": "passed"
+      },
+      {
+        "name": "invented standard unit factor rejected",
+        "status": "passed"
+      },
+      {
+        "name": "currency conversion rejects negative rates",
+        "status": "passed"
+      },
+      {
+        "name": "currency conversion requires matching source unit",
+        "status": "passed"
+      },
+      {
+        "name": "unverified model exchange rate cannot update a view",
+        "status": "passed"
+      }
+    ],
+    "browser": [
+      {
+        "name": "real ECharts bar",
+        "status": "passed",
+        "seconds": 0.156
+      },
+      {
+        "name": "real ECharts horizontalBar",
+        "status": "passed",
+        "seconds": 0.016
+      },
+      {
+        "name": "real ECharts line",
+        "status": "passed",
+        "seconds": 0.031
+      },
+      {
+        "name": "real ECharts area",
+        "status": "passed",
+        "seconds": 0.015
+      },
+      {
+        "name": "real ECharts pie",
+        "status": "passed",
+        "seconds": 0.047
+      },
+      {
+        "name": "real ECharts donut",
+        "status": "passed",
+        "seconds": 0.047
+      },
+      {
+        "name": "real ECharts scatter",
+        "status": "passed",
+        "seconds": 0.031
+      },
+      {
+        "name": "real ECharts histogram",
+        "status": "passed",
+        "seconds": 0.032
+      },
+      {
+        "name": "tooltip uses rich text, not model HTML",
+        "status": "passed",
+        "seconds": 0.0
+      },
+      {
+        "name": "series legend available",
+        "status": "passed",
+        "seconds": 0.0
+      },
+      {
+        "name": "axis labels present",
+        "status": "passed",
+        "seconds": 0.015
+      },
+      {
+        "name": "interactive legend hides and restores series",
+        "status": "passed",
+        "seconds": 0.0
+      },
+      {
+        "name": "zoom and pan retain chart data",
+        "status": "passed",
+        "seconds": 0.078
+      },
+      {
+        "name": "keyboard activates table sorting",
+        "status": "passed",
+        "seconds": 0.047
+      },
+      {
+        "name": "real numeric sorting",
+        "status": "passed",
+        "seconds": 0.063
+      },
+      {
+        "name": "descending sorting",
+        "status": "passed",
+        "seconds": 0.047
+      },
+      {
+        "name": "shift adds multi-column sort",
+        "status": "passed",
+        "seconds": 0.031
+      },
+      {
+        "name": "numeric filter controls",
+        "status": "passed",
+        "seconds": 0.078
+      },
+      {
+        "name": "chart and table share filtered rows",
+        "status": "passed",
+        "seconds": 0.0
+      },
+      {
+        "name": "date filter controls",
+        "status": "passed",
+        "seconds": 0.031
+      },
+      {
+        "name": "missing results clear chart",
+        "status": "passed",
+        "seconds": 0.188
+      },
+      {
+        "name": "reset search restores filtered chart",
+        "status": "passed",
+        "seconds": 0.172
+      },
+      {
+        "name": "column width slider",
+        "status": "passed",
+        "seconds": 0.015
+      },
+      {
+        "name": "hide column",
+        "status": "passed",
+        "seconds": 0.016
+      },
+      {
+        "name": "row source anchor safe",
+        "status": "passed",
+        "seconds": 0.016
+      },
+      {
+        "name": "cell focus keyboard accessible",
+        "status": "passed",
+        "seconds": 0.0
+      },
+      {
+        "name": "real CSV download",
+        "status": "passed",
+        "seconds": 0.14
+      },
+      {
+        "name": "real XLSX download and XML validation",
+        "status": "passed",
+        "seconds": 0.063
+      },
+      {
+        "name": "real SVG export",
+        "status": "passed",
+        "seconds": 0.078
+      },
+      {
+        "name": "real PNG export",
+        "status": "passed",
+        "seconds": 0.078
+      },
+      {
+        "name": "fullscreen stays in same page",
+        "status": "passed",
+        "seconds": 0.062
+      },
+      {
+        "name": "10000-row pagination remains bounded",
+        "status": "passed",
+        "seconds": 0.032
+      },
+      {
+        "name": "next page",
+        "status": "passed",
+        "seconds": 0.031
+      },
+      {
+        "name": "previous page",
+        "status": "passed",
+        "seconds": 0.031
+      },
+      {
+        "name": "virtual rows bounded",
+        "status": "passed",
+        "seconds": 0.016
+      },
+      {
+        "name": "virtual scroll changes visible rows",
+        "status": "passed",
+        "seconds": 0.125
+      },
+      {
+        "name": "large table search responsive",
+        "status": "passed",
+        "seconds": 0.156
+      },
+      {
+        "name": "Ctrl+C copies focused cell",
+        "status": "passed",
+        "seconds": 0.063
+      },
+      {
+        "name": "selected row copying",
+        "status": "passed",
+        "seconds": 0.078
+      },
+      {
+        "name": "copy entire table",
+        "status": "passed",
+        "seconds": 0.078
+      },
+      {
+        "name": "dark theme updates",
+        "status": "passed",
+        "seconds": 0.25
+      },
+      {
+        "name": "small viewport horizontal scrolling",
+        "status": "passed",
+        "seconds": 0.015
+      }
+    ],
+    "research-fixtures": [
+      {
+        "name": "research evidence produces exact prices",
+        "status": "passed"
+      },
+      {
+        "name": "one shared research table/chart",
+        "status": "passed"
+      },
+      {
+        "name": "row citations preserved",
+        "status": "passed"
+      },
+      {
+        "name": "BHD precision retained in chat",
+        "status": "passed"
+      },
+      {
+        "name": "spreadsheet retains source URLs",
+        "status": "passed"
+      },
+      {
+        "name": "unsupported researched price becomes missing",
+        "status": "passed"
+      },
+      {
+        "name": "fabricated citation cannot render",
+        "status": "passed"
+      },
+      {
+        "name": "unjustified currency relabeling blocked",
+        "status": "passed"
+      }
+    ],
+    "qwen-live": [
+      {
+        "name": "selected Qwen creates validated shared table/chart",
+        "status": "passed",
+        "seconds": 30.922,
+        "model": "Qwen3.8-27B.Q4_K_M.gguf"
+      },
+      {
+        "name": "normal-chat sort updates existing view",
+        "status": "passed"
+      },
+      {
+        "name": "normal-chat chart reuses existing data",
+        "status": "passed"
+      },
+      {
+        "name": "normal-chat removal preserves shared dataset",
+        "status": "passed"
+      },
+      {
+        "name": "normal-chat average is computed locally",
+        "status": "passed"
+      },
+      {
+        "name": "simple follow-ups do not invoke/reload Qwen",
+        "status": "passed"
+      },
+      {
+        "name": "normal-chat ranking is computed locally, not supplied by the model",
+        "status": "passed"
+      }
+    ]
+  },
+  "applicationRebuilt": false,
+  "liveResearchTested": false,
+  "mediaGenerationTested": false
+}

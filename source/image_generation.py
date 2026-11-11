@@ -100,7 +100,8 @@ class ImageGenerator:
    with self.lock:self.state=result
  def output(self,name):
   if not re.fullmatch('[0-9a-f]{32}',name):raise ValueError('Invalid image reference.')
-  p=self.home/(name+'.png')
+  from security_paths import job_id
+  p=self.home/(job_id(name)+'.png')
   if not p.is_file():raise ValueError('Image not found.')
   return p.read_bytes()
 

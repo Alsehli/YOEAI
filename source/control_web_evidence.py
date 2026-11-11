@@ -19,9 +19,9 @@ class Text(HTMLParser):
 
 def destination(url):
  p=urlsplit(url)
- if p.scheme not in ['https','http'] or not p.hostname or p.username or p.password or len(url)>2000:raise ValueError('Only ordinary public website addresses may be read.')
+ if p.scheme!='https' or not p.hostname or p.username or p.password or len(url)>2000:raise ValueError('Only ordinary public website addresses may be read.')
  host=p.hostname.encode('idna').decode('ascii');port=p.port or (443 if p.scheme=='https' else 80)
- if port not in [80,443]:raise ValueError('Only public web ports may be read.')
+ if port!=443:raise ValueError('Only public web ports may be read.')
  addresses=list(dict.fromkeys(x[4][0] for x in socket.getaddrinfo(host,port,type=socket.SOCK_STREAM)))
  if not addresses or any(not ipaddress.ip_address(a).is_global for a in addresses):raise ValueError('Private, loopback and reserved network destinations are blocked.')
  return p,host,port,addresses[0]
@@ -30,9 +30,8 @@ def read(url):
  current=url
  for _ in range(4):
   p,host,port,address=destination(current)
-  conn=http.client.HTTPSConnection(host,port,timeout=6,context=ssl.create_default_context()) if p.scheme=='https' else http.client.HTTPConnection(host,port,timeout=6)
-  # Pin the verified public IP while retaining the original TLS hostname/Host.
-  conn._create_connection=lambda endpoint,timeout=6,source_address=None:socket.create_connection((address,port),timeout,source_address)
+  from public_transport import PublicHTTPSConnection
+  conn=PublicHTTPSConnection(host,address,timeout=6)
   try:
    conn.request('GET',(p.path or '/')+('?'+p.query if p.query else ''),headers={'User-Agent':'Mozilla/5.0 (compatible; YOEAI public evidence)','Accept':'text/html,text/plain','Accept-Encoding':'identity'});r=conn.getresponse()
    if r.status in [301,302,303,307,308]:

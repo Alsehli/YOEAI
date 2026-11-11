@@ -22,11 +22,15 @@ def reject_link(path):
   if x.is_symlink() or (os.name=='nt' and x.exists() and x.lstat().st_file_attributes&0x400):raise ValueError('Linked or redirected update targets are blocked.')
 def target(root,name):
  if not isinstance(name,str) or '\\' in name or ':' in name or len(name)>200:raise ValueError('Invalid update path.')
- p=PurePosixPath(name)
- if p.is_absolute() or any(x in {'','..','.'} or x.startswith('.') for x in p.parts):raise ValueError('Invalid update path.')
- if name in PROTECTED or not (name=='ui.html' or name.startswith('assets/') and p.suffix in {'.css','.js','.html'}):raise ValueError('Only existing, unprotected UI text resources may be deployed. Executables, policy, dependencies, models and databases require a separate trusted release.')
+ parts=name.split('/')
+ if name.startswith('/') or any(x in {'','..','.'} or x.startswith('.') for x in parts):raise ValueError('Invalid update path.')
+ # The input selects a trusted inventory entry, never a filesystem expression.
+ root=root.resolve();files={p.relative_to(root).as_posix():p for p in [root/'ui.html',*(root/'assets').rglob('*')] if p.is_file() and p.resolve().is_relative_to(root)}
+ f=files.get(name)
+ if f is None:raise ValueError('Target must be an existing UI text file.')
+ if name in PROTECTED or not (name=='ui.html' or name.startswith('assets/') and f.suffix in {'.css','.js','.html'}):raise ValueError('Only existing, unprotected UI text resources may be deployed. Executables, policy, dependencies, models and databases require a separate trusted release.')
  if any(x in name.lower() for x in ['update-yoe','update-fox','design-engine','worker','permissions','security','trust','vendor/']):raise ValueError('Updater, security and executable resources are protected.')
- f=root/name;reject_link(f)
+ reject_link(f)
  if not f.is_file() or not f.resolve().is_relative_to(root.resolve()) or f.stat().st_size>300000:raise ValueError('Target must be an existing UI text file under 300 KB.')
  return f
 class Manager:

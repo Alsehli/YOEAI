@@ -4,7 +4,7 @@
  'use strict';
  const nodes=new WeakMap(),ids=new WeakMap();let sidebarKey='',follow=true,frame=0,nextId=0,lastItems=null,lastCount=0,lastTail=null,streamPass=false,dirty=false,lastPaint=0;const id=m=>{if(!ids.has(m))ids.set(m,++nextId);return ids.get(m);};
  const $=id=>document.getElementById(id);
- function snapshot(m){return [m.content,JSON.stringify([m.imageGeneration,m.videoGeneration,m.webSources,m.webPhotos,m.pdfRequested,m.pdfReady,m.pdfError,m.pdfTitle,!!window.YoeImages,!!window.YoeVideos])];}
+ function snapshot(m){return [m.content,JSON.stringify([m.imageGeneration,m.videoGeneration,m.webSources,m.webPhotos,m.pdfRequested,m.pdfReady,m.pdfError,m.pdfTitle,!!window.YoeImages,!!window.YoeVideos,!!window.YoeObjects])];}
  function same(a,b){return a&&a[0]===b[0]&&a[1]===b[1];}
  function group(m){if(!m.createdAt)return 'Earlier exchanges';const d=new Date(m.createdAt);if(!Number.isFinite(+d))return 'Earlier exchanges';const today=new Date();today.setHours(0,0,0,0);return d>=today?'Today':d>=new Date(+today-86400000)?'Yesterday':'Earlier exchanges';}
  function historyList(items,isBusy,onDelete){
@@ -26,7 +26,7 @@
   if(m.role!=='assistant'||m.imageGeneration||m.videoGeneration||!String(m.content||'').trim())return;
   const controls=document.createElement('div');controls.className='response-actions';const state=document.createElement('span');state.className='response-action-status';state.setAttribute('role','status');
   const c=document.createElement('button');c.type='button';c.textContent='Copy';c.setAttribute('aria-label','Copy response');c.onclick=()=>copy(m,c,state);
-  const r=document.createElement('button');r.type='button';r.textContent='Regenerate';r.className='regenerate-response';r.setAttribute('aria-label','Regenerate response');r.title='Answer this question again using the current Net setting';r.disabled=isBusy;r.onclick=()=>retry(index);controls.append(c,r,state);article.append(controls);
+  const r=document.createElement('button');r.type='button';r.textContent='Regenerate';r.className='regenerate-response';r.setAttribute('aria-label','Regenerate response');r.title='Answer this question again';r.disabled=isBusy;r.onclick=()=>retry(index);controls.append(c,r,state);article.append(controls);
  }
  function render(items,isBusy,contentNode,onDelete,retry){
   const chat=$('chat');if(!items.length){nodes.clear?.();return false;}

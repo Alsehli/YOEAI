@@ -19,6 +19,8 @@ class Engine:
   before=resources()
   if int(layers)>0 and self.lib.cuda_error:raise RuntimeError('CUDA initialization is unavailable: '+self.lib.cuda_error)
   self.close();started=time.monotonic();self.path=str(path)
+  from context_limits import model_info
+  self.metadata=model_info(path)['metadata']
   from .libllama import Progress
   def report(value,unused):
    if progress:progress(float(value))
@@ -38,6 +40,7 @@ class Engine:
   after=resources()
   import psutil
   measurement={'workerRssBytes':psutil.Process().memory_info().rss,'gpuMemoryBefore':before.get('gpu'),'gpuMemoryAfter':after.get('gpu'),'scope':'GPU readings are device-wide snapshots, not exclusive process attribution.'}
+  self.prompt([{'role':'user','content':'Hello'}])  # Validate chat compatibility before reporting Ready.
   return {'requestedContext':context,'modelContextLimit':int(self.lib.model_n_ctx_train(self.model)),'allocationMeasured':True,'loadMemory':measurement,'vision':bool(self.vision),'model':str(path),'context':self.context,'gpuLayers':self.layers,'loadSeconds':time.monotonic()-started,'gpuSupported':bool(self.lib.supports_gpu_offload()),'transport':'private-stdio','runtime':'libllama b11784'}
  def tokenize(self,text):
   if not self.vocab:raise ValueError('Load a model before tokenizing.')
@@ -51,7 +54,11 @@ class Engine:
   if not data:raise ValueError('Chat messages are missing.')
   array=(Message*len(data))(*(Message(r,c)for r,c in data));template=self.lib.model_chat_template(self.model,None)
   out=C.create_string_buffer(65536);n=self.lib.chat_apply_template(template,array,len(array),True,out,len(out))
-  if n<0:raise ValueError('Native chat template is unsupported; refusing to silently use another format.')
+  if n<0:
+   from .chat_template import render
+   bos=self.lib.piece(self.vocab,int(self.metadata.get('tokenizer.ggml.bos_token_id',0))).decode('utf8')
+   eos=self.lib.piece(self.vocab,int(self.metadata.get('tokenizer.ggml.eos_token_id',0))).decode('utf8')
+   return render(self.metadata.get('tokenizer.chat_template'),messages,bos,eos)
   if n>=len(out):out=C.create_string_buffer(n+1);n=self.lib.chat_apply_template(template,array,len(array),True,out,len(out))
   text=out.raw[:n].decode('utf8')
   # Qwen3.5 non-thinking assistant prefix, matching existing reasoning-off behavior.

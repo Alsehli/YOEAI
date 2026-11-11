@@ -1,0 +1,11 @@
+{
+  "repository": "https://github.com/kandinskylab/kandinsky-6",
+  "sourceCommit": "73b892b730885e02ab58fbf7fc5cb10b78e1e3da",
+  "srRepository": "https://github.com/kandinskylab/kandinsky-6-sr",
+  "srCommit": "b15e2aac526519c51f59dfec2b848355bb8902de",
+  "modelRepository": "kandinskylab/Kandinsky-6.0-Lite-distill-5s-Diffusers",
+  "modelRevision": "4c487e8b4aeeb9059e5a77905aa2ddb59ec28f81",
+  "runtimePolicy": "Windows SDPA; BF16/module offload for 24GB, NF4 Qwen/module offload for 16GB; untested",
+  "testsRun": false,
+  "inferenceRun": false
+}

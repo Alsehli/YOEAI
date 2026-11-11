@@ -13,7 +13,8 @@ def check_url(url):
  return u
 
 def fetch(url):
- check_url(url)
+ parsed=check_url(url)
+ url='https://raw.githubusercontent.com'+urllib.parse.quote(parsed.path,safe='/._-')
  with urllib.request.build_opener(NoRedirect).open(urllib.request.Request(url,headers={'User-Agent':'YOEAI-Reviewed-Acquisition/1.0'}),timeout=20) as r:
   if r.headers.get('Content-Encoding','identity')!='identity':raise ValueError('Compressed transfer is not accepted.')
   data=r.read(MAX+1)

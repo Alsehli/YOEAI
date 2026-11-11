@@ -4,8 +4,8 @@ import json,re
 
 def storage_request(text):
  if not isinstance(text,str):return None
- if re.match(r'\s*(?:explain|describe|how\s+(?:do|can|to)|اشرح|كيف)\b',text,re.I):return None
- if not re.search(r'largest|biggest|taking.*space|أكبر|اكبر',text,re.I) or not re.search(r'files?|folders?|ملفات|ملف|مساحة',text,re.I):return None
+ if re.match(r'[ \t]{0,100}(?:explain|describe|how[ \t]{1,20}(?:do|can|to)|اشرح|كيف)\b',text,re.I):return None
+ if not re.search(r'largest|biggest|taking.{0,200}space|أكبر|اكبر',text,re.I) or not re.search(r'files?|folders?|ملفات|ملف|مساحة',text,re.I):return None
  patterns=[r'\b([a-z]):(?:[\\/])?',r'\b([a-z])\s+(?:drive|disk)\b',r'\b(?:drive|disk)\s+([a-z])\b',r'(?:قرص|القرص)\s+([a-z])\b']
  match=next((m for p in patterns if (m:=re.search(p,text,re.I))),None)
  if not match:return {'question':'Which drive should I scan? For example, F:.'}
@@ -47,7 +47,7 @@ def choose(e,body):
   finally:conn.close()
   if value.get('route') not in schema['properties']['route']['enum']:raise ValueError('Invalid capability decision.')
   query=str(value.get('query','')).strip()[:320]
-  if re.search(r'[A-Za-z]:[\\/]|[\w.+-]+@[\w.-]+|password\s*[:=]|api.?key\s*[:=]',query+' '+text,re.I):return {'route':'clarify','question':'Please remove private paths, passwords or contact details before using public web search.'}
+  if re.search(r'[A-Za-z]:[\\/]|[\w.+-]{1,254}@[\w.-]{1,253}|password[ \t]{0,32}[:=]|api.?key[ \t]{0,32}[:=]',query+' '+text,re.I):return {'route':'clarify','question':'Please remove private paths, passwords or contact details before using public web search.'}
   return {'route':value['route'],'question':str(value.get('question',''))[:300],'query':query if value['route']=='web' else ''}
  except (ValueError,KeyError,TypeError,OSError):return {'route':'chat','notice':'Automatic routing unavailable; no computer action was started.'}
  finally:GATE.release()

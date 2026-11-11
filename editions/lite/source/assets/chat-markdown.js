@@ -16,6 +16,8 @@
   const openLink = md.renderer.rules.link_open || ((tokens, index, options, env, self) => self.renderToken(tokens, index, options));
   md.renderer.rules.link_open = (tokens, index, options, env, self) => {
     tokens[index].attrSet('rel', 'noopener noreferrer');
+    // Keep the standalone app on its conversation when opening web citations.
+    if (/^https?:\/\//i.test(tokens[index].attrGet('href') || '')) tokens[index].attrSet('target', '_blank');
     return openLink(tokens, index, options, env, self);
   };
   // Uploaded attachments keep their existing image renderer. Model Markdown cannot fetch images.

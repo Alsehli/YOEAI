@@ -61,7 +61,7 @@ class NativeSetupTests(unittest.TestCase):
   from collections import namedtuple
   with tempfile.TemporaryDirectory() as folder:
    root=Path(folder);payload=root/'payload';payload.mkdir();(payload/'YOEAILite.exe').write_bytes(b'new app')
-   for name in ['Documents','Licenses','Source','Speech','RuntimeSupport','NativeEngine','NativeRuntime']:(payload/name).mkdir()
+   for name in ['Documents','Licenses','Source','Speech','RuntimeSupport','NativeEngine','NativeRuntime','ImageGeneration','SearchRuntime']:(payload/name).mkdir()
    (payload/'package-manifest.json').write_text(json.dumps({'files':[{'path':'YOEAILite.exe','size':7,'sha256':hashlib.sha256(b'new app').hexdigest()}]}),encoding='utf-8')
    offline=root/'8GB-Lite';(offline/'Models').mkdir(parents=True);(offline/'Runtime').mkdir()
    (offline/'Models/model.gguf').write_bytes(b'model');(offline/'Models/projector.gguf').write_bytes(b'projector')
@@ -73,5 +73,5 @@ class NativeSetupTests(unittest.TestCase):
    usage=namedtuple('Usage','total used free')(100_000_000_000,0,100_000_000_000)
    with patch.object(setup,'PAYLOAD',payload),patch.object(setup,'DATA',root/'data'),patch.object(setup,'OFFLINE_ROOT',root),patch.object(setup,'FILES',files),patch.object(setup,'desktop_folder',return_value=desktop),patch.object(setup,'shortcut',side_effect=lambda exe,dest:Path(dest).write_bytes(b'fixture shortcut')),patch.object(setup.shutil,'disk_usage',return_value=usage),patch.object(setup.subprocess,'check_output',return_value='8192\n'),patch.object(setup.HTTP,'open',side_effect=AssertionError('Network forbidden')),patch.dict(os.environ,{'PROGRAMFILES(X86)':str(root/'Programs')}):
     self.assertIn('Installed',setup.install())
-   config=json.loads((root/'data/profile.json').read_text());self.assertTrue(Path(config['model']).is_file());self.assertTrue(Path(config['projector']).is_file());self.assertEqual(config['inferenceEngine'],'native');self.assertNotIn('backend',config);self.assertEqual(config['context'],16384);self.assertTrue((desktop/'YOEAI Lite 2.0.lnk').exists())
+   config=json.loads((root/'data/profile.json').read_text());self.assertTrue(Path(config['model']).is_file());self.assertTrue(Path(config['projector']).is_file());self.assertEqual(config['inferenceEngine'],'native');self.assertNotIn('backend',config);self.assertEqual(config['context'],16384);self.assertTrue((desktop/'YOEAI.lnk').exists())
 if __name__=='__main__':unittest.main(verbosity=2)

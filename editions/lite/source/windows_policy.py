@@ -47,7 +47,7 @@ SPECS={
 TOPICS=('overview','processes','storage','disk_health','startup','updates','defender','firewall','network','power','apps')
 PRIVATE_NAME=re.compile(r'(^\.env|credential|password|secret|token|private.?key|id_rsa|id_ed25519)',re.I)
 PROTECTED={'.ssh','.aws','.azure','.gnupg','.codex','.config','.kube','.docker','appdata','windows','program files','program files (x86)','programdata','$recycle.bin','system volume information','.git','node_modules','.venv','venv'}
-SENSITIVE_UI=re.compile(r'password|passcode|credential|security key|sign.?in|log.?in|buy|purchase|pay\b|checkout|transfer|send\b|submit|publish|post\b|delete|remove|overwrite|replace|\bsave\b|install|uninstall|elevat|administrator|defender|firewall|antivirus|security|macro|visual basic|execute|\brun\b|accept.*terms|agree|allow access',re.I)
+SENSITIVE_UI=re.compile(r'password|passcode|credential|security key|sign.?in|log.?in|buy|purchase|pay\b|checkout|transfer|send\b|submit|publish|post\b|delete|remove|overwrite|replace|\bsave\b|install|uninstall|elevat|administrator|defender|firewall|antivirus|security|macro|visual basic|execute|\brun\b|terms|agree|allow access',re.I)
 
 def fingerprint(value):return hashlib.sha256(json.dumps(value,sort_keys=True,separators=(',',':')).encode()).hexdigest()
 def redact(text):
@@ -59,7 +59,8 @@ def reject_secret(text):
 
 def root_folder(value):
  if not value:return None
- p=Path(value).expanduser().absolute()
+ from security_paths import user_local_path
+ p=user_local_path(value)
  for part in [p,*p.parents]:
   if part.is_symlink() or part.exists() and getattr(part.lstat(),'st_file_attributes',0)&0x400:raise ValueError('Linked folder scopes are blocked.')
  p=p.resolve(strict=True)

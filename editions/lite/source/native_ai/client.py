@@ -66,4 +66,3 @@ class Connection:
  def close(self):
   if self.response is None or not self.response.done:self.cancel.set()
   if self.response is not None:self.response.close()
-  if self.response:self.response.close()

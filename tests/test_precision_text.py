@@ -8,7 +8,7 @@ from PIL import Image
 
 class PrecisionTests(unittest.TestCase):
  def setUp(self):
-  self.tmp=tempfile.TemporaryDirectory(dir='F:/YOEAI-Autonomy/Precision-Text');self.home=Path(self.tmp.name);self.store=TextProjects(self.home);self.png=io.BytesIO();Image.new('RGB',(512,512),'#14304c').save(self.png,'PNG')
+  self.tmp=tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parent);self.home=Path(self.tmp.name);self.store=TextProjects(self.home);self.png=io.BytesIO();Image.new('RGB',(512,512),'#14304c').save(self.png,'PNG')
  def tearDown(self):self.tmp.cleanup()
  def project(self,prompt):return self.store.create(uuid.uuid4().hex,exact_recipe(prompt),self.png.getvalue())
  def test_exact_english(self):

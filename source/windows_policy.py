@@ -54,7 +54,7 @@ SPECS.update(EXTRA_SPECS)
 TOPICS=('overview','processes','storage','disk_health','startup','updates','defender','firewall','network','power','apps','model')
 PRIVATE_NAME=re.compile(r'(^\.env|credential|password|secret|token|private.?key|id_rsa|id_ed25519)',re.I)
 PROTECTED={'.ssh','.aws','.azure','.gnupg','.codex','.config','.kube','.docker','appdata','windows','program files','program files (x86)','programdata','$recycle.bin','system volume information','.git','node_modules','.venv','venv'}
-SENSITIVE_UI=re.compile(r'password|passcode|credential|security key|sign.?in|log.?in|buy|purchase|pay\b|checkout|transfer|send\b|submit|publish|post\b|delete|remove|overwrite|replace|\bsave\b|install|uninstall|elevat|administrator|defender|firewall|antivirus|security|macro|visual basic|execute|\brun\b|accept.*terms|agree|allow access',re.I)
+SENSITIVE_UI=re.compile(r'password|passcode|credential|security key|sign.?in|log.?in|buy|purchase|pay\b|checkout|transfer|send\b|submit|publish|post\b|delete|remove|overwrite|replace|\bsave\b|install|uninstall|elevat|administrator|defender|firewall|antivirus|security|macro|visual basic|execute|\brun\b|terms|agree|allow access',re.I)
 
 def fingerprint(value):return hashlib.sha256(json.dumps(value,sort_keys=True,separators=(',',':')).encode()).hexdigest()
 def redact(text):
@@ -72,7 +72,8 @@ def canonical_path(value):
   if tail.startswith('UNC\\'):text='\\\\'+tail[4:]
   elif re.match(r'^[A-Za-z]:\\',tail):text=tail
   else:raise ValueError('Only ordinary drive/UNC paths are supported.')
- return Path(text)
+ from security_paths import user_local_path
+ return user_local_path(text)
 
 def native_path(value):
  p=Path(value);text=str(p)
@@ -85,7 +86,8 @@ def relative_path(value,root):return canonical_path(value).relative_to(canonical
 
 def root_folder(value):
  if not value:return None
- p=native_path(Path(value).expanduser().absolute())
+ from security_paths import user_local_path
+ p=native_path(user_local_path(value))
  normal=canonical_path(p)
  if os.name=='nt':
   import ctypes
