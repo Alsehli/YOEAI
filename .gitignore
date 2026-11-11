@@ -31,3 +31,5 @@ Logs/
 Profile*/
 artifacts/
 release-check.json
+
+security-status.json

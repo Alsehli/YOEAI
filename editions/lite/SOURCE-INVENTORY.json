@@ -1731,8 +1731,8 @@
   },
   {
     "path": "windows_policy.py",
-    "bytes": 12577,
-    "sha256": "bfcf52ace320b483d0c80f0c31df1ba042e4e0652239f2e70170aea5d68aae1a"
+    "bytes": 12609,
+    "sha256": "1042f77d0412a0a61ee339c2ad13034ee47434bb36c272209ef53248050d5562"
   },
   {
     "path": "windows_routes.py",

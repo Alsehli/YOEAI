@@ -59,7 +59,8 @@ def reject_secret(text):
 
 def root_folder(value):
  if not value:return None
- p=Path(value).expanduser().absolute()
+ from security_paths import user_local_path
+ p=user_local_path(value)
  for part in [p,*p.parents]:
   if part.is_symlink() or part.exists() and getattr(part.lstat(),'st_file_attributes',0)&0x400:raise ValueError('Linked folder scopes are blocked.')
  p=p.resolve(strict=True)

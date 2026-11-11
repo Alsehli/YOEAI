@@ -22,3 +22,8 @@ jobs:
           languages: python
           build-mode: none
       - uses: github/codeql-action/analyze@33d7b85da1a04171e211befe2c739303b9a4c066
+      - name: Reconcile existing code-scanning baseline
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python tools/code_scanning_status.py
