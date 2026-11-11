@@ -15,11 +15,11 @@
   if(tag==='br')return {text:'\n',...style};
   return {text:[...node.childNodes].map(n=>inline(n,style)),...style};
  }
- function definition(content){
+ function definition(content,message=null){
   if(typeof content!=='string'||!content.trim())throw Error('The document has no content.');
   if(/[\u0590-\u0dff\u3040-\u9fff]/.test(content))throw Error('This PDF creator currently supports Latin, Greek and Cyrillic text. Ask for an English PDF; other scripts need additional font and layout support.');
   if(content.length>100000)throw Error('This document is too long. Ask for a shorter PDF.');
-  const root=YoeVisuals.fragment(content,YoeMarkdown.fragment),blocks=[];
+  const root=YoeVisuals.fragment(content,YoeMarkdown.fragment),blocks=[];window.YoeWeb?.filterSources?.(message,root);
   const title=(root.querySelector('h1,h2')?.textContent||'YOEAI document').slice(0,160);
   const walk=node=>{
    if(node.nodeType===3){if(node.textContent.trim())blocks.push({text:node.textContent,margin:[0,0,0,8]});return;}
@@ -49,8 +49,8 @@
  async function blobFor(m){
   if(cache.has(m))return cache.get(m);
   const completeVisual=/^\s*(?:\{[\s\S]*\}|```(?:yoeai-visual|visual|chart|diagram)\s*\n[\s\S]*\n```\s*)$/.test(m.content);
-  if(completeVisual){const rendered=YoeVisuals.fragment(m.content,YoeMarkdown.fragment),visual=rendered.querySelector('.vie-response');if(visual){const host=document.createElement('div');host.style.cssText='position:fixed;left:-10000px;top:0;width:900px';host.append(rendered);document.body.append(host);try{m.pdfTitle=visual.vieSpec.title;const result=await YoeVisualRenderer.pdf(visual);cache.set(m,Promise.resolve(result));return result;}finally{host.remove();}}}
-  const {title,doc}=definition(m.content);m.pdfTitle=title;
+  if(completeVisual){const rendered=YoeVisuals.fragment(m.content,YoeMarkdown.fragment),visual=rendered.querySelector('.vie-response');if(visual){window.YoeWeb?.filterSources?.(m,rendered);const host=document.createElement('div');host.style.cssText='position:fixed;left:-10000px;top:0;width:900px';host.append(rendered);document.body.append(host);try{m.pdfTitle=visual.vieSpec.title;const result=await YoeVisualRenderer.pdf(visual);cache.set(m,Promise.resolve(result));return result;}finally{host.remove();}}}
+  const {title,doc}=definition(m.content,m);m.pdfTitle=title;
   const promise=new Promise((resolve,reject)=>{try{pdfMake.createPdf(doc).getBlob(blob=>resolve(blob));}catch(e){reject(e);}setTimeout(()=>reject(Error('PDF creation timed out. Try a shorter document.')),60000);});
   cache.set(m,promise);try{return await promise;}catch(e){cache.delete(m);throw e;}
  }

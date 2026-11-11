@@ -50,5 +50,6 @@ def capacity(info,requested,active=None,hardware=None,projector_bytes=0):
   for n in options:
    estimate=cache_estimate(info,n)['bytes']
    if estimate is not None and info['sizeBytes']*1.12+reserve+estimate<=available:result['recommended']=n
+ result['presets']={'quick':min(16384,limit),'long':min(196608,limit)}
  result['note']='Model limit is metadata, allocation is measured after loading; neither guarantees useful recall at the full length. Input + output share this context. GPU size alone does not determine capacity.'
  return result

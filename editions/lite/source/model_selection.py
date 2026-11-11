@@ -1,6 +1,6 @@
 """Explicit local GGUF selection. Never copies, renames or downloads weights."""
 from pathlib import Path
-from gguf_metadata import inspect_model
+from context_limits import model_info as inspect_model
 
 def selected_model(value, projector=''):
     path=Path(value).expanduser().resolve()

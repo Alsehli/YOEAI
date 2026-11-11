@@ -1,0 +1,9 @@
+{
+  "enabled": true,
+  "selectable": false,
+  "mode": "images",
+  "model": "Models/DeepSeek-V4-Pro-Qwen3.5-9B-MTP-Q4_K_M.gguf",
+  "projector": "Models/mmproj-F32.gguf",
+  "context": 8192,
+  "verified": false
+}

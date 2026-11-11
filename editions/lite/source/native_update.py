@@ -28,7 +28,7 @@ def shortcut(target,destination=None):
 
     import pythoncom,win32com.client
 
-    destination=Path(destination) if destination else desktop_folder()/'YOEAI Lite 2.0.lnk'
+    destination=Path(destination) if destination else desktop_folder()/'YOEAI.lnk'
 
     destination.parent.mkdir(parents=True,exist_ok=True)
 
@@ -40,7 +40,7 @@ def shortcut(target,destination=None):
 
         link.TargetPath=str(Path(target).resolve());link.WorkingDirectory=str(Path(target).resolve().parent)
 
-        link.Description='YOEAI Lite - local text and image AI';link.IconLocation=str(Path(target).resolve())+',0';link.Save();link=None
+        link.Description='YOEAI - local AI assistant';link.IconLocation=str(Path(target).resolve())+',0';link.Save();link=None
 
     finally:pythoncom.CoUninitialize()
 
@@ -61,6 +61,10 @@ def busy_ports(profile):
     return False
 
 
+
+def replace_copy(source,target):
+    staged=Path(str(target)+'.update-'+uuid.uuid4().hex)
+    shutil.copy2(source,staged);os.replace(staged,target);return target
 
 def update(payload,data=None,make_shortcut=shortcut,stopper=None,selection=None):
 
@@ -138,9 +142,9 @@ def update(payload,data=None,make_shortcut=shortcut,stopper=None,selection=None)
 
     if old!=target and old.exists():os.replace(old,backup/old.name)
 
-    for name in ['Documents','Licenses','Source','Speech','NativeEngine','NativeRuntime']:
+    for name in ['Documents','Licenses','Source','Speech','NativeEngine','NativeRuntime','RuntimeSupport','ImageGeneration','SearchRuntime']:
 
-        if (payload/name).is_dir():shutil.copytree(payload/name,root/name,dirs_exist_ok=True)
+        if (payload/name).is_dir():shutil.copytree(payload/name,root/name,dirs_exist_ok=True,copy_function=replace_copy)
 
     if selection:
 

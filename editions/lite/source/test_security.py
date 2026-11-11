@@ -24,16 +24,17 @@ class Tests(unittest.TestCase):
   self.assertEqual(h.replies[0][0],400)
  def test_stale_pid_is_not_stopped(self):
   with tempfile.TemporaryDirectory() as folder:
-   state=Path(folder)/'engine.json';state.write_text(json.dumps({'pid':10,'identity':{'exe':'expected','created':1}}))
-   with patch.object(app,'STATE',state),patch.object(app,'identity',return_value={'exe':'different','created':2}),self.assertRaises(RuntimeError):app.stop_engine()
+   state=Path(folder)/'ui.json';state.write_text(json.dumps({'pid':10,'identity':{'exe':'expected','created':1}}))
+   with patch.object(app,'UI_STATE',state),patch.object(app,'stop_engine'),patch.object(app,'identity',return_value={'exe':'different','created':2}),patch.object(app.HTTP,'open') as network:
+    app.stop();network.assert_not_called()
  def test_8192_context_is_accepted(self):
   h=self.handler('/context',b'{"context":8192}')
-  with tempfile.TemporaryDirectory() as folder,patch.object(app,'config',return_value={'uiPort':8090,'context':2048}),patch.object(app,'CONFIG',Path(folder)/'profile.json'),patch.object(app,'stop_engine'),patch.object(app,'start') as start:
+  with tempfile.TemporaryDirectory() as folder,patch.object(app,'config',return_value={'uiPort':8090,'context':2048,'model':'fixture.gguf'}),patch.object(app,'CONFIG',Path(folder)/'profile.json'),patch.object(app,'stop_engine'),patch.object(app,'start') as start,patch('context_limits.validate_context'):
    h.do_POST();start.assert_called_once();self.assertEqual(h.replies[0][0],200)
  def test_failed_context_restores_previous_profile(self):
   h=self.handler('/context',b'{"context":8192}')
   with tempfile.TemporaryDirectory() as folder:
    config_file=Path(folder)/'profile.json'
-   with patch.object(app,'config',return_value={'uiPort':8090,'context':2048}),patch.object(app,'CONFIG',config_file),patch.object(app,'stop_engine'),patch.object(app,'start',side_effect=[RuntimeError('memory exhausted'),None]) as start:
+   with patch.object(app,'config',return_value={'uiPort':8090,'context':2048,'model':'fixture.gguf'}),patch.object(app,'CONFIG',config_file),patch.object(app,'stop_engine'),patch.object(app,'start',side_effect=[RuntimeError('memory exhausted'),None]) as start,patch('context_limits.validate_context'):
     h.do_POST();self.assertEqual(h.replies[0][0],500);self.assertEqual(json.loads(config_file.read_text())['context'],2048);self.assertEqual(start.call_count,2)
 if __name__=='__main__':unittest.main(verbosity=2)

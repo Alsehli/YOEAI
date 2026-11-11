@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.spec
+build/
+dist/
+
+# Machine-local qualification output; publish reviewed summaries separately.
+docs/search-results/
+docs/system-audit/
+docs/model-folder-*.json

@@ -1,10 +1,12 @@
+> **11 November — YOEAI 3.0 development source:** [Current changes and verification](docs/RELEASE-20261111-YOEAI-3.md) and [Lite-based source](editions/lite/README.md) include automatic research, linked models, faster model switching, context presets and composer updates. **No YOEAI 3.0 installer is published.** The download links below remain historical 2.0 previews.
+
 > **8 November Lite update:** [Image Turbo preview](docs/RELEASE-20261108-LITE-IMAGE.md) adds local image generation to Lite. [Downloads](https://github.com/Alsehli/YOEAI/releases/tag/v2.0.20261108-lite-image-preview). Tested on an 8GB card; 24GB and fresh-PC image qualification remain pending.
 
 > **7 November update:** [Native GGUF & Settings preview](docs/RELEASE-20261107.md). Updated source uses embedded native llama.cpp through a private worker; no external model server is required. The older release notes below describe historical builds. New unsigned preview downloads are available from the [release page](https://github.com/Alsehli/YOEAI/releases/tag/v2.0.20261107-native-preview).
 
 <p align="center"><img src="docs/images/social-preview.png" alt="YOEAI 2.0 — Your AI. Your PC. Your Rules." width="100%"></p>
 
-# YOEAI 2.0
+# YOEAI
 
 **Your AI. Your PC. Your Rules.** A local-first AI assistant for Windows.
 

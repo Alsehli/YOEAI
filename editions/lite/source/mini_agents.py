@@ -417,7 +417,7 @@ def shared_request(handler):
  guarded=handler.path in ['/v1/chat/completions','/context','/imagegen/create','/videogen/create']
  acquired=not guarded or GATE.acquire(blocking=False)
  try:
-  if not acquired:handler.json(409,{'error':'Mini YOE is using the shared local model. Wait or stop its task.'})
+  if not acquired:handler.json(409,{'error':'The shared model is busy loading, switching, or running an AI task. Wait for it to finish.'})
   yield acquired
  finally:
   if guarded and acquired:GATE.release()

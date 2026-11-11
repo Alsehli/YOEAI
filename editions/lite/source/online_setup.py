@@ -136,6 +136,7 @@ def obtain_file(category,name,size,digest,url,cache,offline):
 
   staged.rename(target);return target
 
+ if os.environ.get('YOEAI_OFFLINE_ONLY')=='1':raise RuntimeError('Offline installer file is missing: '+name+'. Keep Setup.exe beside its Payload folder.')
  return download(url,target,size,digest)
 
 def verify_payload():
@@ -158,7 +159,7 @@ def find_offline(base):
 
  for candidate in candidates:
 
-  if (candidate/'Models').is_dir() and (candidate/'Runtime').is_dir():return candidate
+  if (candidate/'Models').is_dir() and ((candidate/'Runtime').is_dir() or (candidate/'NativeRuntime').is_dir()):return candidate
 
  return base/'YOEAI-Lite'
 
@@ -175,6 +176,11 @@ def run_setup(payload=None,offline=None):
  main()
 
 
+
+def copy_local(source,target):
+ try:os.link(source,target)
+ except OSError:shutil.copy2(source,target)
+ return target
 
 def install(selected=None,projector=''):
 
@@ -198,7 +204,7 @@ def install(selected=None,projector=''):
 
  if (DATA/'profile.json').exists():raise RuntimeError('A custom Lite profile already exists. It was preserved; this installer will not overwrite it.')
 
- desktop=desktop_folder()/'YOEAI Lite 2.0.lnk'
+ desktop=desktop_folder()/'YOEAI.lnk'
 
  if desktop.exists():raise RuntimeError('An existing Lite shortcut was preserved. Resolve the existing installation before continuing.')
 
@@ -234,7 +240,7 @@ def install(selected=None,projector=''):
 
   else:extract_verified(path,stage/'Backend')
 
- for name in ['Documents','Licenses','Source','Speech','RuntimeSupport','NativeEngine','NativeRuntime']:shutil.copytree(PAYLOAD/name,stage/name)
+ for name in ['Documents','Licenses','Source','Speech','RuntimeSupport','NativeEngine','NativeRuntime','ImageGeneration','SearchRuntime']:shutil.copytree(PAYLOAD/name,stage/name,copy_function=copy_local)
 
  from native_payload import check
 
@@ -250,15 +256,15 @@ def install(selected=None,projector=''):
 
  shortcut(final/'YOEAILite.exe',desktop)
 
- return 'Installed. Open the YOEAI Lite 2.0 desktop shortcut. Future inference works offline.'
+ return 'Installed. Open the YOEAI desktop shortcut. Future inference works offline.'
 
 def main():
 
- window=tk.Tk();window.title('YOEAI Lite 2.0 - Native Setup 2.0.3');window.geometry('760x620')
+ window=tk.Tk();window.title('YOEAI Lite 2.0 - Native Setup 2.0.4');window.geometry('760x620')
 
  tk.Label(window,text='YOEAI Lite 2.0\nText, image understanding, PDF and English voice',font=('Segoe UI',18),pady=15).pack()
 
- tk.Label(window,text='Setup reuses a complete YOEAI-Lite folder beside this EXE when available.\nOtherwise first setup downloads about 7.60 GB; conversations run locally afterward.\nNVIDIA 8 GB+ VRAM, 16 GB system RAM, Microsoft Edge and 25 GB free SSD space required.\nUnsigned development build: target-PC validation and signing remain pending.',wraplength=640,justify='left').pack()
+ tk.Label(window,text='Complete offline installation: model, vision projector and English voice included.\nKeep Setup.exe beside its Payload folder. No downloads are required.\nNVIDIA 8 GB+ VRAM, 16 GB system RAM, Microsoft Edge and 25 GB free SSD space required.\nUnsigned development build: target-PC validation and signing remain pending.',wraplength=640,justify='left').pack()
 
  model=tk.StringVar();vision=tk.StringVar()
 
@@ -398,7 +404,7 @@ if __name__=='__main__':
 
   count=verify_payload()
 
-  result=update(PAYLOAD,data,make_shortcut=lambda target:shortcut(target,test/'YOEAI Lite 2.0.lnk'),stopper=lambda exe:None)
+  result=update(PAYLOAD,data,make_shortcut=lambda target:shortcut(target,test/'YOEAI.lnk'),stopper=lambda exe:None)
 
   assert profile.read_bytes()==before and sha(installed/'YOEAILite.exe')==sha(PAYLOAD/'YOEAILite.exe')
 

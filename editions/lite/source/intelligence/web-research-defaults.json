@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "enabled": true,
+  "backend": "bundled-searxng",
+  "managedHttpsEndpoint": null,
+  "engines": [
+    "brave",
+    "duckduckgo",
+    "wikipedia"
+  ],
+  "language": "auto",
+  "safeSearch": 2,
+  "requestTimeoutSeconds": 15,
+  "startupTimeoutSeconds": 30,
+  "idleShutdownSeconds": 300,
+  "maxResults": 8,
+  "maxPages": 3,
+  "userAgent": "YOEAI/3.0 public research",
+  "localInferenceOnly": true,
+  "startupNetworkRequests": false,
+  "preparationOnly": true,
+  "verified": false
+}

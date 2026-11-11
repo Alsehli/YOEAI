@@ -1,0 +1,9 @@
+# Faster local model loading — 11 November 2026
+
+The linked folder, selected model and Desktop YOEAI Models shortcut now use `C:\YOEAI-Models` on the Lexar NVMe SSD. All three GGUFs were copied from the USB Seagate E: drive (40,894,719,168 bytes). Robocopy reported three successful copies, zero failed files and zero mismatches. Subsequent verification compared sizes and five distributed 1 MiB blocks per file; this was not a full-file SHA-256 comparison. E: originals remain as backups.
+
+Installed the rebuilt app at the existing E: shortcut target. Native-worker libraries/CUDA initialization are retained across healthy model changes; selecting an already-ready model avoids reloading it. Resource planning and selection share the stat-keyed GGUF metadata cache. Failure handling retains profile rollback and worker cleanup. Three new fixture tests passed, plus 35 model-folder and 31 audit regressions. No runtime DLL integrity checks were removed.
+
+Observed selected Qwen3.8-27B Q4_K_M load: prior E: worker reported 172.516 seconds; C: worker reported 12.469 seconds, and the installed API confirmed ready. Both used context 196608. GPU offload was chosen automatically (55 versus 54 layers); storage cache, available VRAM and other conditions were not controlled, so this is an observed result, not a controlled speedup benchmark. Selecting the same ready model retained worker PID 16704 and did not reload weights.
+
+Selected model: `C:\YOEAI-Models\Qwen3.8-27B.Q4_K_M.gguf`. Other detected models: gemma-4-12B-it-Q5_K_M and Qwen3.8-27B-Uncensored-IQ4_XS. No weights were modified or downloaded. Original profiles are backed up under the user's ModelChangeBackups/ssd-migration directory; prior executable is in the installation's Before-ssd-loading-20261111 folder. Raw copy and load records are in the task outputs/YOEAI-System-Audit directory.
