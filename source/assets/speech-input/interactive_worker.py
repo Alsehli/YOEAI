@@ -5,6 +5,15 @@ PRINT=threading.Lock()
 def emit(value):
  with PRINT:print(json.dumps(value,ensure_ascii=False),flush=True)
 
+def load_settings(path):
+ path=Path(path).resolve();c=json.loads(path.read_text(encoding='utf-8-sig'))
+ if not isinstance(c,dict):raise ValueError('Interactive Voice configuration must be an object.')
+ for key in ('model','speech'):
+  raw=c.get(key)
+  if not isinstance(raw,str) or not raw.strip():raise ValueError('Interactive Voice configuration is missing '+key+'.')
+  target=Path(raw);c[key]=str((target if target.is_absolute() else path.parent/target).resolve())
+ return c
+
 class VoiceAudio:
  def __init__(self,c):
   import numpy as np,torch,sounddevice as sd,soxr,webrtcvad,onnxruntime as ort
@@ -143,7 +152,7 @@ class VoiceAudio:
 if __name__=='__main__':
  worker=None
  try:
-  c=json.loads(Path(sys.argv[1]).read_text(encoding='utf8'));worker=VoiceAudio(c)
+  worker=VoiceAudio(load_settings(sys.argv[1]))
   for line in sys.stdin:
    try:
     r=json.loads(line)

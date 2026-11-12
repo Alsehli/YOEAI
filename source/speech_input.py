@@ -15,10 +15,8 @@ class Dictation:
   with self.lock:self.state.update(**values)
  def settings(self):
   if not self.config.is_file():raise ValueError('Local English dictation is not installed on this PC.')
-  c=json.loads(self.config.read_text(encoding='utf8'))
-  for key in ('python','worker','model'):
-   if not Path(c[key]).exists():raise ValueError('Local dictation files are missing: '+key)
-  return c
+  from optional_paths import load_paths
+  return load_paths(self.config,('python','worker','model'),{'cache':HOME/'Dictation/Cache'})
  def launch(self,args,c):
   env=os.environ.copy();env.update(PYTHONIOENCODING='utf-8',HF_HOME=c['cache'],HF_HUB_OFFLINE='1',TRANSFORMERS_OFFLINE='1',HF_HUB_DISABLE_TELEMETRY='1')
   for key in ('PYTHONPATH','PYTHONHOME','QT_QPA_PLATFORM'):env.pop(key,None)

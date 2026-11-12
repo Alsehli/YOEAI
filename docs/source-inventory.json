@@ -741,8 +741,8 @@
   },
   {
     "path": "source/assets/speech-input/interactive_worker.py",
-    "size": 9869,
-    "sha256": "e817c122516a725df125be2a305dbfbc1e05c4713e7f8cde0044379533217e77"
+    "size": 10314,
+    "sha256": "ccdf72087011fed45324845999fb956135c83a12975e183db8f895321ad3d78b"
   },
   {
     "path": "source/assets/speech-input/pro_worker.py",
@@ -1231,8 +1231,8 @@
   },
   {
     "path": "source/interactive_voice.py",
-    "size": 12490,
-    "sha256": "3d4ee48eeb0f1448dc7374dc355348270f86b038c45e44b0229ae1494f4b2677"
+    "size": 12391,
+    "sha256": "d8a40c44ac0b88b27ca8121605f70c118d795fb3921770f35d596dada81a1db2"
   },
   {
     "path": "source/language_understanding.py",
@@ -1350,6 +1350,11 @@
     "sha256": "48ad338acd1d341f85b849261a95fca1e9ec58b5b16db49635ff1f9a10f3d308"
   },
   {
+    "path": "source/optional_paths.py",
+    "size": 1134,
+    "sha256": "79d6095d439e31079b2a145a3ffde1cc8ad6cbca21ee5d8deb64323b318f8ee3"
+  },
+  {
     "path": "source/photoshop_yoe.py",
     "size": 6163,
     "sha256": "864999a1521c9ec9d828f64af989745944e0896a678c7dc004e720df227db53e"
@@ -1431,8 +1436,8 @@
   },
   {
     "path": "source/speech_input.py",
-    "size": 7464,
-    "sha256": "6319ed52c8c4e758d952109ab6bd6216d6905eecdcf950dded6c35174267d67c"
+    "size": 7398,
+    "sha256": "0cbf90e9254b4dae7f6890211509f5f525be9cef68c98fb7cb4259e5beeb61a5"
   },
   {
     "path": "source/speech_live.py",
