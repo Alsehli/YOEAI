@@ -8,6 +8,8 @@ import re
 import shutil
 import subprocess
 import sys
+import time
+import urllib.request
 import zipfile
 from pathlib import Path
 
@@ -50,6 +52,53 @@ def copy_dependency_notices(payload):
                           'license': distribution.metadata.get('License-Expression') or distribution.metadata.get('License'),
                           'notices': copied})
     (payload / 'python-component-notices.json').write_text(json.dumps(inventory, indent=2), encoding='utf8')
+
+
+def smoke_candidate(payload, edition, tag):
+    """Exercise the actual frozen entry point; never load a model or optional worker."""
+    base = Path(os.environ.get('YOEAI_SOURCE_ORIGINAL_APPDATA', os.environ['LOCALAPPDATA']))
+    isolated = base / 'YOEAI-SourceCandidateData' / edition / tag
+    home = isolated / ('YOEAILite' if edition == 'Lite' else 'AlsehliAI-Preview')
+    if edition == 'Normal':
+        subprocess.run([str(payload / 'YOEAI.exe'), '--smoke-test'], cwd=ROOT, check=True, timeout=60)
+        result = json.loads((home / 'text-image-shell-test.json').read_text(encoding='utf8'))
+        if result.get('status') != 'PASS':
+            raise ValueError('Normal frozen UI did not pass its disposable smoke check.')
+        return {'passed': True, 'scope': 'Frozen Normal UI construction, no inference.'}
+    process = subprocess.Popen([str(payload / 'YOEAILite.exe'), '--headless'], cwd=ROOT)
+    opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+    url = 'http://127.0.0.1:19237'
+    try:
+        deadline = time.monotonic() + 60
+        while time.monotonic() < deadline:
+            if process.poll() is not None:
+                raise ValueError('Frozen Lite server exited during smoke check.')
+            try:
+                state = json.loads((home / 'ui-state.json').read_text(encoding='utf8'))
+                if state.get('pid') != process.pid:
+                    raise OSError('Waiting for this candidate process to acquire its UI port.')
+                with opener.open(url + '/status', timeout=2) as response:
+                    json.load(response)
+                with opener.open(url + '/', timeout=2) as response:
+                    if b'YOEAI' not in response.read():
+                        raise ValueError('Candidate HTML is missing.')
+                return {'passed': True, 'scope': 'Frozen Lite headless HTTP/HTML, no inference.'}
+            except (OSError, json.JSONDecodeError):
+                time.sleep(.2)
+        raise TimeoutError('Frozen Lite server startup timed out.')
+    finally:
+        if process.poll() is None:
+            try:
+                state = json.loads((home / 'ui-state.json').read_text(encoding='utf8'))
+                if state.get('pid') == process.pid:
+                    request = urllib.request.Request(url + '/shutdown', json.dumps({'token': state['token']}).encode(),
+                                                     {'Content-Type': 'application/json', 'Origin': url})
+                    with opener.open(request, timeout=5) as response:
+                        response.read()
+                process.wait(timeout=15)
+            except (OSError, ValueError, KeyError, subprocess.TimeoutExpired):
+                process.kill()
+                process.wait(timeout=10)
 
 
 def build(edition, tag, commit, output, runtime=None):
@@ -101,6 +150,9 @@ def build(edition, tag, commit, output, runtime=None):
         shutil.copytree(ROOT / 'build-inputs/Native-Licenses', payload / 'NativeRuntime/Licenses')
     marker = {'edition': edition, 'version': tag, 'sourceCommit': commit, 'sourcePreviewOnly': True}
     (payload / 'source-candidate.json').write_text(json.dumps(marker), encoding='utf8')
+    smoke = smoke_candidate(payload, edition, tag)
+    print(json.dumps({'edition': edition, 'smoke': smoke}), flush=True)
+    (payload / 'candidate-smoke.json').write_text(json.dumps(smoke, indent=2), encoding='utf8')
     dependencies = subprocess.check_output([sys.executable, '-m', 'pip', 'freeze', '--all'], text=True)
     (payload / 'build-dependencies.txt').write_text(dependencies, encoding='utf8')
     rows = [{'path': p.relative_to(payload).as_posix(), 'bytes': p.stat().st_size, 'sha256': digest(p)}
