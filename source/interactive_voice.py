@@ -15,10 +15,8 @@ class VoiceSession:
  def settings(self):
   p=APP_DIR/'SpeechInput/interactive-config.json'
   if not p.is_file():raise ValueError('Interactive Voice components are not installed.')
-  c=json.loads(p.read_text(encoding='utf8'))
-  for key in ('python','worker','model','speech'):
-   if not Path(c[key]).exists():raise ValueError('Interactive Voice is missing '+key+'.')
-  return c
+  from optional_paths import load_paths
+  return load_paths(p,('python','worker','model','speech'))
  def start(self,body):
   if body.get('activated') is not True:raise ValueError('Start the microphone explicitly.')
   from speech_input import service
