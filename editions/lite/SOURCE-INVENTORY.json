@@ -1346,8 +1346,8 @@
   },
   {
     "path": "native_worker_entry.py",
-    "bytes": 804,
-    "sha256": "3b0924d098290dd1ddfa7eddb6ef8f3057cf7ad006d9099cf911258c25e874e9"
+    "bytes": 901,
+    "sha256": "48ad338acd1d341f85b849261a95fca1e9ec58b5b16db49635ff1f9a10f3d308"
   },
   {
     "path": "object_generation.py",

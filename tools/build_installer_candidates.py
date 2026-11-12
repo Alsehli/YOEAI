@@ -136,7 +136,7 @@ def build(edition, tag, commit, output, runtime=None):
     support = payload / 'CorrespondingBuild'
     support.mkdir()
     shutil.copy2(entry, support / 'entry.py')
-    for script in ('build_installer_candidates.py', 'candidate_installer.py', 'source_candidate_environment.py'):
+    for script in ('build_installer_candidates.py', 'candidate_installer.py', 'source_candidate_environment.py', 'provision_native_runtime.py'):
         shutil.copy2(ROOT / 'tools' / script, support / script)
     for file in ('LICENSE', 'NOTICE', 'THIRD-PARTY.md'):
         shutil.copy2(ROOT / file, payload / file)
@@ -148,6 +148,14 @@ def build(edition, tag, commit, output, runtime=None):
     if runtime:
         shutil.copytree(runtime, payload / 'NativeRuntime/b11784')
         shutil.copytree(ROOT / 'build-inputs/Native-Licenses', payload / 'NativeRuntime/Licenses')
+        probe = subprocess.run([str(payload / 'NativeEngine/YOEAI-Inference.exe'), '--probe',
+                                str(payload / 'NativeRuntime/b11784'), '--probe-cpu-ok'],
+                               check=True, capture_output=True, text=True, timeout=60)
+        result = json.loads(probe.stdout)
+        if not result.get('native') or not result.get('devices') or result.get('modelLoaded') is not False:
+            raise ValueError('Frozen native-worker library probe failed.')
+        (payload / 'native-library-probe.json').write_text(json.dumps(result, indent=2), encoding='utf8')
+        print(json.dumps({'edition': edition, 'nativeLibraryProbe': result}), flush=True)
     marker = {'edition': edition, 'version': tag, 'sourceCommit': commit, 'sourcePreviewOnly': True}
     (payload / 'source-candidate.json').write_text(json.dumps(marker), encoding='utf8')
     smoke = smoke_candidate(payload, edition, tag)
