@@ -182,7 +182,8 @@ def build(edition, tag, commit, output, runtime=None):
     run(sys.executable, '-m', 'PyInstaller', '--noconfirm', '--onefile', '--console', '--name', edition + '-Setup',
         '--paths', ROOT / 'tools', '--distpath', output, '--workpath', work / 'setup-build', '--specpath', work, setup)
     run(output / (edition + '-Setup.exe'), '--verify')
-    run(output / (edition + '-Setup.exe'), '--test-install', work / 'extraction-check')
+    # Exercise the full Qt/application payload under a long parent, not only a short CI checkout.
+    run(output / (edition + '-Setup.exe'), '--test-install', work / ('long-parent-' + 'x' * 100) / 'extraction-check')
     # Standalone matching inventories remain convenient without unpacking the ZIP.
     (output / (edition + '-provenance.json')).write_text(json.dumps(provenance, indent=2), encoding='utf8')
 
