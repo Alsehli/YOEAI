@@ -1,6 +1,7 @@
 """Build isolated Lite/Normal source installers from one exact clean Git tag."""
 import argparse
 import hashlib
+import importlib.metadata
 import json
 import os
 import re
@@ -24,6 +25,31 @@ def git(*args):
 def digest(path):
     with path.open('rb') as stream:
         return hashlib.file_digest(stream, 'sha256').hexdigest()
+
+
+def copy_dependency_notices(payload):
+    inventory = []
+    for distribution in importlib.metadata.distributions():
+        name = distribution.metadata.get('Name', 'unknown')
+        component = re.sub(r'[^A-Za-z0-9._-]', '_', name)
+        copied = []
+        for item in distribution.files or ():
+            relative = Path(str(item))
+            if relative.is_absolute() or '..' in relative.parts:
+                continue
+            if not any(word in str(item).lower() for word in ('license', 'copying', 'notice')):
+                continue
+            original = Path(distribution.locate_file(item))
+            if not original.is_file() or original.suffix.lower() in ('.exe', '.dll', '.pyd', '.py', '.pyc'):
+                continue
+            target = payload / 'Licenses/Python' / component / relative
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(original, target)
+            copied.append(target.relative_to(payload).as_posix())
+        inventory.append({'name': name, 'version': distribution.version,
+                          'license': distribution.metadata.get('License-Expression') or distribution.metadata.get('License'),
+                          'notices': copied})
+    (payload / 'python-component-notices.json').write_text(json.dumps(inventory, indent=2), encoding='utf8')
 
 
 def build(edition, tag, commit, output, runtime=None):
@@ -65,6 +91,7 @@ def build(edition, tag, commit, output, runtime=None):
         shutil.copy2(ROOT / 'tools' / script, support / script)
     for file in ('LICENSE', 'NOTICE', 'THIRD-PARTY.md'):
         shutil.copy2(ROOT / file, payload / file)
+    copy_dependency_notices(payload)
     run(sys.executable, '-m', 'PyInstaller', '--noconfirm', '--console', '--onedir', '--name', 'YOEAI-Inference',
         '--paths', source, '--distpath', work / 'worker', '--workpath', work / 'worker-build', '--specpath', work,
         '--exclude-module', 'torch', '--exclude-module', 'PySide6', '--exclude-module', 'numpy', source / 'native_worker_entry.py')
