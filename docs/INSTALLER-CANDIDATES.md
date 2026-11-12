@@ -8,13 +8,16 @@ Both editions use one exact `candidate-*` Git tag and clean commit. Manual build
 
 Each edition produces `Lite-Setup.exe` / `Normal-Setup.exe`, its matching `*-Payload.zip`, a `*-provenance.json` inventory and `SHA256SUMS.txt`. Keep the setup and ZIP together. The expected ZIP hash is compiled into its setup. Transport, archive paths, extraction budget and every file hash are checked before additive installation. CI runs each compiled setup's verification and extraction commands in disposable folders. It also exercises the frozen Lite server/HTML and Normal UI construction without loading models, using separate profiles and ports. Matching application source/build entry points, original project notices and available installed dependency license files are included. The bootstrap changes only the candidate process environment; it does not migrate user profiles.
 
-These are **source-preview installers**, not complete offline model/creative distributions. CI packages the app shells and private native workers. Models, optional media/voice runtimes and CUDA are not silently fetched or inherited from a developer PC. The default CI payload has no native inference DLLs. A local builder can accept `--native-runtime PATH`; it validates the exact existing b11784 ABI/integrity inventory and preserves the available native notices. This optional input needs its own source/license review and is not provisioned by CI yet.
+These are **native-enabled source candidates**, not complete offline model/creative distributions. CI explicitly provisions the version-paired llama.cpp b11784/CUDA 13.4 DLLs from fixed upstream archives whose sizes and SHA-256 digests are committed in the provisioner. Only an allowlist of core DLLs and notices is extracted; server executables and RPC backends are excluded. Microsoft CRT files come from the pinned PySide6 6.12.0 build input, with individual hashes and carrier version recorded. No model weights or optional voice/media runtimes are silently fetched or inherited from a developer PC. See [runtime provenance and probe scope](NATIVE-RUNTIME-INPUTS.md).
+
+Each compiled native worker runs a library/device-enumeration probe. GPU-less CI may use the explicit `--probe-cpu-ok` switch; its result retains `cuda: false` and `modelLoaded: false`. The existing default probe still requires CUDA. This verifies native DLL/ABI loading, not model inference or physical GPU compatibility. A local builder can also accept an existing verified `--native-runtime PATH` without downloading it.
 
 For a configured Windows build environment:
 
 ```text
 python -m pip install -r requirements-build.txt -r editions/lite/source/build-requirements.txt
-python tools/build_installer_candidates.py --tag candidate-YOUR_VERSION --output artifacts/installer-candidates
+python tools/provision_native_runtime.py --output artifacts/native-runtime --cache artifacts/native-input-cache
+python tools/build_installer_candidates.py --tag candidate-YOUR_VERSION --output artifacts/installer-candidates --native-runtime artifacts/native-runtime
 ```
 
 Output must be new. Installer destinations must also be new. No existing app, profile, model or shortcut is replaced, no post-install program runs, and no production endpoint is enabled. The application environment is isolated under `YOEAI-SourceCandidateData/<edition>/<tag>`; files install under `YOEAI-SourceCandidates/<edition>/<tag>` by default.

@@ -6,7 +6,8 @@ if '--probe' in sys.argv:
  base.ggml_backend_dev_name.argtypes=[C.c_void_p];base.ggml_backend_dev_name.restype=C.c_char_p
  names=[base.ggml_backend_dev_name(g.ggml_backend_dev_get(i)).decode()for i in range(g.ggml_backend_dev_count())]
  result={'native':True,'devices':names,'cuda':any(n.startswith('CUDA')for n in names),'modelLoaded':False,'transport':'none'}
- lib.backend_free();print(json.dumps(result));sys.exit(0 if result['cuda']else 1)
+ result['cudaRequired']='--probe-cpu-ok' not in sys.argv
+ lib.backend_free();print(json.dumps(result));sys.exit(0 if result['cuda']or (not result['cudaRequired']and names)else 1)
 else:
  from native_ai.worker import main
  main()
