@@ -16,10 +16,14 @@ class DesignGenerator(ImageGenerator):
   super().__init__(config_path,self.base/'Outputs',pause,resume,max_size=1536)
  def config(self):
   c=load_json(self.config_path)
+  if not isinstance(c,dict):raise ValueError('Design configuration must be an object.')
   install=load_json(self.base/'installation.json')
   if install.get('status') in ['Downloading','Installing'] and time.time()-install.get('updated',0)<120:raise ValueError('Design installation is still active. Wait for file and backend verification.')
   for key in ['python','modelDirectory']:
-   if not Path(c.get(key,'__missing__')).exists():raise ValueError('Design needs setup. Generate will prepare it automatically.')
+   raw=c.get(key)
+   if not isinstance(raw,str) or not raw.strip():raise ValueError('Design needs setup. Generate will prepare it automatically.')
+   value=Path(raw);c[key]=str((value if value.is_absolute() else self.base/value).resolve())
+   if not Path(c[key]).exists():raise ValueError('Design needs setup. Generate will prepare it automatically.')
   verified=load_json(self.base/'files-verified.json');backend=load_json(self.base/'backend.json')
   if verified.get('revision')!=c.get('revision') or not backend.get('cudaAvailable'):raise ValueError('Design setup verification is incomplete. Generate will check it automatically.')
   manifest=load_json(self.base/'model-manifest.json');model=Path(c['modelDirectory'])

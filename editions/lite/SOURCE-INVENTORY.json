@@ -1016,8 +1016,8 @@
   },
   {
     "path": "image_generation.py",
-    "bytes": 8722,
-    "sha256": "5048e94a88ee83caefb90e907723ecc31a2aaa80843c1f33bdeece7f03f273fc"
+    "bytes": 8958,
+    "sha256": "74eb8368a7336e39869dc8c879688fdf1d0a94c9d8f1e702b5049f8832033a94"
   },
   {
     "path": "installer/README.md",

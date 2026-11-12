@@ -1176,8 +1176,8 @@
   },
   {
     "path": "source/design_generation.py",
-    "size": 15554,
-    "sha256": "a8c4b4e5d524f05a06b3a0728aa1a8a7b1154eaf9887ce6e26a25865f00a43d7"
+    "size": 15868,
+    "sha256": "42f3df42f95a411fce35eba382ccc0de87e103227908b80743492a6eaf87499d"
   },
   {
     "path": "source/developer_mode.py",
@@ -1211,8 +1211,8 @@
   },
   {
     "path": "source/image_generation.py",
-    "size": 8565,
-    "sha256": "411697ef80616d64f2794423bb50763354f53d5918bd41aa91efdaa16e9aae47"
+    "size": 8931,
+    "sha256": "a715a24cdb193afd78b2b878f6ebaaf370aa9f42f55f186d44e2ddf5e82842a8"
   },
   {
     "path": "source/image_generation_adapter.py",
