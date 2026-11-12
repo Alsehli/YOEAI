@@ -1,0 +1,137 @@
+name: Build tagged-source installer candidates
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/installer-candidates.yml'
+      - 'tools/build_installer_candidates.py'
+      - 'tools/candidate_installer.py'
+      - 'tools/source_candidate_environment.py'
+      - 'tests/test_candidate_installer.py'
+  workflow_dispatch:
+    inputs:
+      source_tag:
+        description: 'Existing candidate-* tag on a reviewed main-branch commit'
+        required: true
+        type: string
+      request_signing:
+        description: 'Request SignPath signing after explicit maintainer approval'
+        default: false
+        type: boolean
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: windows-2022
+    timeout-minutes: 45
+    outputs:
+      artifact_id: ${{ steps.upload.outputs.artifact-id }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: '3.13'
+          architecture: x64
+      - name: Select exact tagged source
+        shell: pwsh
+        env:
+          SOURCE_TAG: ${{ inputs.source_tag }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          if ($env:EVENT_NAME -eq 'pull_request') {
+            $candidateTag = 'candidate-ci-' + $env:GITHUB_RUN_ID
+            git tag $candidateTag HEAD
+          } else {
+            $candidateTag = $env:SOURCE_TAG
+            if ($candidateTag -notmatch '^candidate-[A-Za-z0-9][A-Za-z0-9._-]{0,79}$') { throw 'Invalid candidate tag' }
+            $commit = git rev-parse --verify "refs/tags/$candidateTag^{commit}"
+            if ($LASTEXITCODE -ne 0) { throw 'Tag does not exist' }
+            git merge-base --is-ancestor $commit origin/main
+            if ($LASTEXITCODE -ne 0) { throw 'Tag must identify reviewed main-branch source' }
+            git checkout --detach $commit
+            if ($LASTEXITCODE -ne 0) { throw 'Unable to check out tagged source' }
+          }
+          "CANDIDATE_TAG=$candidateTag" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+      - name: Install pinned build dependencies
+        run: python -m pip install -r requirements-build.txt -r editions/lite/source/build-requirements.txt
+      - name: Validate source and installer boundaries
+        run: |
+          python tools/check_release.py
+          python tools/check_docs.py
+          python -m unittest discover -s tests -p test_candidate_installer.py -v
+      - name: Build and extract both source installers
+        shell: pwsh
+        run: python tools/build_installer_candidates.py --tag $env:CANDIDATE_TAG --output artifacts/installer-candidates
+      - name: Upload exact unsigned candidate bytes and inventories
+        id: upload
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: source-installer-candidates
+          path: |
+            artifacts/installer-candidates/*-Setup.exe
+            artifacts/installer-candidates/*-Payload.zip
+            artifacts/installer-candidates/*-provenance.json
+            artifacts/installer-candidates/SHA256SUMS.txt
+          if-no-files-found: error
+          retention-days: 14
+  sign:
+    if: github.event_name == 'workflow_dispatch' && inputs.request_signing
+    needs: build
+    runs-on: windows-2022
+    timeout-minutes: 60
+    environment: release-signing
+    permissions:
+      actions: read
+      contents: read
+    steps:
+      - name: Validate signing configuration
+        shell: pwsh
+        env:
+          SIGNPATH_ORGANIZATION_ID: ${{ vars.SIGNPATH_ORGANIZATION_ID }}
+          SIGNPATH_PROJECT_SLUG: ${{ vars.SIGNPATH_PROJECT_SLUG }}
+          SIGNPATH_SIGNING_POLICY_SLUG: ${{ vars.SIGNPATH_SIGNING_POLICY_SLUG }}
+          SIGNPATH_ARTIFACT_CONFIGURATION_SLUG: ${{ vars.SIGNPATH_ARTIFACT_CONFIGURATION_SLUG }}
+          SIGNPATH_CERTIFICATE_THUMBPRINT: ${{ vars.SIGNPATH_CERTIFICATE_THUMBPRINT }}
+          SIGNPATH_API_TOKEN: ${{ secrets.SIGNPATH_API_TOKEN }}
+        run: |
+          foreach ($name in 'SIGNPATH_ORGANIZATION_ID','SIGNPATH_PROJECT_SLUG','SIGNPATH_SIGNING_POLICY_SLUG','SIGNPATH_ARTIFACT_CONFIGURATION_SLUG','SIGNPATH_CERTIFICATE_THUMBPRINT','SIGNPATH_API_TOKEN') {
+            if ([string]::IsNullOrWhiteSpace([Environment]::GetEnvironmentVariable($name))) { throw "Missing signing configuration: $name" }
+          }
+      - name: Submit this run's exact artifact to SignPath
+        uses: signpath/github-action-submit-signing-request@f6d04783b4569d051e0c80105fe66e82819d0092
+        with:
+          api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
+          organization-id: ${{ vars.SIGNPATH_ORGANIZATION_ID }}
+          project-slug: ${{ vars.SIGNPATH_PROJECT_SLUG }}
+          signing-policy-slug: ${{ vars.SIGNPATH_SIGNING_POLICY_SLUG }}
+          artifact-configuration-slug: ${{ vars.SIGNPATH_ARTIFACT_CONFIGURATION_SLUG }}
+          github-artifact-id: ${{ needs.build.outputs.artifact_id }}
+          wait-for-completion: true
+          wait-for-completion-timeout-in-seconds: 3000
+          output-artifact-directory: signed-candidates
+      - name: Verify publisher, signatures and timestamps; generate new hashes
+        shell: pwsh
+        env:
+          EXPECTED_THUMBPRINT: ${{ vars.SIGNPATH_CERTIFICATE_THUMBPRINT }}
+        run: |
+          $reports = @()
+          foreach ($name in 'Lite-Setup.exe','Normal-Setup.exe') {
+            $path = Join-Path 'signed-candidates' $name
+            if (-not (Test-Path -LiteralPath $path -PathType Leaf)) { throw "Missing signed installer: $name" }
+            $signature = Get-AuthenticodeSignature -LiteralPath $path
+            if ($signature.Status -ne 'Valid' -or $null -eq $signature.TimeStamperCertificate) { throw "Invalid or untimestamped signature: $name" }
+            if ($signature.SignerCertificate.Thumbprint -ne $env:EXPECTED_THUMBPRINT) { throw "Unexpected signing certificate: $name" }
+            & $path --verify
+            if ($LASTEXITCODE -ne 0) { throw "Signed setup no longer verifies its paired payload: $name" }
+            $reports += @{file=$name;status='Valid';timestamped=$true;sha256=(Get-FileHash -LiteralPath $path -Algorithm SHA256).Hash.ToLowerInvariant();functionallyQualified=$false}
+          }
+          $reports | ConvertTo-Json -Depth 5 | Set-Content signed-candidates/Signature-verification.json -Encoding utf8
+          Get-ChildItem signed-candidates -File | Where-Object Name -ne 'SHA256SUMS.txt' | Sort-Object Name | ForEach-Object { (Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash.ToLowerInvariant() + '  ' + $_.Name } | Set-Content signed-candidates/SHA256SUMS.txt -Encoding utf8
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: signed-source-installer-candidates
+          path: signed-candidates/
+          if-no-files-found: error
+          retention-days: 14
