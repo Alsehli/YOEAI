@@ -22,6 +22,8 @@ python tools/build_installer_candidates.py --tag candidate-YOUR_VERSION --output
 
 Output must be new. Installer destinations must also be new. No existing app, profile, model or shortcut is replaced, no post-install program runs, and no production endpoint is enabled. The application environment is isolated under `YOEAI-SourceCandidateData/<edition>/<tag>`; files install under `YOEAI-SourceCandidates/<edition>/<tag>` by default.
 
+Extraction uses Windows extended-length filesystem paths for its new destination/staging directory. This supports long Qt asset names even when the parent folder is deeply nested, without modifying the Windows long-path policy. Archive traversal, reserved-name, alias, duplicate and hash checks remain enforced. Failed extractions remove only their newly created staging directory.
+
 ## Signing and publication
 
 The maintainer reports SignPath approval. See [code-signing setup and approval boundaries](../CODE-SIGNING.md). Signing is off by default, requires an explicit manual request plus protected-environment approval, and uses only the artifact ID from the successful build in that same workflow run. Returned installer signatures, expected certificate thumbprint and timestamps must verify before signed artifacts are retained. New hashes describe the signed bytes; old public hashes remain immutable.

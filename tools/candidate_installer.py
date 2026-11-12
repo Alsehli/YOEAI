@@ -17,6 +17,15 @@ def digest(path):
         return hashlib.file_digest(stream, 'sha256').hexdigest()
 
 
+def filesystem_path(path):
+    """Use Windows extended paths without requiring a machine-wide policy change."""
+    path = Path(path).resolve()
+    text = str(path)
+    if os.name == 'nt' and not text.startswith('\\\\?\\'):
+        return Path('\\\\?\\UNC\\' + text[2:] if text.startswith('\\\\') else '\\\\?\\' + text)
+    return path
+
+
 def archive_entries(archive, limit):
     entries = archive.infolist()
     if len(entries) > 100000 or sum(x.file_size for x in entries) > limit:
@@ -62,10 +71,14 @@ def verify(package, expected, budget):
 def install(package, expected, budget, destination):
     manifest = verify(package, expected, budget)
     destination = Path(destination).resolve()
-    if destination.exists():
+    destination_io = filesystem_path(destination)
+    if destination_io.exists():
         raise ValueError('Destination already exists and was preserved. Choose a new folder.')
-    destination.parent.mkdir(parents=True, exist_ok=True)
-    stage = Path(tempfile.mkdtemp(prefix='.yoeai-candidate-', dir=destination.parent))
+    destination_io.parent.mkdir(parents=True, exist_ok=True)
+    stage = Path(tempfile.mkdtemp(prefix='.yoeai-candidate-', dir=destination_io.parent))
+    stage_root = stage.resolve()
+    if not stage_root.is_relative_to(destination_io.parent.resolve()):
+        raise ValueError('Candidate staging directory escapes its destination parent.')
     try:
         with zipfile.ZipFile(package) as archive:
             for entry in archive_entries(archive, budget):
@@ -81,7 +94,7 @@ def install(package, expected, budget, destination):
         for row in manifest['files']:
             if digest(stage / row['path']) != row['sha256']:
                 raise ValueError('Installed file verification failed.')
-        stage.rename(destination)
+        stage.rename(destination_io)
     finally:
         if stage.exists():
             # stage is the exact directory created by mkdtemp, never a payload path.
