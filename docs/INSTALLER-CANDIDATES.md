@@ -12,6 +12,8 @@ These are **native-enabled source candidates**, not complete offline model/creat
 
 Each compiled native worker runs a library/device-enumeration probe. GPU-less CI may use the explicit `--probe-cpu-ok` switch; its result retains `cuda: false` and `modelLoaded: false`. The existing default probe still requires CUDA. This verifies native DLL/ABI loading, not model inference or physical GPU compatibility. A local builder can also accept an existing verified `--native-runtime PATH` without downloading it.
 
+The frozen Lite check also opens its local assistant-state endpoint and runs its actual private document worker against generated PDF, DOCX, XLSX and RTF fixtures. The build pins the document/XML/schema libraries used by these paths; importing only the main page does not detect missing lazily loaded document dependencies. No private documents, model inference or public network requests are used by these checks.
+
 For a configured Windows build environment:
 
 ```text

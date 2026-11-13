@@ -8,8 +8,9 @@ on:
       - 'tools/source_candidate_environment.py'
       - 'tools/provision_native_runtime.py'
       - 'tests/test_native_runtime_inputs.py'
-      - 'source/native_worker_entry.py'
-      - 'editions/lite/source/native_worker_entry.py'
+      - 'requirements-build.txt'
+      - 'source/**'
+      - 'editions/lite/source/**'
       - 'tests/test_candidate_installer.py'
   workflow_dispatch:
     inputs:

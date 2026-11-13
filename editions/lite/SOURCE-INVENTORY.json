@@ -876,8 +876,8 @@
   },
   {
     "path": "build-requirements.txt",
-    "bytes": 506,
-    "sha256": "6af09cffdcd106784893780924d673f83f2b0046ba5752b8a2f078bf81c8f725"
+    "bytes": 593,
+    "sha256": "5fe50ce1daaec14a47fd81f17c124dabe6748bf79e0966674abfa8a76dd4d850"
   },
   {
     "path": "build_app.py",

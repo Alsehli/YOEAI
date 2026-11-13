@@ -82,7 +82,13 @@ def smoke_candidate(payload, edition, tag):
                 with opener.open(url + '/', timeout=2) as response:
                     if b'YOEAI' not in response.read():
                         raise ValueError('Candidate HTML is missing.')
-                return {'passed': True, 'scope': 'Frozen Lite headless HTTP/HTML, no inference.'}
+                with opener.open(url + '/assistant/state', timeout=5) as response:
+                    assistant = json.load(response)
+                if not isinstance(assistant, dict) or not {'documents', 'memories', 'tools'}.issubset(assistant):
+                    raise ValueError('Frozen assistant service did not initialize.')
+                formats = smoke_documents(payload)
+                return {'passed': True, 'scope': 'Frozen Lite HTTP/HTML, assistant state and private document workers; no inference.',
+                        'documentFormats': formats}
             except (OSError, json.JSONDecodeError):
                 time.sleep(.2)
         raise TimeoutError('Frozen Lite server startup timed out.')
@@ -99,6 +105,35 @@ def smoke_candidate(payload, edition, tag):
             except (OSError, ValueError, KeyError, subprocess.TimeoutExpired):
                 process.kill()
                 process.wait(timeout=10)
+
+
+def smoke_documents(payload):
+    """Run actual frozen extraction workers on generated, non-private document fixtures."""
+    from reportlab.pdfgen.canvas import Canvas
+    from openpyxl import Workbook
+    fixtures = payload.parent / 'document-smoke-fixtures'
+    fixtures.mkdir()
+    text = 'YOEAI candidate document fixture'
+    pdf = Canvas(str(fixtures / 'fixture.pdf'))
+    pdf.drawString(40, 750, text)
+    pdf.save()
+    with zipfile.ZipFile(fixtures / 'fixture.docx', 'w') as package:
+        package.writestr('word/document.xml', '<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body><w:p><w:r><w:t>' + text + '</w:t></w:r></w:p></w:body></w:document>')
+    book = Workbook()
+    book.active['A1'] = text
+    book.save(fixtures / 'fixture.xlsx')
+    book.close()
+    (fixtures / 'fixture.rtf').write_text('{\\rtf1\\ansi ' + text + '}', encoding='ascii')
+    formats = []
+    for path in sorted(fixtures.iterdir()):
+        result = subprocess.run([str(payload / 'YOEAILite.exe'), '--assistant-tool-worker', 'extract'],
+                                input=json.dumps({'path': str(path)}).encode('utf8'),
+                                capture_output=True, check=True, timeout=45)
+        value = json.loads(result.stdout)['result']
+        if value.get('untrusted') is not True or text not in ' '.join(s['text'] for s in value['sections']):
+            raise ValueError('Frozen document extraction failed: ' + path.suffix)
+        formats.append(path.suffix)
+    return formats
 
 
 def build(edition, tag, commit, output, runtime=None):
@@ -122,7 +157,7 @@ def build(edition, tag, commit, output, runtime=None):
         command += ['--exclude-module', 'PySide6']
     for dependency in ('ddgs', 'pywinauto', 'comtypes'):
         command += ['--collect-submodules', dependency]
-    for dependency in ('primp', 'lxml', 'playwright', 'psutil'):
+    for dependency in ('primp', 'lxml', 'playwright', 'psutil', 'jsonschema', 'jsonschema_specifications'):
         command += ['--collect-all', dependency]
     for dependency in ('ddgs', 'primp', 'lxml'):
         command += ['--copy-metadata', dependency]
