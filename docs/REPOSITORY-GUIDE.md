@@ -2,7 +2,7 @@
 
 | Section | Purpose and current scope |
 |---|---|
-| Code | Source snapshot, notices, setup and release records. Match newer installer binaries to their attached source archives. |
+| Code | One current YOEAI product under the historical `editions/lite/source` path. Old root/edition trees and release records preserve provenance; they are not separate current products. Match binaries to their exact source/build inventories. |
 | Issues | Reproducible bugs and evidence-based release gates; templates collect version, steps and redacted diagnostics. |
 | Pull requests | Reviewed changes with hosted checks. Empty means no changes are awaiting review. |
 | Actions | Windows source validation/build/smoke checks and CodeQL static analysis. Optional runtime and hardware tests are separate. |

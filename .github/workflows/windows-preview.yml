@@ -1,4 +1,4 @@
-name: Build unsigned Windows source preview
+name: Check Windows source and UI contracts
 on:
   pull_request:
   push:
@@ -37,15 +37,4 @@ jobs:
           node tests_search/citations.cjs
           node tests_search/link_navigation.cjs
           node test_chat_controls.cjs ui.html
-      - name: Build separate unsigned source preview
-        run: python build.py
-      - name: Check compiled UI without loading models or production data
-        shell: pwsh
-        run: |
-          $env:LOCALAPPDATA = Join-Path $env:RUNNER_TEMP 'YOEAI-Source-Smoke'
-          New-Item -ItemType Directory -Path $env:LOCALAPPDATA -Force | Out-Null
-          $process = Start-Process -FilePath (Resolve-Path 'dist/YOEAI/YOEAI.exe') -ArgumentList '--smoke-test' -WindowStyle Hidden -PassThru
-          if (-not $process.WaitForExit(45000)) { throw 'UI smoke test timed out' }
-          if ($process.ExitCode -ne 0) { throw 'UI smoke test failed' }
-          $report = Get-Content (Join-Path $env:LOCALAPPDATA 'AlsehliAI-Preview/text-image-shell-test.json') -Raw | ConvertFrom-Json
-          if ($report.status -ne 'PASS') { throw 'UI smoke test did not report PASS' }
+      # The unified compiled app/installer checks run in installer-candidates.yml.

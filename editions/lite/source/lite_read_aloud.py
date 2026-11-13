@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-only
-"""Same-origin, CPU-only Read and save voice jobs for YOEAI Lite."""
+"""Same-origin, CPU-only Read and save voice jobs for YOEAI."""
 import atexit,json,re,subprocess,threading,time,uuid,wave
 from pathlib import Path
 APP_DIR=None;HOME=None
@@ -17,7 +17,7 @@ class SpeechJobs:
   if re.search(r'[\u0590-\u0dff\u3040-\u9fff]',text):raise ValueError('Read and save voice currently supports English replies. Ask for an English reply first.')
   if isinstance(speed,bool) or speed not in (0.85,1.0,1.15):raise ValueError('Unsupported speech speed.')
   for rel in ['Runtime/YOEAI-Speech.exe','Models/kokoro-v1.0.onnx','Models/voices-v1.0.bin','eSpeak/libespeak-ng.dll','eSpeak/espeak-ng-data/phontab']:
-   if not (self.root/rel).is_file():raise ValueError('The local Read aloud files are missing. Use the updated Lite package with its Speech folder.')
+   if not (self.root/rel).is_file():raise ValueError('The local Read aloud files are missing. Use the updated YOEAI package with its Speech folder.')
   with self.lock:
    if self.state['status']=='running':raise ValueError('Stop the current voice before reading another reply.')
    job=uuid.uuid4().hex;self.cancelled.clear();self.state={'status':'running','id':job,'message':'Preparing voice…'}

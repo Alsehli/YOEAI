@@ -91,8 +91,8 @@
   },
   {
     "path": "app.py",
-    "bytes": 17462,
-    "sha256": "1c0e659f3a6c9c2df25358df2fee1e6afb198a802ad57684e8fd2e8627582d0d"
+    "bytes": 17456,
+    "sha256": "5d0c0ec9f71f5aea7b59a1645e994109d2be8181d37fb1ad867d45d0afabf483"
   },
   {
     "path": "assets/activity.png",
@@ -876,8 +876,8 @@
   },
   {
     "path": "build-requirements.txt",
-    "bytes": 506,
-    "sha256": "6af09cffdcd106784893780924d673f83f2b0046ba5752b8a2f078bf81c8f725"
+    "bytes": 593,
+    "sha256": "5fe50ce1daaec14a47fd81f17c124dabe6748bf79e0966674abfa8a76dd4d850"
   },
   {
     "path": "build_app.py",
@@ -931,8 +931,8 @@
   },
   {
     "path": "developer_mode.py",
-    "bytes": 14473,
-    "sha256": "52a76ba540e27ecd3dd073598f87f65160a80318d0ed07342de6173d8d090850"
+    "bytes": 14448,
+    "sha256": "3f86ac09cd398b77ca56a5936fae41b65c03efd00706738372fe86286a4fcb16"
   },
   {
     "path": "docs/CONTEXT_PRESETS_PROGRESS.md",
@@ -1016,8 +1016,8 @@
   },
   {
     "path": "image_generation.py",
-    "bytes": 8722,
-    "sha256": "5048e94a88ee83caefb90e907723ecc31a2aaa80843c1f33bdeece7f03f273fc"
+    "bytes": 8959,
+    "sha256": "7ca5d12de6503cdbc8e5c5bb1e4fb94ff559550c9f058d25420354e3d6a416fd"
   },
   {
     "path": "installer/README.md",
@@ -1211,18 +1211,18 @@
   },
   {
     "path": "lite_image_generation.py",
-    "bytes": 7455,
-    "sha256": "667a0e7269706527a7f6191e6110c3f5bd219d23cdf4fec2618ee58c066be046"
+    "bytes": 7458,
+    "sha256": "45a8640bd01dcf03791f406a7baf86dfa674bce485137166addf65e489fe1bc7"
   },
   {
     "path": "lite_native.py",
-    "bytes": 2483,
-    "sha256": "80c4cbb181e0c79c14b6d6cda87feafdc68f383ce3373639d2307ae196d7c3f8"
+    "bytes": 2485,
+    "sha256": "8ffbe131a25df4416cc66c111d85e0c15b290d9b84c154084b62ff4dfff503e7"
   },
   {
     "path": "lite_read_aloud.py",
-    "bytes": 5559,
-    "sha256": "ad3b82c7d9981b1ee1f43afcef54eb356395e1bc5cade1ad3cc4fcca4e79848e"
+    "bytes": 5555,
+    "sha256": "b9465fb1f173c737883ea514ec1b9b6523f2e47694f7a9e7f24b300a41ed33c2"
   },
   {
     "path": "lite_refresh.py",
@@ -1336,8 +1336,8 @@
   },
   {
     "path": "native_payload.py",
-    "bytes": 815,
-    "sha256": "7d3adb2875168c6d9486d9b1e8e1a873a07cd293e1e64d9868e31b7ca9fa580a"
+    "bytes": 820,
+    "sha256": "5f3604ed6fdca4dc1bd986c54f22f39f6414d04a237d376db11a4c4b9f9b93db"
   },
   {
     "path": "native_update.py",

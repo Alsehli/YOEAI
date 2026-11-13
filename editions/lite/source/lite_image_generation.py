@@ -80,7 +80,7 @@ def route(handler,post,app,home,bundle,config):
   global INSTANCE,ROUTER
   if handler.path=='/imagegen/configure' and post:
    if not handler.allowed() or handler.headers.get('Origin')!='http://'+handler.headers.get('Host',''):
-    handler.reply(403,{'error':'Use the local Lite settings'});return True
+    handler.reply(403,{'error':'Use the local YOEAI settings'});return True
    try:
     n=int(handler.headers.get('Content-Length','0'))
     if handler.headers.get('Transfer-Encoding') or not 0<n<=4096:raise ValueError('Invalid configuration request')
@@ -98,7 +98,7 @@ def route(handler,post,app,home,bundle,config):
        if stream.read(4)!=b'GGUF':raise ValueError('Invalid GGUF component: '+file.name)
     runtimes=[Path(app)/'ImageGeneration/Runtime/CUDA/sd-cli.exe',Path('F:/YOEAI-Image-Generation/Runtime/CUDA/sd-cli.exe')]
     exe=next((x for x in runtimes if x.is_file()),None)
-    if exe is None:raise ValueError('Image runtime missing; install the Lite image tools')
+    if exe is None:raise ValueError('Image runtime missing; install the YOEAI image tools')
     target=Path(home)/'ImageGeneration/config.json';target.parent.mkdir(parents=True,exist_ok=True)
     value={k:str(file) for k,file in files.items()};value.update(executable=str(exe),arguments=['--backend','cuda0','--max-vram','cuda0=5','--flash-attn','off,diffusion=on','-t','6'])
     temp=target.with_suffix('.tmp');temp.write_text(json.dumps(value,indent=2),encoding='utf8');temp.replace(target)
@@ -108,7 +108,7 @@ def route(handler,post,app,home,bundle,config):
    except (ValueError,TypeError,AttributeError,OSError) as e:handler.reply(400,{'error':str(e)});return True
   gen=instance(app,home,bundle,config)
   if handler.path=='/imagegen/models' and not post:
-   if not handler.allowed():handler.reply(403,{'error':'Use the local Lite interface'});return True
+   if not handler.allowed():handler.reply(403,{'error':'Use the local YOEAI interface'});return True
    try:gen.config();status={'state':'Ready','canGenerate':True}
    except (ValueError,OSError) as e:status={'state':'Setup needed','canGenerate':False,'error':str(e)}
    ph3={'state':'Setup needed','canGenerate':False}

@@ -1,7 +1,7 @@
 from candidate_environment import initialize as initialize_candidate
 initialize_candidate()
 from native_ai.client import Connection as NativeConnection
-"""YOEAI Lite: local text/image edition using system Microsoft Edge."""
+"""YOEAI: local desktop assistant using system Microsoft Edge."""
 import mimetypes
 from urllib.parse import unquote,urlsplit
 import argparse,ctypes,hashlib,http.client,json,os,shutil,socket,subprocess,sys,threading,time,urllib.request,uuid,zipfile
@@ -283,7 +283,7 @@ if __name__=='__main__':
   elif args.setup:install()
   elif args.stop:stop()
   elif needs_setup():
-   if args.headless:raise RuntimeError('Lite is not installed. Run Install-Lite.bat and complete setup first.')
+   if args.headless:raise RuntimeError('YOEAI is not installed. Run YOEAI-Setup.exe and complete setup first.')
    install()
   else:serve(not args.headless)
  except Exception as e:

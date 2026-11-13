@@ -3,6 +3,7 @@ import hashlib
 import io
 import json
 import stat
+import shutil
 import sys
 import tempfile
 import unittest
@@ -11,7 +12,7 @@ import zipfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools'))
-from candidate_installer import archive_entries, digest, install, verify
+from candidate_installer import archive_entries, digest, filesystem_path, install, verify
 from source_candidate_environment import configure
 
 
@@ -93,6 +94,33 @@ class CandidateInstallerTests(unittest.TestCase):
             with zipfile.ZipFile(stream) as reader, self.assertRaises(ValueError):
                 archive_entries(reader, 1024)
 
+    def test_long_payload_paths_install_and_failed_stages_are_cleaned(self):
+        with tempfile.TemporaryDirectory() as raw:
+            root = Path(raw)
+            name = 'assets/' + ('nested-' * 15) + '/' + ('qt-image-' + 'x' * 140 + '.png')
+            data = b'fixture, not an image'
+            package = root / 'long-payload.zip'
+            meta = {'sourceCommit': 'b' * 40, 'files': [{'path': name, 'bytes': len(data),
+                     'sha256': hashlib.sha256(data).hexdigest()}]}
+            with zipfile.ZipFile(package, 'w') as archive:
+                archive.writestr(name, data)
+                archive.writestr('candidate-provenance.json', json.dumps(meta))
+            destination = root / 'new-long-version'
+            self.assertGreater(len(str(destination / name)), 260)
+            try:
+                result = install(package, digest(package), 4096, destination)
+                self.assertEqual(result['verifiedFiles'], 1)
+                self.assertEqual((filesystem_path(destination) / name).read_bytes(), data)
+                with patch('candidate_installer.shutil.copyfileobj', side_effect=OSError('fixture transfer failure')):
+                    with self.assertRaises(OSError):
+                        install(package, digest(package), 4096, root / 'failed-version')
+                self.assertFalse((root / 'failed-version').exists())
+                self.assertFalse(list(root.glob('.yoeai-candidate-*')))
+            finally:
+                owned = filesystem_path(destination)
+                if owned.exists() and owned.resolve().is_relative_to(filesystem_path(root).resolve()):
+                    shutil.rmtree(owned)
+
     def test_profiles_and_child_processes_keep_candidate_isolation(self):
         with tempfile.TemporaryDirectory() as raw, patch.dict('os.environ', {'LOCALAPPDATA': raw}, clear=True):
             root = Path(raw) / 'app'
@@ -113,6 +141,15 @@ class CandidateInstallerTests(unittest.TestCase):
             marker.write_text(json.dumps({'edition': 'Lite', 'version': '../escape'}))
             with self.assertRaises(ValueError):
                 configure(root)
+
+    def test_unified_product_preserves_legacy_profile_layout_and_isolates_identity(self):
+        with tempfile.TemporaryDirectory() as raw, patch.dict('os.environ', {'LOCALAPPDATA': raw}, clear=True):
+            root = Path(raw) / 'app'
+            root.mkdir()
+            (root / 'source-candidate.json').write_text(json.dumps({'product': 'YOEAI', 'version': 'candidate-unified'}))
+            home = configure(root)
+            self.assertEqual(home, Path(raw) / 'YOEAI-SourceCandidateData/YOEAI/candidate-unified/YOEAILite')
+            self.assertEqual(json.loads((home / 'profile.json').read_text())['uiPort'], 19237)
 
 
 if __name__ == '__main__':

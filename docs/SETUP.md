@@ -1,11 +1,11 @@
-# Developer source setup
+# YOEAI source setup
 
-Use Windows x64 and Python 3.13. Install `requirements-build.txt`, then run `python tools/test_portable.py`, `python tools/check_release.py`, and `python tools/check_docs.py`.
+YOEAI is now one product. Use Windows x64 and Python 3.13. Install both `requirements-build.txt` and `editions/lite/source/build-requirements.txt`, then run `python tools/test_portable.py`, `python tools/check_release.py` and `python tools/check_docs.py`.
 
-`python build.py` builds the desktop UI and private inference worker without downloading models or runtime libraries. This default build can run the UI smoke test but cannot infer until the runtime is supplied.
+The active source remains under `editions/lite/source` for compatibility. The historical root app and old build helpers are preserved as references, not as another current edition.
 
-For native inference, use `python build.py --native-runtime PATH` with an existing, trusted b11784 directory containing its runtime-manifest.json and matching DLLs. The build verifies all hashes and the ABI before copying. Include the native license notices. Do not use random DLL replacements. Configure an existing compatible GGUF through Settings; model weights are not bundled.
+Use an exact clean reviewed `candidate-*` tag with `tools/build_installer_candidates.py`. The [candidate build guide](INSTALLER-CANDIDATES.md) gives the complete commands, runtime provisioning and validation scope. Output is `YOEAI-Setup.exe`, its paired `YOEAI-Payload.zip`, provenance and hashes; the app is `YOEAI.exe`. Native inputs must match the pinned b11784 ABI and integrity manifest. Preserve notices and use existing compatible models rather than copying private profiles or duplicate weights.
 
 Use a separate LOCALAPPDATA profile for development. Never copy production credentials, ownership records or private histories. Optional speech/image/video/Ghidra/Unity/Adobe components require separate supported configuration and are not installed by this build.
 
-See [current preview limitations](RELEASE-20261107.md) and [Windows downloads](WINDOWS-DOWNLOADS.md). The desktop UI transport remains local HTTP; inference uses private pipes and embedded native libraries, not an HTTP model server.
+See [current and historical downloads](WINDOWS-DOWNLOADS.md). Candidate extraction, clean-PC behavior, physical devices and exact signed bytes have separate qualification gates. The UI uses local HTTP; inference uses private pipes and native libraries rather than an external model server.

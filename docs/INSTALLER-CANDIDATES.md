@@ -4,13 +4,15 @@ The manual **Build tagged-source installer candidates** workflow addresses the r
 
 ## Build and provenance
 
-Both editions use one exact `candidate-*` Git tag and clean commit. Manual builds reject tags outside the reviewed main-branch history. PR validation uses an ephemeral CI tag solely to exercise the builder. Direct and edition build requirements are pinned, and each payload records the actual Python and installed dependency versions.
+The single current YOEAI product uses one exact `candidate-*` Git tag and clean commit. Manual builds require reviewed main-branch history. PR validation uses an ephemeral CI tag. Build inputs are pinned and actual dependency versions are recorded. `editions/lite/source` remains an internal compatibility path; old edition release records are historical.
 
-Each edition produces `Lite-Setup.exe` / `Normal-Setup.exe`, its matching `*-Payload.zip`, a `*-provenance.json` inventory and `SHA256SUMS.txt`. Keep the setup and ZIP together. The expected ZIP hash is compiled into its setup. Transport, archive paths, extraction budget and every file hash are checked before additive installation. CI runs each compiled setup's verification and extraction commands in disposable folders. It also exercises the frozen Lite server/HTML and Normal UI construction without loading models, using separate profiles and ports. Matching application source/build entry points, original project notices and available installed dependency license files are included. The bootstrap changes only the candidate process environment; it does not migrate user profiles.
+The build produces `YOEAI-Setup.exe`, `YOEAI-Payload.zip`, `YOEAI-provenance.json` and `SHA256SUMS.txt`. The installed app is `YOEAI.exe`. Setup binds the matching payload hash; archive paths, extraction budgets and every file hash are checked before additive installation. CI verifies/extracts the compiled setup and exercises the frozen server, assistant and document workers without inference. Corresponding source/build entries and dependency notices accompany the payload.
 
 These are **native-enabled source candidates**, not complete offline model/creative distributions. CI explicitly provisions the version-paired llama.cpp b11784/CUDA 13.4 DLLs from fixed upstream archives whose sizes and SHA-256 digests are committed in the provisioner. Only an allowlist of core DLLs and notices is extracted; server executables and RPC backends are excluded. Microsoft CRT files come from the pinned PySide6 6.12.0 build input, with individual hashes and carrier version recorded. No model weights or optional voice/media runtimes are silently fetched or inherited from a developer PC. See [runtime provenance and probe scope](NATIVE-RUNTIME-INPUTS.md).
 
 Each compiled native worker runs a library/device-enumeration probe. GPU-less CI may use the explicit `--probe-cpu-ok` switch; its result retains `cuda: false` and `modelLoaded: false`. The existing default probe still requires CUDA. This verifies native DLL/ABI loading, not model inference or physical GPU compatibility. A local builder can also accept an existing verified `--native-runtime PATH` without downloading it.
+
+The frozen YOEAI check opens its local assistant-state endpoint and runs its private document worker against generated PDF, DOCX, XLSX and RTF fixtures. The document/XML/schema libraries are pinned. These checks use no private documents, model inference or public network requests.
 
 For a configured Windows build environment:
 
@@ -20,7 +22,9 @@ python tools/provision_native_runtime.py --output artifacts/native-runtime --cac
 python tools/build_installer_candidates.py --tag candidate-YOUR_VERSION --output artifacts/installer-candidates --native-runtime artifacts/native-runtime
 ```
 
-Output must be new. Installer destinations must also be new. No existing app, profile, model or shortcut is replaced, no post-install program runs, and no production endpoint is enabled. The application environment is isolated under `YOEAI-SourceCandidateData/<edition>/<tag>`; files install under `YOEAI-SourceCandidates/<edition>/<tag>` by default.
+Output and installation destinations must be new. Existing apps, profiles, models and shortcuts are preserved. Candidate files use `YOEAI-SourceCandidates/YOEAI/<tag>` and profiles use `YOEAI-SourceCandidateData/YOEAI/<tag>`. The internal `YOEAILite` profile subdirectory is retained for compatibility; no profile migration is performed.
+
+Extraction uses Windows extended-length filesystem paths for its new destination/staging directory. This supports long Qt asset names even when the parent folder is deeply nested, without modifying the Windows long-path policy. Archive traversal, reserved-name, alias, duplicate and hash checks remain enforced. Failed extractions remove only their newly created staging directory.
 
 ## Signing and publication
 
