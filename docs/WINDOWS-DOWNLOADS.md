@@ -1,6 +1,10 @@
 > Latest Lite image build: [8 November download and setup](RELEASE-20261108-LITE-IMAGE.md). It uses two installer parts. The older instructions below describe their named historical releases.
 
-# Installing the native Windows preview
+# Current YOEAI installer
+
+YOEAI is now one product. Current candidates use `YOEAI-Setup.exe` and the matching `YOEAI-Payload.zip`; see [build and qualification scope](INSTALLER-CANDIDATES.md). A qualified new production download is not yet published. Setup/payload hashes are paired, so historical setup files must not be relabeled as the new build.
+
+# Historical Windows previews
 
 Download from the [7 November unsigned prerelease](https://github.com/Alsehli/YOEAI/releases/tag/v2.0.20261107-native-preview). Lite targets compatible NVIDIA 8GB systems; Normal targets 16GB. Hardware and model architecture compatibility still apply.
 

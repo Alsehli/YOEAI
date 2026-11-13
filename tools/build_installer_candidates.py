@@ -1,4 +1,4 @@
-"""Build the unified YOEAI source candidate from one exact clean Git tag."""
+"""Build the single current YOEAI app and installer from one exact clean Git tag."""
 import argparse
 import hashlib
 import importlib.metadata
