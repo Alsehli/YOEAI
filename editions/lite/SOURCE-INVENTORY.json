@@ -1406,8 +1406,8 @@
   },
   {
     "path": "speech_input.py",
-    "bytes": 7130,
-    "sha256": "a604bee4bc28663c53d6e5211974eb043653779b12704f38008d188a6f927a58"
+    "bytes": 7458,
+    "sha256": "6ca73bea35fb1386d01d756eb84c67d33d64e0f1f4e59ac02e9f1dc53131a098"
   },
   {
     "path": "test_chat_controls.cjs",
