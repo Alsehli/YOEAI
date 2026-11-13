@@ -57,7 +57,11 @@ class ImageGenerator:
   with self.lock:
    if self.state['status'] in ('running','restoring'):raise ValueError('An image is already being created.')
    self.cancelled.clear();job=uuid.uuid4().hex;self.state={'status':'running','message':'Preparing image generation…','id':job,'started':time.time()}
-   self.worker=threading.Thread(target=self.run,args=(c,prompt,size,job),daemon=True);self.worker.start()
+   try:
+    self.worker=threading.Thread(target=self.run,args=(c,prompt,size,job),daemon=True);self.worker.start()
+   except (RuntimeError,OSError) as error:
+    self.worker=None;self.state={'status':'error','message':'Image generation could not start. Try again.'}
+    raise ValueError(self.state['message']) from error
   return self.status()
  def cancel(self):
   self.cancelled.set()
@@ -68,9 +72,10 @@ class ImageGenerator:
   self.cancel()
   if self.worker and self.worker.is_alive() and self.worker is not threading.current_thread():self.worker.join(timeout=270)
  def run(self,c,prompt,size,job):
-  paused=False;handle=None;result={};self.home.mkdir(parents=True,exist_ok=True)
+  paused=False;handle=None;result={}
   root=self.config_path.parent;lockfile=root/'generation.lock';output=self.home/(job+'.png');log=self.home/(job+'.log')
   try:
+   self.home.mkdir(parents=True,exist_ok=True)
    try:handle=os.open(lockfile,os.O_CREAT|os.O_EXCL|os.O_WRONLY)
    except FileExistsError:raise ValueError('Another image-generation job is active. If a previous app crashed, reopen the image add-on to recover its lock.')
    os.write(handle,str(os.getpid()).encode())

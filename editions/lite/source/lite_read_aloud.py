@@ -21,7 +21,10 @@ class SpeechJobs:
   with self.lock:
    if self.state['status']=='running':raise ValueError('Stop the current voice before reading another reply.')
    job=uuid.uuid4().hex;self.cancelled.clear();self.state={'status':'running','id':job,'message':'Preparing voice…'}
-   threading.Thread(target=self.run,args=(job,text.strip(),float(speed)),daemon=True).start()
+   try:threading.Thread(target=self.run,args=(job,text.strip(),float(speed)),daemon=True).start()
+   except (RuntimeError,OSError) as error:
+    self.state={'status':'error','message':'Voice preparation could not start. Try again.'}
+    raise ValueError(self.state['message']) from error
    return dict(self.state)
  def stop(self):
   with self.lock:
