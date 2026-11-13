@@ -56,7 +56,7 @@ def start(app,home,config):
 
  model=Path(c['model']).resolve();projector=Path(c['projector']).resolve() if c.get('projector') else None
 
- if not model.is_file() or (projector and not projector.is_file()):raise ValueError('The existing Lite model or vision file is missing. Reconnect its drive; no download was started.')
+ if not model.is_file() or (projector and not projector.is_file()):raise ValueError('The existing YOEAI model or vision file is missing. Reconnect its drive; no download was started.')
 
  with LOCK:
 
@@ -80,7 +80,7 @@ def start(app,home,config):
 
     if not any(x in str(e).lower()for x in ('alloc','memory','cuda','worker closed')):raise
 
-  else:raise ValueError('The Lite model could not load safely: '+errors[-1])
+  else:raise ValueError('The YOEAI model could not load safely: '+errors[-1])
 
   INSTANCE.state['resourcePlan']=profile
 

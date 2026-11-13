@@ -1,4 +1,4 @@
-"""Build isolated Lite/Normal source installers from one exact clean Git tag."""
+"""Build the unified YOEAI source candidate from one exact clean Git tag."""
 import argparse
 import hashlib
 import importlib.metadata
@@ -54,25 +54,18 @@ def copy_dependency_notices(payload):
     (payload / 'python-component-notices.json').write_text(json.dumps(inventory, indent=2), encoding='utf8')
 
 
-def smoke_candidate(payload, edition, tag):
+def smoke_candidate(payload, tag):
     """Exercise the actual frozen entry point; never load a model or optional worker."""
     base = Path(os.environ.get('YOEAI_SOURCE_ORIGINAL_APPDATA', os.environ['LOCALAPPDATA']))
-    isolated = base / 'YOEAI-SourceCandidateData' / edition / tag
-    home = isolated / ('YOEAILite' if edition == 'Lite' else 'AlsehliAI-Preview')
-    if edition == 'Normal':
-        subprocess.run([str(payload / 'YOEAI.exe'), '--smoke-test'], cwd=ROOT, check=True, timeout=60)
-        result = json.loads((home / 'text-image-shell-test.json').read_text(encoding='utf8'))
-        if result.get('status') != 'PASS':
-            raise ValueError('Normal frozen UI did not pass its disposable smoke check.')
-        return {'passed': True, 'scope': 'Frozen Normal UI construction, no inference.'}
-    process = subprocess.Popen([str(payload / 'YOEAILite.exe'), '--headless'], cwd=ROOT)
+    home = base / 'YOEAI-SourceCandidateData' / 'YOEAI' / tag / 'YOEAILite'
+    process = subprocess.Popen([str(payload / 'YOEAI.exe'), '--headless'], cwd=ROOT)
     opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
     url = 'http://127.0.0.1:19237'
     try:
         deadline = time.monotonic() + 60
         while time.monotonic() < deadline:
             if process.poll() is not None:
-                raise ValueError('Frozen Lite server exited during smoke check.')
+                raise ValueError('Frozen YOEAI server exited during smoke check.')
             try:
                 state = json.loads((home / 'ui-state.json').read_text(encoding='utf8'))
                 if state.get('pid') != process.pid:
@@ -87,11 +80,11 @@ def smoke_candidate(payload, edition, tag):
                 if not isinstance(assistant, dict) or not {'documents', 'memories', 'tools'}.issubset(assistant):
                     raise ValueError('Frozen assistant service did not initialize.')
                 formats = smoke_documents(payload)
-                return {'passed': True, 'scope': 'Frozen Lite HTTP/HTML, assistant state and private document workers; no inference.',
+                return {'passed': True, 'scope': 'Frozen YOEAI HTTP/HTML, assistant state and private document workers; no inference.',
                         'documentFormats': formats}
             except (OSError, json.JSONDecodeError):
                 time.sleep(.2)
-        raise TimeoutError('Frozen Lite server startup timed out.')
+        raise TimeoutError('Frozen YOEAI server startup timed out.')
     finally:
         if process.poll() is None:
             try:
@@ -126,7 +119,7 @@ def smoke_documents(payload):
     (fixtures / 'fixture.rtf').write_text('{\\rtf1\\ansi ' + text + '}', encoding='ascii')
     formats = []
     for path in sorted(fixtures.iterdir()):
-        result = subprocess.run([str(payload / 'YOEAILite.exe'), '--assistant-tool-worker', 'extract'],
+        result = subprocess.run([str(payload / 'YOEAI.exe'), '--assistant-tool-worker', 'extract'],
                                 input=json.dumps({'path': str(path)}).encode('utf8'),
                                 capture_output=True, check=True, timeout=45)
         value = json.loads(result.stdout)['result']
@@ -136,11 +129,12 @@ def smoke_documents(payload):
     return formats
 
 
-def build(edition, tag, commit, output, runtime=None):
-    source = ROOT / ('editions/lite/source' if edition == 'Lite' else 'source')
-    module = 'app' if edition == 'Lite' else 'customer'
-    name = 'YOEAILite' if edition == 'Lite' else 'YOEAI'
-    work = output / ('build-' + edition)
+def build(tag, commit, output, runtime=None):
+    # The historical source-directory name is retained to preserve provenance.
+    source = ROOT / 'editions/lite/source'
+    module = 'app'
+    name = 'YOEAI'
+    work = output / 'build-YOEAI'
     work.mkdir()
     entry = work / 'entry.py'
     # Child tool workers inherit the original base, avoiding recursive profile nesting.
@@ -153,8 +147,7 @@ def build(edition, tag, commit, output, runtime=None):
                '--distpath', work / 'dist', '--workpath', work / 'pyi', '--specpath', work,
                '--add-data', str(source / 'ui.html') + ';.', '--add-data', str(source / 'assets') + ';assets',
                '--exclude-module', 'torch', '--exclude-module', 'faster_whisper', '--exclude-module', 'piper']
-    if edition == 'Lite':
-        command += ['--exclude-module', 'PySide6']
+    command += ['--exclude-module', 'PySide6']
     for dependency in ('ddgs', 'pywinauto', 'comtypes'):
         command += ['--collect-submodules', dependency]
     for dependency in ('primp', 'lxml', 'playwright', 'psutil', 'jsonschema', 'jsonschema_specifications'):
@@ -190,11 +183,11 @@ def build(edition, tag, commit, output, runtime=None):
         if not result.get('native') or not result.get('devices') or result.get('modelLoaded') is not False:
             raise ValueError('Frozen native-worker library probe failed.')
         (payload / 'native-library-probe.json').write_text(json.dumps(result, indent=2), encoding='utf8')
-        print(json.dumps({'edition': edition, 'nativeLibraryProbe': result}), flush=True)
-    marker = {'edition': edition, 'version': tag, 'sourceCommit': commit, 'sourcePreviewOnly': True}
+        print(json.dumps({'product': 'YOEAI', 'nativeLibraryProbe': result}), flush=True)
+    marker = {'product': 'YOEAI', 'version': tag, 'sourceCommit': commit, 'sourcePreviewOnly': True}
     (payload / 'source-candidate.json').write_text(json.dumps(marker), encoding='utf8')
-    smoke = smoke_candidate(payload, edition, tag)
-    print(json.dumps({'edition': edition, 'smoke': smoke}), flush=True)
+    smoke = smoke_candidate(payload, tag)
+    print(json.dumps({'product': 'YOEAI', 'smoke': smoke}), flush=True)
     (payload / 'candidate-smoke.json').write_text(json.dumps(smoke, indent=2), encoding='utf8')
     dependencies = subprocess.check_output([sys.executable, '-m', 'pip', 'freeze', '--all'], text=True)
     (payload / 'build-dependencies.txt').write_text(dependencies, encoding='utf8')
@@ -205,7 +198,7 @@ def build(edition, tag, commit, output, runtime=None):
                   'limitations': ['No bundled models or optional voice/media runtimes.',
                                   'No clean-PC, inference, accessibility or GPU qualification is implied.']}
     (payload / 'candidate-provenance.json').write_text(json.dumps(provenance, indent=2), encoding='utf8')
-    package = output / (edition + '-Payload.zip')
+    package = output / 'YOEAI-Payload.zip'
     with zipfile.ZipFile(package, 'x', compression=zipfile.ZIP_DEFLATED, compresslevel=6) as archive:
         for path in sorted(payload.rglob('*')):
             if path.is_file():
@@ -213,14 +206,14 @@ def build(edition, tag, commit, output, runtime=None):
     budget = sum(p.stat().st_size for p in payload.rglob('*') if p.is_file())
     setup = work / 'setup.py'
     setup.write_text('from candidate_installer import main\n' +
-                     f'main({edition!r},{tag!r},{package.name!r},{digest(package)!r},{budget!r})\n', encoding='utf8')
-    run(sys.executable, '-m', 'PyInstaller', '--noconfirm', '--onefile', '--console', '--name', edition + '-Setup',
+                     f'main("YOEAI",{tag!r},{package.name!r},{digest(package)!r},{budget!r})\n', encoding='utf8')
+    run(sys.executable, '-m', 'PyInstaller', '--noconfirm', '--onefile', '--console', '--name', 'YOEAI-Setup',
         '--paths', ROOT / 'tools', '--distpath', output, '--workpath', work / 'setup-build', '--specpath', work, setup)
-    run(output / (edition + '-Setup.exe'), '--verify')
+    run(output / 'YOEAI-Setup.exe', '--verify')
     # Exercise the full Qt/application payload under a long parent, not only a short CI checkout.
-    run(output / (edition + '-Setup.exe'), '--test-install', work / ('long-parent-' + 'x' * 100) / 'extraction-check')
+    run(output / 'YOEAI-Setup.exe', '--test-install', work / ('long-parent-' + 'x' * 100) / 'extraction-check')
     # Standalone matching inventories remain convenient without unpacking the ZIP.
-    (output / (edition + '-provenance.json')).write_text(json.dumps(provenance, indent=2), encoding='utf8')
+    (output / 'YOEAI-provenance.json').write_text(json.dumps(provenance, indent=2), encoding='utf8')
 
 
 def main():
@@ -242,8 +235,7 @@ def main():
         verify(args.native_runtime)
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=False)
-    for edition in ('Lite', 'Normal'):
-        build(edition, args.tag, commit, output, args.native_runtime)
+    build(args.tag, commit, output, args.native_runtime)
     files = sorted(p for p in output.iterdir() if p.is_file())
     (output / 'SHA256SUMS.txt').write_text(''.join(digest(p) + '  ' + p.name + '\n' for p in files), encoding='utf8')
 

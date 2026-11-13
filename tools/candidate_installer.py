@@ -122,7 +122,7 @@ def main(edition, version, package_name, expected, budget):
     import tkinter as tk
     from tkinter import messagebox
     window = tk.Tk()
-    window.title('YOEAI ' + edition + ' source-candidate setup')
+    window.title(('YOEAI' if edition == 'YOEAI' else 'YOEAI ' + edition) + ' source-candidate setup')
     window.geometry('630x300')
     tk.Label(window, text='Tagged-source candidate — not a qualified production release', font=('Segoe UI', 13, 'bold')).pack(pady=15)
     tk.Label(window, text='Installs into a new folder. Existing apps, shortcuts, profiles and models are preserved.\nNo models are downloaded. Optional voice/media engines are not bundled.\nNative inference is available only when verified runtime inputs accompanied the build.\nInstallation does not launch the app or run model inference.', justify='left').pack(pady=10)

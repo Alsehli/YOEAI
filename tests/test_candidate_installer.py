@@ -142,6 +142,15 @@ class CandidateInstallerTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 configure(root)
 
+    def test_unified_product_preserves_legacy_profile_layout_and_isolates_identity(self):
+        with tempfile.TemporaryDirectory() as raw, patch.dict('os.environ', {'LOCALAPPDATA': raw}, clear=True):
+            root = Path(raw) / 'app'
+            root.mkdir()
+            (root / 'source-candidate.json').write_text(json.dumps({'product': 'YOEAI', 'version': 'candidate-unified'}))
+            home = configure(root)
+            self.assertEqual(home, Path(raw) / 'YOEAI-SourceCandidateData/YOEAI/candidate-unified/YOEAILite')
+            self.assertEqual(json.loads((home / 'profile.json').read_text())['uiPort'], 19237)
+
 
 if __name__ == '__main__':
     unittest.main()

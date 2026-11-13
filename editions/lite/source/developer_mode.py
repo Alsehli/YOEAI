@@ -112,7 +112,7 @@ def main(app_dir,default,home,lite=False,ui_dir=None):
  backend=app_dir/'NativeRuntime/b11784/llama.dll'
  work=Workspace(backend,ui_dir,home,18090 if lite else 18092);profiles=work.home/'profiles.json'
  saved=json.loads(profiles.read_text()) if profiles.exists() else []
- window=tk.Tk();window.title(('Lite' if lite else 'YOEAI')+' · Developer Mode');window.geometry('850x730');window.configure(bg='#0B0F19')
+ window=tk.Tk();window.title('YOEAI · Developer Mode');window.geometry('850x730');window.configure(bg='#0B0F19')
  style=ttk.Style();style.theme_use('clam');style.configure('.',background='#151D2B',foreground='#F8FAFC',fieldbackground='#202B3C',font=('Segoe UI',10));style.configure('TButton',padding=9);style.configure('TEntry',padding=6)
  panel=ttk.Frame(window,padding=24);panel.pack(fill='both',expand=True)
  ttk.Label(panel,text='Developer Mode',font=('Segoe UI',20,'bold')).pack(anchor='w')
