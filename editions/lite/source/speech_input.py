@@ -71,11 +71,11 @@ class Recognition:
         return self.status()
 
     def run(self, raw, language, executable, model):
-        self.home.mkdir(parents=True, exist_ok=True)
         key = uuid.uuid4().hex
         source, output, log = (self.home / (key + suffix) for suffix in ('.wav', '.txt', '.log'))
         result = {'status': 'error', 'message': 'Transcription failed.'}
         try:
+            self.home.mkdir(parents=True, exist_ok=True)
             source.write_bytes(raw)
             with log.open('wb') as stream:
                 with self.lock:
@@ -99,8 +99,14 @@ class Recognition:
             result = {'status': 'error', 'message': str(error)[:300]}
         finally:
             # These are the exact assistant-owned per-job files, never user audio.
+            cleanup_failed = False
             for path in (source, output, log):
-                path.unlink(missing_ok=True)
+                try:
+                    path.unlink(missing_ok=True)
+                except OSError:
+                    cleanup_failed = True
+            if cleanup_failed:
+                result = {'status': 'error', 'message': 'Temporary dictation files could not be removed. Check access to the Dictation folder and try again.'}
             with self.lock:
                 self.process = None
                 self.state = result
