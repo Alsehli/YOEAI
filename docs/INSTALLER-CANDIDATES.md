@@ -30,6 +30,8 @@ Extraction uses Windows extended-length filesystem paths for its new destination
 
 The maintainer reports SignPath approval. See [code-signing setup and approval boundaries](../CODE-SIGNING.md). Signing is off by default, requires an explicit manual request plus protected-environment approval, and uses only the artifact ID from the successful build in that same workflow run. Returned installer signatures, expected certificate thumbprint and timestamps must verify before signed artifacts are retained. New hashes describe the signed bytes; old public hashes remain immutable.
 
+The [14 November test-signing record](TEST-SIGNING-20261114.md) documents a completed manual request for the reviewed PR #32 setup, with exact input/output hashes and an untrusted self-signed certificate. It does not cover later fixes or establish production signing.
+
 No automatic release publication exists. A signed installer is not evidence that models, optional runtimes or clean-PC behavior work.
 
 ## Remaining acceptance work
