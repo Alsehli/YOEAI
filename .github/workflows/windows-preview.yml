@@ -35,6 +35,7 @@ jobs:
           node tests_visuals/data.cjs
           python tests_visuals/browser.py
           node tests_search/citations.cjs
+          node tests_search/empty_research.cjs
           node tests_search/link_navigation.cjs
           node test_chat_controls.cjs ui.html
       # The unified compiled app/installer checks run in installer-candidates.yml.

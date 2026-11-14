@@ -786,8 +786,8 @@
   },
   {
     "path": "assets/web-search.js",
-    "bytes": 18565,
-    "sha256": "65ffecfed6a6e487ac664dd114800deeb46bf16deb56177eaaccf066292e4b68"
+    "bytes": 19631,
+    "sha256": "7d3e0182be0a3dbf11cb6db3242bd33f4aa98f0b9065b13d83c36872181c68bd"
   },
   {
     "path": "assets/windows-yoe.css",
@@ -1523,6 +1523,11 @@
     "path": "tests_search/citations.cjs",
     "bytes": 3786,
     "sha256": "28bebb2874e85591f2a56235bbca3a88794e13962266439eaad26248ea707152"
+  },
+  {
+    "path": "tests_search/empty_research.cjs",
+    "bytes": 3221,
+    "sha256": "aeff4998a0982ce87ec8f0d006a84872eb655d516ac302d1834b134dca660977"
   },
   {
     "path": "tests_search/end_to_end.py",
