@@ -1016,8 +1016,8 @@
   },
   {
     "path": "image_generation.py",
-    "bytes": 8959,
-    "sha256": "7ca5d12de6503cdbc8e5c5bb1e4fb94ff559550c9f058d25420354e3d6a416fd"
+    "bytes": 9182,
+    "sha256": "5ddd182bd943770626784110eaac054a184bfc19510758b8797db3e5abcb40cf"
   },
   {
     "path": "installer/README.md",
@@ -1221,8 +1221,8 @@
   },
   {
     "path": "lite_read_aloud.py",
-    "bytes": 5555,
-    "sha256": "b9465fb1f173c737883ea514ec1b9b6523f2e47694f7a9e7f24b300a41ed33c2"
+    "bytes": 5752,
+    "sha256": "623a7cd167e8cfb6da1f9040c4407acb526475764f8460c1ca011e3f71fda24c"
   },
   {
     "path": "lite_refresh.py",
@@ -1406,8 +1406,8 @@
   },
   {
     "path": "speech_input.py",
-    "bytes": 7458,
-    "sha256": "6ca73bea35fb1386d01d756eb84c67d33d64e0f1f4e59ac02e9f1dc53131a098"
+    "bytes": 7743,
+    "sha256": "b41bef9e880a578d9da1ab7a7cff7af27549b944b731755fd2fc7a47d44c161f"
   },
   {
     "path": "test_chat_controls.cjs",

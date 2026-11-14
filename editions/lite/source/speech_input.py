@@ -66,8 +66,13 @@ class Recognition:
                 raise ValueError('Wait for the current transcription or stop it first.')
             self.cancelled.clear()
             self.state = {'status': 'running', 'message': 'Transcribing locally…'}
-            self.thread = threading.Thread(target=self.run, args=(raw, language, executable, model), daemon=True)
-            self.thread.start()
+            try:
+                self.thread = threading.Thread(target=self.run, args=(raw, language, executable, model), daemon=True)
+                self.thread.start()
+            except (RuntimeError, OSError) as error:
+                self.thread = None
+                self.state = {'status': 'error', 'message': 'Transcription could not start. Try again.'}
+                raise ValueError(self.state['message']) from error
         return self.status()
 
     def run(self, raw, language, executable, model):
