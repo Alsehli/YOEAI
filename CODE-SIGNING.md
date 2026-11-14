@@ -1,7 +1,7 @@
 # Code signing policy
 
 ## Current status
-The current product is **YOEAI**, with one app and installer. Historical previews remain unsigned. A Foundation application has been submitted, and the YOEAI SignPath project has an approval-required, self-signed test policy. This certificate is not a trusted production identity. Account signup and application receipt do not establish production signing approval.
+The current product is **YOEAI**, with one app and installer. Historical previews remain unsigned. A Foundation application has been submitted, and the YOEAI SignPath project has an approval-required, self-signed test policy. A manual test-signing request completed on 14 November 2026; the downloaded output hashes, signer and timestamp were checked. See the [exact test-signing record](docs/TEST-SIGNING-20261114.md). This certificate is not a trusted production identity. Account signup and application receipt do not establish production signing approval.
 
 When Foundation signing is activated and verified, the required provider attribution will be: “Free code signing provided by SignPath.io, certificate by SignPath Foundation.” This conditional statement is not a claim that an existing download has been signed. See [SignPath's conditions](https://signpath.org/terms.html).
 
