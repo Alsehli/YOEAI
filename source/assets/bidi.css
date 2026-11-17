@@ -1,0 +1,22 @@
+/* Shared prose direction; graphics and code keep their original coordinate/order systems. */
+.yoe-bidi-text{unicode-bidi:isolate;text-align:start!important}
+.yoe-plain-text{white-space:pre-wrap;unicode-bidi:plaintext;overflow-wrap:anywhere}
+.yoe-bidi-field{unicode-bidi:plaintext;text-align:start!important}
+.yoe-bidi-code,pre:has(>code),code,kbd,samp,[data-yoe-ltr]{direction:ltr!important;unicode-bidi:isolate;text-align:left!important}
+bdi[data-yoe-ltr]{display:inline;unicode-bidi:isolate;direction:ltr}
+pre.yoe-bidi-text{unicode-bidi:plaintext;white-space:pre-wrap}
+.markdown-body :is(ul,ol){padding-inline:1.6em;margin-inline:0}
+.markdown-body blockquote{border-inline-start:3px solid var(--border);border-inline-end:0;padding-inline-start:14px;padding-inline-end:0;margin-inline:0}
+.markdown-body :is(td,th),.vie-table :is(td,th){text-align:start}
+.markdown-body .table-scroll{max-inline-size:100%;overflow-x:auto}
+[dir=rtl] .history-item{padding-inline-start:12px;padding-inline-end:6px}
+[dir=rtl] .publisher{padding-inline-start:12px;padding-inline-end:0}
+html[dir=rtl] .sidebar{border-right:0;border-inline-end:1px solid var(--border)}
+html[dir=rtl] .theme-shortcut{margin-left:0;margin-inline-start:12px}
+.stats,.yoeai-visual-plot,.vie-chart-surface,.yg-view{direction:ltr}
+svg text{unicode-bidi:plaintext}
+
+/* Logical auto-margins keep localized layouts consistent without flipping controls. */
+.composer .composer-actions{margin-left:0;margin-inline-start:auto}.composer-bottom .keyboard-hint{margin-left:0;margin-inline-start:auto}.sidebar .publisher{padding-left:0;padding-inline-start:12px}.markdown-body blockquote{border-left:0;border-inline-start:3px solid var(--border)}
+
+.yoe-bidi-plain{unicode-bidi:plaintext}

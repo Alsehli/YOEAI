@@ -40,6 +40,16 @@
     "sha256": "9c30b7d1f9a5ab307eda5c65c2e482440a9c5b49de46320741a275a484052ef2"
   },
   {
+    "path": "source/assets/bidi.css",
+    "size": 1755,
+    "sha256": "147724f9bee533367fa3c0b2de3bee73779b8f6418421ba37cd1fafd79cddc8c"
+  },
+  {
+    "path": "source/assets/bidi.js",
+    "size": 8891,
+    "sha256": "a0b291345d4f684243b053e84ea7ecee8673e3bbc73a1c4fc3e2585960b8323d"
+  },
+  {
     "path": "source/assets/brand.png",
     "size": 14131,
     "sha256": "b40491f6f09f4be432ae9299fd71ca89a1a52cd547a31c7cd963fe792a0d1768"
@@ -56,8 +66,8 @@
   },
   {
     "path": "source/assets/chat-markdown.js",
-    "size": 1922,
-    "sha256": "c43e7fd7617efef6d190c054f4c18bc980f5e37246d338f14553024c7c9b4d6a"
+    "size": 1953,
+    "sha256": "ffbe34490438faedc0705e255fb5a8dbf4cd95abdc0563a44b19fd89a143dbca"
   },
   {
     "path": "source/assets/chat-pdf.js",
@@ -76,8 +86,8 @@
   },
   {
     "path": "source/assets/chat-visuals.js",
-    "size": 13359,
-    "sha256": "83c9790b1401f339e930b85c70d5ff2093f5173bedb9e3e22f6455180761f11d"
+    "size": 13449,
+    "sha256": "4518d7cef31ef903a9de18905dec3d5f12a6ce7c7088376f2d4bbb5c1b3a8033"
   },
   {
     "path": "source/assets/chat.png",
@@ -461,8 +471,8 @@
   },
   {
     "path": "source/assets/image-generation.js",
-    "size": 15568,
-    "sha256": "322e024b8f67f0e674f9f21d887ff10f6f9dcb6be7b989d900fbb8bb747db066"
+    "size": 15521,
+    "sha256": "3c9afd33b8b18a1880391f61ecef11065f0c9c654aa702cebf1d4eeb1aee2246"
   },
   {
     "path": "source/assets/image-pdf.css",
@@ -591,13 +601,13 @@
   },
   {
     "path": "source/assets/premium-ui.css",
-    "size": 10373,
-    "sha256": "52cf71100813640e69edbb7c10e5987918b8924e2a30ea2378472ee1338c8b53"
+    "size": 11528,
+    "sha256": "fb8f3502913b2fcf5f46034c57a4a46c3e0f09036eee6d02698e626135b9062c"
   },
   {
     "path": "source/assets/premium-ui.js",
-    "size": 8702,
-    "sha256": "1497a6cc2a75317a0bc220bdb7b7316a8b9aa523b1313f34d62fef7d227ca2b1"
+    "size": 8730,
+    "sha256": "2487de5d9c3ac0df3111078096ab781345cf15312ad563ba75b19d8457d85cfc"
   },
   {
     "path": "source/assets/preview-vendor/Babel-LICENSE.txt",
@@ -966,8 +976,8 @@
   },
   {
     "path": "source/assets/visual-engine/charts.js",
-    "size": 7875,
-    "sha256": "825a77b63b4239f28547a0613053824628f6da6b3cbeda26cf714d79638fc95c"
+    "size": 8028,
+    "sha256": "5d2639eb6b871c8a69c0433087440e285ca384747ec952679efbf842501f889c"
   },
   {
     "path": "source/assets/visual-engine/core.js",
@@ -1185,6 +1195,11 @@
     "sha256": "bde7749a582ccff2f2f2e5be3db57fe83204dbad2050d048fdfe3cd947531fe7"
   },
   {
+    "path": "source/docs/ARABIC-RTL.md",
+    "size": 1702,
+    "sha256": "85085332cb22f016f8821771937c1078b57706649d1785d96c25d5f150b0ff21"
+  },
+  {
     "path": "source/game_assets.py",
     "size": 5453,
     "sha256": "21f4a095bd78cca55aafb8e09b82c16493c8f81aeb720396d0a7caf26e862080"
@@ -1266,8 +1281,8 @@
   },
   {
     "path": "source/mini_agents.py",
-    "size": 45162,
-    "sha256": "ac69b1727c8c24483452935d6b871661573126e3e4286a9851c6345ec30e9174"
+    "size": 45113,
+    "sha256": "8de9b62d337952a33fa4b88acbc76eada511861d6d85e2996f9afa7a058de4ca"
   },
   {
     "path": "source/model_modes.py",
@@ -1366,8 +1381,8 @@
   },
   {
     "path": "source/presentation.py",
-    "size": 7824,
-    "sha256": "423d8ee69c849860206bba033cf4624cc2124e87cc500f95530df7fe87871f7c"
+    "size": 7615,
+    "sha256": "7c0abc84f7226bd20cca901f924621bda4e31d877fc330129dab995f00b5939e"
   },
   {
     "path": "source/public_transport.py",
@@ -1455,14 +1470,29 @@
     "sha256": "cceb33b7a1870eb9438cc3a95e7e5f8a2f0cee4faf096245f994540aff74f708"
   },
   {
+    "path": "source/tests_ui/bidi-fixture.html",
+    "size": 3065,
+    "sha256": "35e8f3f7677d63968d145aca22d10a03cf95c457d7df16c766bd951f662e4a36"
+  },
+  {
+    "path": "source/tests_ui/bidi-fixture.js",
+    "size": 7531,
+    "sha256": "6ad9afad624d76d8f09c76b54513dfca44899b8c563c6dc04eca762b32491691"
+  },
+  {
+    "path": "source/tests_ui/bidi.test.cjs",
+    "size": 1361,
+    "sha256": "d87e6fd25dda0f7b9925e547a7d4d21c99b89f66bc4096febc9a7361b47f84e9"
+  },
+  {
     "path": "source/text_image_shell.py",
     "size": 10315,
     "sha256": "fffed81d8cc96ba55eeeab21dd8591a75ba0220b6cfa26560e1bf013b3830a6a"
   },
   {
     "path": "source/ui.html",
-    "size": 36566,
-    "sha256": "8967d0599cb2d6b42ad827065015246fa380de85b4fb2899fee468e0fe86ccae"
+    "size": 36246,
+    "sha256": "33cd2776678fd59656a0861a6faae1a380f0cc38080c587cea605402f4d60695"
   },
   {
     "path": "source/update_acquire.py",

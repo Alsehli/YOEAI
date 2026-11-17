@@ -17,3 +17,9 @@ body.output-fullscreen #conversation-panel.conversation-expanded{background:var(
 
 /* Keep the token rate legible beside the other hardware readings. */
 .system-status>.stat:nth-child(4){flex-direction:column;align-items:flex-start;gap:0;min-width:120px}.system-status>.stat:nth-child(4)>span{white-space:normal;overflow:visible;text-overflow:clip}.system-status>.stat:nth-child(4)>b{white-space:nowrap;overflow:visible;text-overflow:clip;flex-shrink:0}
+
+/* Compact theme control beneath Settings. */
+.theme-shortcut{display:inline-flex;align-items:center;gap:6px;width:max-content;min-height:26px;margin-left:12px;margin-top:-6px;padding:3px 9px;border:1px solid var(--border);border-radius:999px;background:var(--panel);color:var(--muted);font-size:11px;line-height:18px}.theme-shortcut:hover{color:var(--ink);background:var(--hover)}#theme-shortcut-icon{font-size:15px;line-height:16px}html[data-theme=light]{--sidebar:#ffffff}.sidebar-collapsed .theme-shortcut{margin-left:4px;width:30px;padding:3px;justify-content:center}.sidebar-collapsed .theme-shortcut-label{display:none}@media(max-width:760px){.theme-shortcut{margin-left:3px;width:30px;padding:3px;justify-content:center}.theme-shortcut-label{display:none}}
+
+/* Keep the Settings shortcut reachable on shorter displays. */
+.sidebar{overflow-y:auto}.sidebar-bottom{flex-shrink:0}@media(max-height:760px){.sidebar{gap:12px;padding-top:16px;padding-bottom:12px}.sidebar-bottom{gap:6px}.sidebar-bottom .local-card{padding:8px}.sidebar-bottom .publisher{font-size:10px;line-height:1.35}.sidebar .history-section{min-height:40px}}

@@ -25,6 +25,12 @@ jobs:
           python tools/check_release.py
           python tools/test_portable.py
           python tools/check_docs.py
+      - name: Check shared Arabic direction and free Space contracts
+        run: |
+          node source/tests_ui/bidi.test.cjs
+          node editions/lite/source/tests_ui/bidi.test.cjs
+          python tools/test_bidi_browser.py
+          node --test spaces/yoeai/core.test.mjs
       - name: Check Lite 3.0 source contracts without loading models
         working-directory: editions/lite/source
         run: |

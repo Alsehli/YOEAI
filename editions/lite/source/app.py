@@ -74,8 +74,7 @@ class Handler(BaseHTTPRequestHandler):
   if speech_input_route(self,False,Path(os.environ.get('YOEAI_ASSISTANT_RUNTIME',str(APP))),DATA):return
   from object_generation import route as object_route
   if object_route(self,False,APP,DATA,BUNDLE,config):return
-  from lite_video_generation import route as video_route
-  if video_route(self,False,APP,DATA,BUNDLE,config):return
+
   if self.path.startswith('/assistant/'):
    from intelligence.routes import route as assistant_route
    if assistant_route(self,False,DATA,Path(os.environ.get('YOEAI_ASSISTANT_RUNTIME',str(APP))),'Lite'):return
@@ -112,8 +111,7 @@ class Handler(BaseHTTPRequestHandler):
   if speech_input_route(self,True,Path(os.environ.get('YOEAI_ASSISTANT_RUNTIME',str(APP))),DATA):return
   from object_generation import route as object_route
   if object_route(self,True,APP,DATA,BUNDLE,config):return
-  from lite_video_generation import route as video_route
-  if video_route(self,True,APP,DATA,BUNDLE,config):return
+
   if self.path.startswith('/assistant/'):
    from intelligence.routes import route as assistant_route
    if assistant_route(self,True,DATA,Path(os.environ.get('YOEAI_ASSISTANT_RUNTIME',str(APP))),'Lite'):return
@@ -246,8 +244,6 @@ def serve(browser=True):
   server.server_close()
   import speech_input
   if speech_input.INSTANCE:speech_input.INSTANCE.close()
-  import lite_video_generation
-  if lite_video_generation.INSTANCE:lite_video_generation.INSTANCE.shutdown()
   import object_generation
   if object_generation.INSTANCE:object_generation.INSTANCE.shutdown()
   from lite_agents_bridge import shutdown

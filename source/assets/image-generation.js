@@ -49,7 +49,7 @@
   return /\b(?:generate|create|make|produce|render)\b[^\n]{0,160}\b(?:images?|pictures?|photos?|photographs?|illustrations?|artwork|posters?|advertisements?|banners?|flyers?|logos?|certificates?)\b/i.test(value)||/^(?:please\s+)?(?:can you\s+)?(?:draw|paint)\b/i.test(value)||/^(?:please\s+)?(?:an?\s+)?(?:image|picture|photo|photograph|illustration)\s+of\b/i.test(value)||/(?:ارسم|أنشئ\s+صور|انشئ\s+صور|اصنع\s+صور|ول[ّد]*\s+صور|توليد\s+صور)/.test(value);
  }
  byId('send').addEventListener('click',event=>{
-  if(window.YoeWeb?.enabled()||window.YoeVideos?.wants(byId('prompt').value))return;
+  if(window.YoeWeb?.enabled())return;
   const prompt=byId('prompt'),attachment=byId('image');if(!prompt.value.trim())return;
   if(attachment?.files?.length){if(imageMode){event.preventDefault();event.stopImmediatePropagation();byId('error').textContent='Image creation uses text prompts. Remove the attachment, or select Conversation to understand an image.';}return;}
   if(!imageMode&&!wantsImage(prompt.value))return;event.preventDefault();event.stopImmediatePropagation();if(!chat.isBusy())start(prompt.value.trim(),true);

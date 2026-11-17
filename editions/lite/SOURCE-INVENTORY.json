@@ -91,8 +91,8 @@
   },
   {
     "path": "app.py",
-    "bytes": 17456,
-    "sha256": "5d0c0ec9f71f5aea7b59a1645e994109d2be8181d37fb1ad867d45d0afabf483"
+    "bytes": 17114,
+    "sha256": "8298fb26cbf7785be795a072a03cb78f367e047a6e9a96b103026b23e95e57fa"
   },
   {
     "path": "assets/activity.png",
@@ -108,6 +108,16 @@
     "path": "assets/agent-memory.js",
     "bytes": 4951,
     "sha256": "9c30b7d1f9a5ab307eda5c65c2e482440a9c5b49de46320741a275a484052ef2"
+  },
+  {
+    "path": "assets/bidi.css",
+    "bytes": 1755,
+    "sha256": "147724f9bee533367fa3c0b2de3bee73779b8f6418421ba37cd1fafd79cddc8c"
+  },
+  {
+    "path": "assets/bidi.js",
+    "bytes": 8891,
+    "sha256": "a0b291345d4f684243b053e84ea7ecee8673e3bbc73a1c4fc3e2585960b8323d"
   },
   {
     "path": "assets/brand.png",
@@ -126,8 +136,8 @@
   },
   {
     "path": "assets/chat-markdown.js",
-    "bytes": 2113,
-    "sha256": "137eb0a59d30f302142a7f029e807622c22cf1c944ed6e4f0df64cd3051fd1f5"
+    "bytes": 2144,
+    "sha256": "7a05a0ef9c9c61ddd3cab5e69d6e5b0610c45ddbb539083f6250f53d7e68b5d4"
   },
   {
     "path": "assets/chat-pdf.js",
@@ -141,8 +151,8 @@
   },
   {
     "path": "assets/chat-visuals.js",
-    "bytes": 13532,
-    "sha256": "e51dfb79246e135ea1846a22c3618b60378b5732648408f8ce11b3de7cd81745"
+    "bytes": 13622,
+    "sha256": "3888ed896cb36035e728ebfec90132a1f98397fc738ee26f5495f83f77520b9f"
   },
   {
     "path": "assets/chat.png",
@@ -376,8 +386,8 @@
   },
   {
     "path": "assets/image-generation.js",
-    "bytes": 17811,
-    "sha256": "cfc01054df088b2730136b269d569656608b0e3740982955db89b9b8bdc20148"
+    "bytes": 17429,
+    "sha256": "d2f61f96aafe10fa756cb16043d7a9842ba4d48c7d5827ce8b8ea216443e26fb"
   },
   {
     "path": "assets/image.png",
@@ -396,8 +406,8 @@
   },
   {
     "path": "assets/lite-video.js",
-    "bytes": 8056,
-    "sha256": "bdc40215837d99fe98c1f06808a3d45e01ba0bc24a60c8c6c17c23b304f7d799"
+    "bytes": 65,
+    "sha256": "dc3ce2853474edd827fdf2eb8af672d3c169f84338ec13d4fc2a156fb88da7ec"
   },
   {
     "path": "assets/mascot.js",
@@ -486,13 +496,13 @@
   },
   {
     "path": "assets/premium-ui.css",
-    "bytes": 10748,
-    "sha256": "bd7c60377017ee73f1d7c277c1f4b5ab8a3760c1a0f51b89f73e4a98713b0b4e"
+    "bytes": 11903,
+    "sha256": "b41eb37cff84fb578df045b88911372cc651748df0194fc1e54921e62766278b"
   },
   {
     "path": "assets/premium-ui.js",
-    "bytes": 8692,
-    "sha256": "c7e3ba46f88a03e02b01f04a34c7648b336d84e716a2cada5001691360f7cb19"
+    "bytes": 8720,
+    "sha256": "a7efac6e134d911b1eb67ed16ae05d39d5d1e4c8f8185933aeefcfc307e01035"
   },
   {
     "path": "assets/read-aloud.js",
@@ -721,8 +731,8 @@
   },
   {
     "path": "assets/visual-engine/charts.js",
-    "bytes": 8041,
-    "sha256": "b687c607f772e4e4e7610ff66fd10ed5505f4e4fee7b7481f8e8b0c3543665ee"
+    "bytes": 8194,
+    "sha256": "6088b6383b8d3d0a8d731d9a62f1c21ed2eced8406ac10804cb686f82a40b3f9"
   },
   {
     "path": "assets/visual-engine/conversation.js",
@@ -933,6 +943,11 @@
     "path": "developer_mode.py",
     "bytes": 14448,
     "sha256": "3f86ac09cd398b77ca56a5936fae41b65c03efd00706738372fe86286a4fcb16"
+  },
+  {
+    "path": "docs/ARABIC-RTL.md",
+    "bytes": 1702,
+    "sha256": "85085332cb22f016f8821771937c1078b57706649d1785d96c25d5f150b0ff21"
   },
   {
     "path": "docs/CONTEXT_PRESETS_PROGRESS.md",
@@ -1246,8 +1261,8 @@
   },
   {
     "path": "mini_agents.py",
-    "bytes": 37212,
-    "sha256": "2994e1074c4318ee73775c89869d6833508e4e1ae8134ac5a16cc8d12c795318"
+    "bytes": 37163,
+    "sha256": "cb417545a154591b8c7e009f3bf7ea1316045db45a29c81c5032fa7d24603286"
   },
   {
     "path": "model_experience.py",
@@ -1650,6 +1665,21 @@
     "sha256": "e1a80697c4e4ceb036eb6bf6234fd0087cfda18181acd6b947eaca2b52c13f2e"
   },
   {
+    "path": "tests_ui/bidi-fixture.html",
+    "bytes": 3065,
+    "sha256": "35e8f3f7677d63968d145aca22d10a03cf95c457d7df16c766bd951f662e4a36"
+  },
+  {
+    "path": "tests_ui/bidi-fixture.js",
+    "bytes": 7531,
+    "sha256": "6ad9afad624d76d8f09c76b54513dfca44899b8c563c6dc04eca762b32491691"
+  },
+  {
+    "path": "tests_ui/bidi.test.cjs",
+    "bytes": 1361,
+    "sha256": "d87e6fd25dda0f7b9925e547a7d4d21c99b89f66bc4096febc9a7361b47f84e9"
+  },
+  {
     "path": "tests_visuals/.gitignore",
     "bytes": 20,
     "sha256": "7a2bfc130ed619857740b72e503a6487fc4888e9f16887e6f33f1dcac239ebe0"
@@ -1686,8 +1716,8 @@
   },
   {
     "path": "ui.html",
-    "bytes": 34657,
-    "sha256": "11036f65d1eb74853576c346c5c78296810af738c1a625bd1d9aa3fff036764f"
+    "bytes": 34549,
+    "sha256": "77ad09df7585492b5a2ad4a9e5eb6be3e3b98202d375e99eef697cba5adb3a70"
   },
   {
     "path": "update_sandbox.py",

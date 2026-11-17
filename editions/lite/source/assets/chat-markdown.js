@@ -31,7 +31,7 @@
       template.innerHTML = md.render(String(text ?? ''));
       body.append(template.content);
       body.querySelectorAll('table').forEach(table=>{const wrap=document.createElement('div');wrap.className='table-scroll';wrap.tabIndex=0;wrap.setAttribute('role','region');wrap.setAttribute('aria-label','Scrollable table');table.before(wrap);wrap.append(table);});
-      return body;
+      return window.YoeBidi?.prepare(body)||body;
     }
   });
 })();
