@@ -177,8 +177,8 @@ class Engine:
   if t.get('agent')=='windows' and not self.windows_enabled:raise ValueError('Windows YOE is disabled. Enable it for this session before resuming.')
   if self.closed or self.cancel_events.setdefault(t['id'],threading.Event()).is_set():raise InterruptedError('Task stopped.')
  def gpu_busy(self):
-  import video_generation_adapter as video,image_generation_adapter as image
-  return any(x and x.state.get('status') in ['running','restoring','installing'] for x in [video.INSTANCE,image.INSTANCE])
+  import image_generation_adapter as image
+  return any(x and x.state.get('status') in ['running','restoring','installing'] for x in [image.INSTANCE])
  def work(self):
   while not self.closed:
    try:tid=self.q.get(timeout=.5)

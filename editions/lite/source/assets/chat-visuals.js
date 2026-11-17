@@ -31,11 +31,11 @@
   const label=(x,y,value,anchor='middle',size=12)=>add('text',{x,y,fill:ink,'font-family':'Arial, sans-serif','font-size':size,'text-anchor':anchor},value);
   add('title',{},data.title);
   if(data.kind==='diagram'){
-   data.nodes.forEach((node,i)=>{const y=12+i*74;if(i)add('path',{d:`M ${width/2} ${y-20} v 18 m -5 -6 l 5 6 l 5 -6`,fill:'none',stroke:ink,'stroke-width':1.5});add('rect',{x:12,y,width:width-24,height:52,rx:10,fill:'none',stroke:border});label(width/2,y+31,node.length>Math.floor(width/8)?node.slice(0,Math.floor(width/8)-1)+'…':node);});return svg;
+   data.nodes.forEach((node,i)=>{const y=12+i*74;if(i)add('path',{d:`M ${width/2} ${y-20} v 18 m -5 -6 l 5 6 l 5 -6`,fill:'none',stroke:ink,'stroke-width':1.5});add('rect',{x:12,y,width:width-24,height:52,rx:10,fill:'none',stroke:border});label(width/2,y+31,node.length>Math.floor(width/8)?node.slice(0,Math.floor(width/8)-1)+'…':node);});return window.YoeBidi?.prepare(svg)||svg;
   }
   if(data.type==='pie'){
    const sum=data.values.reduce((a,b)=>a+b,0),cx=width/2,cy=122,r=91;let angle=-Math.PI/2;
-   data.values.forEach((v,i)=>{const end=angle+2*Math.PI*v/sum;const color=['#4f8cff','#2aa889','#ba80df','#e3a543','#e77979','#57bdd0'][i%6];let e;if(v===sum)e=add('circle',{cx,cy,r,fill:color});else e=add('path',{d:`M ${cx} ${cy} L ${cx+r*Math.cos(angle)} ${cy+r*Math.sin(angle)} A ${r} ${r} 0 ${end-angle>Math.PI?1:0} 1 ${cx+r*Math.cos(end)} ${cy+r*Math.sin(end)} Z`,fill:color});const t=document.createElementNS(NS,'title');t.textContent=data.labels[i]+': '+v+' '+data.unit;e.append(t);angle=end;});label(width/2,246,'Values and labels are listed in the data table below.');return svg;
+   data.values.forEach((v,i)=>{const end=angle+2*Math.PI*v/sum;const color=['#4f8cff','#2aa889','#ba80df','#e3a543','#e77979','#57bdd0'][i%6];let e;if(v===sum)e=add('circle',{cx,cy,r,fill:color});else e=add('path',{d:`M ${cx} ${cy} L ${cx+r*Math.cos(angle)} ${cy+r*Math.sin(angle)} A ${r} ${r} 0 ${end-angle>Math.PI?1:0} 1 ${cx+r*Math.cos(end)} ${cy+r*Math.sin(end)} Z`,fill:color});const t=document.createElementNS(NS,'title');t.textContent=data.labels[i]+': '+v+' '+data.unit;e.append(t);angle=end;});label(width/2,246,'Values and labels are listed in the data table below.');return window.YoeBidi?.prepare(svg)||svg;
   }
   const left=66,right=24,top=20,bottom=275,w=width-left-right,h=bottom-top;
   const xs=data.type==='scatter'?data.points.map(p=>p.x):data.values.map((_,i)=>i),ys=data.type==='scatter'?data.points.map(p=>p.y):data.values;
@@ -50,7 +50,7 @@
    xs.forEach((x,i)=>{const e=add('circle',{cx:X(x),cy:Y(ys[i]),r:4,fill:accent});const t=document.createElementNS(NS,'title');t.textContent=(data.type==='scatter'?x:data.labels[i])+': '+ys[i];e.append(t);if(data.type==='line'&&i%tickEvery===0)label(X(x),298,data.labels[i].slice(0,12),'middle',11);});
    if(data.type==='scatter')for(let i=0;i<=4;i++)label(left+i*w/4,298,Number((xmin+i*(xmax-xmin)/4).toPrecision(3)),'middle',11);
   }
-  label(left+w/2,327,data.type==='scatter'?data.xLabel:'Category');const yl=label(14,top+h/2,data.yLabel);yl.setAttribute('transform',`rotate(-90 14 ${top+h/2})`);return svg;
+  label(left+w/2,327,data.type==='scatter'?data.xLabel:'Category');const yl=label(14,top+h/2,data.yLabel);yl.setAttribute('transform',`rotate(-90 14 ${top+h/2})`);return window.YoeBidi?.prepare(svg)||svg;
  }
  function download(data,png=false){
   const svg=draw(data,1000);const source=new XMLSerializer().serializeToString(svg),blob=new Blob([source],{type:'image/svg+xml;charset=utf-8'}),url=URL.createObjectURL(blob);

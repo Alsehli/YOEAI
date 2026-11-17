@@ -53,8 +53,7 @@ class PresentationHandler(runtime.Handler):
     def existing_POST(self):
         from vision_chat import route as vision_chat_route
         if vision_chat_route(self):return
-        from video_generation_adapter import route as video_route
-        if video_route(self,True):return
+
         from web_search import route as search_route
         if search_route(self,True,HOME):return
         from read_aloud import route as speech_route
@@ -95,8 +94,7 @@ class PresentationHandler(runtime.Handler):
         if preview_route(self):return
         from mini_agents import route as mini_route
         if mini_route(self):return
-        from video_generation_adapter import route as video_route
-        if video_route(self):return
+
         from web_search import route as search_route
         if search_route(self,False,HOME):return
         from read_aloud import route as speech_route

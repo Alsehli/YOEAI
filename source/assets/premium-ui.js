@@ -39,7 +39,7 @@
     if(m.role==='assistant'&&!m.imageGeneration&&!m.videoGeneration)YoePdf.card(m,el);if(m.imageGeneration&&window.YoeImages)YoeImages.card(m,el);window.YoeVideos?.card(m,el);window.YoeWeb?.card(m,el);if(!isBusy)window.YoeSpeech?.card(m,el);actions(m,el,index,isBusy,retry);record.sig=snapshot(m);
    }
    if(!isBusy&&m.role==='assistant'&&!m.imageGeneration&&!m.videoGeneration&&!el.querySelector('.speech-controls')&&window.YoeSpeech){const controls=el.querySelector('.response-actions');if(controls)controls.remove();YoeSpeech.card(m,el);if(controls)el.append(controls);}
-   const r=el.querySelector('.regenerate-response');if(r){r.disabled=isBusy;r.onclick=()=>retry(items.indexOf(m));}if(el.parentNode!==chat)chat.append(el);index++;
+   const r=el.querySelector('.regenerate-response');if(r){r.disabled=isBusy;r.onclick=()=>retry(items.indexOf(m));}window.YoeBidi?.prepare(el);if(el.parentNode!==chat)chat.append(el);index++;
   }
   if(!streamOnly){for(const el of [...chat.children])if(!keep.has(el))el.remove();historyList(items,isBusy,onDelete);lastItems=items;lastCount=items.length;lastTail=items.at(-1);}if(follow)chat.scrollTop=chat.scrollHeight;return true;
  }

@@ -50,7 +50,7 @@
   if(info.engine==='ph3'){const meta=card.querySelector('.generated-image-meta');if(meta)meta.textContent=meta.textContent.replace('Image Turbo · Z-Image-Turbo','P-H3-Image · Powered by MiniMax H3');}
   if(info.status==='complete'&&validURL(info.url)){const save=document.createElement('button');save.type='button';save.textContent='Save image';save.onclick=async()=>{try{if(info.precisionProject)await window.YoePrecision.open(info.precisionProject);else await saveImage(info.url);}catch(error){byId('error').textContent=error.message;}};actions.append(save);}
   if(!['running','restoring','installing'].includes(info.status)){const regenerate=document.createElement('button');regenerate.type='button';regenerate.textContent='Regenerate';regenerate.disabled=chat.isBusy();regenerate.onclick=()=>start(String(info.prompt||''),false,{...info,engine:info.engine||'turbo'});actions.append(regenerate);}
-  if(info.status==='complete'&&validURL(info.url)){const animate=document.createElement('button');animate.type='button';animate.textContent='Animate image';animate.disabled=chat.isBusy();animate.onclick=()=>window.YoeVideos?.animate(info.url).catch(error=>byId('error').textContent=error.message);actions.append(animate);}if(info.precisionProject){const edit=document.createElement('button');edit.textContent='Edit text';edit.onclick=()=>window.YoePrecision.open(info.precisionProject);actions.prepend(edit);const note=document.createElement('p');note.className='generated-image-meta';note.textContent='Precision Text · Editable words · Review artwork lettering before export';card.append(note);}if(info.precisionError){const note=document.createElement('p');note.textContent=info.precisionError;card.append(note);}card.append(actions);container.append(card);
+if(info.precisionProject){const edit=document.createElement('button');edit.textContent='Edit text';edit.onclick=()=>window.YoePrecision.open(info.precisionProject);actions.prepend(edit);const note=document.createElement('p');note.className='generated-image-meta';note.textContent='Precision Text · Editable words · Review artwork lettering before export';card.append(note);}if(info.precisionError){const note=document.createElement('p');note.textContent=info.precisionError;card.append(note);}card.append(actions);container.append(card);
  }};
  function wantsImage(text){
   const value=text.trim();if(!value)return false;
@@ -60,7 +60,6 @@
  }
  byId('send').addEventListener('click',event=>{
   if(window.YoeObjects?.enabled())return;
-  if(window.YoeVideos?.wants(byId('prompt').value))return;
   const prompt=byId('prompt'),attachment=byId('image');if(!prompt.value.trim())return;
   if(attachment?.files?.length){if(imageMode){event.preventDefault();event.stopImmediatePropagation();byId('error').textContent='Image creation uses text prompts. Remove the attachment, or select Conversation to understand an image.';}return;}
   if(!imageMode&&!wantsImage(prompt.value))return;event.preventDefault();event.stopImmediatePropagation();if(!chat.isBusy())start(prompt.value.trim(),true);
